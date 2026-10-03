@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phòng Khám Sản Phụ Khoa Hoàng Dịu | Thấu hiểu phụ nữ - Chăm sóc tận tâm</title>
+  
+  <!-- Google Fonts & Tailwind CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              red: '#DC2626',
+              rose: '#E11D48',
+              pink: '#FFF1F2',
+              pinkLight: '#FDF2F4',
+              pinkCard: '#FFE4E6',
+              pinkBorder: '#FECDD3',
+              dark: '#1E293B',
+              text: '#475569'
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Thanh cuộn tinh chỉnh cho giao diện */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FFF1F2;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #FDA4AF;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #F43F5E;
+    }
+    .gradient-hero {
+      background: linear-gradient(135deg, #FFF5F7 0%, #FFFFFF 50%, #FEE2E2 100%);
+    }
+  </style>
+</head>
+<body class="font-sans text-brand-dark bg-slate-50 antialiased selection:bg-rose-200 selection:text-rose-900">
+
+  <!-- HEADER LUÔN HIỂN THỊ -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-rose-100 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Logo bên trái -->
+        <a href="#trang-chu" onclick="switchTab('trang-chu'); return false;" class="flex items-center gap-3 group">
+          <div class="w-14 h-14 rounded-full p-0.5 bg-gradient-to-tr from-rose-500 via-pink-400 to-rose-300 shadow-md shadow-rose-200 group-hover:scale-105 transition-transform duration-300 overflow-hidden bg-white">
+            <img 
+              src="logo.jpg" 
+              alt="Logo Phòng Khám Sản Phụ Khoa Hoàng Dịu" 
+              class="w-full h-full object-contain rounded-full"
+              onerror="this.onerror=null; this.src='https://placehold.co/200x200/ffe4e6/e11d48?text=Hoàng+Dịu';"
+            />
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-widest font-bold text-rose-500">Phòng Khám Sản Phụ Khoa</div>
+            <div class="text-2xl font-serif font-bold text-slate-800 tracking-tight leading-none group-hover:text-rose-600 transition-colors">
+              Hoàng Dịu
+            </div>
+          </div>
+        </a>
+
+        <!-- Menu ở giữa -->
+        <nav class="hidden md:flex items-center space-x-1 lg:space-x-8 font-medium text-slate-700">
+          <button type="button" onclick="switchTab('trang-chu')" data-tab="trang-chu" class="nav-tab-btn px-4 py-2 rounded-xl transition-all font-semibold text-rose-600 bg-rose-50 border border-rose-200 shadow-sm">
+            Trang chủ
+          </button>
+          <button type="button" onclick="switchTab('dich-vu')" data-tab="dich-vu" class="nav-tab-btn px-4 py-2 rounded-xl transition-all text-slate-600 hover:text-rose-600 hover:bg-rose-50">
+            Dịch vụ
+          </button>
+          <button type="button" onclick="switchTab('bac-si')" data-tab="bac-si" class="nav-tab-btn px-4 py-2 rounded-xl transition-all text-slate-600 hover:text-rose-600 hover:bg-rose-50">
+            Bác sỹ
+          </button>
+          <button type="button" onclick="switchTab('lich-lam-viec')" data-tab="lich-lam-viec" class="nav-tab-btn px-4 py-2 rounded-xl transition-all text-slate-600 hover:text-rose-600 hover:bg-rose-50">
+            Lịch làm việc
+          </button>
+        </nav>
+
+        <!-- Nút đặt lịch khám bên phải -->
+        <div class="flex items-center gap-3">
+          <button type="button" onclick="switchTab('dat-lich')" data-tab="dat-lich" class="nav-tab-btn hidden sm:inline-flex items-center gap-2 bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white font-semibold px-5 py-2.5 rounded-full shadow-md shadow-rose-200 hover:shadow-lg hover:shadow-rose-300 transition-all duration-300 transform active:scale-95">
+            <i class="fa-regular fa-calendar-check"></i>
+            <span>Đặt lịch khám</span>
+          </button>
+
+          <!-- Nút Menu trên thiết bị di động -->
+          <button id="mobileMenuBtn" aria-label="Mở menu" class="md:hidden text-slate-700 hover:text-rose-600 p-2 rounded-lg focus:outline-none">
+            <i class="fa-solid fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menu thả xuống di động -->
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-rose-100 px-4 pt-3 pb-5 space-y-2">
+      <button type="button" onclick="switchTab('trang-chu')" data-tab-mobile="trang-chu" class="nav-mobile-btn w-full text-left px-3 py-2 rounded-lg font-medium text-rose-600 bg-rose-50">Trang chủ</button>
+      <button type="button" onclick="switchTab('dich-vu')" data-tab-mobile="dich-vu" class="nav-mobile-btn w-full text-left px-3 py-2 rounded-lg font-medium text-slate-700 hover:bg-rose-50 hover:text-rose-600">Dịch vụ</button>
+      <button type="button" onclick="switchTab('bac-si')" data-tab-mobile="bac-si" class="nav-mobile-btn w-full text-left px-3 py-2 rounded-lg font-medium text-slate-700 hover:bg-rose-50 hover:text-rose-600">Bác sỹ</button>
+      <button type="button" onclick="switchTab('lich-lam-viec')" data-tab-mobile="lich-lam-viec" class="nav-mobile-btn w-full text-left px-3 py-2 rounded-lg font-medium text-slate-700 hover:bg-rose-50 hover:text-rose-600">Lịch làm việc</button>
+      <button type="button" onclick="switchTab('dat-lich')" data-tab-mobile="dat-lich" class="w-full block text-center mt-3 bg-rose-500 text-white font-semibold py-2.5 rounded-full shadow">
+        Đặt lịch khám ngay
+      </button>
+    </div>
+  </header>
+
+  <!-- KHU VỰC CÁC MỤC (CHỈ HIỂN THỊ MỤC ĐƯỢC CHỌN) -->
+  <main id="mainTabContainer" class="min-h-[70vh]">
+    <!-- MỤC TRANG CHỦ -->
+    <section id="tab-trang-chu" class="tab-content relative gradient-hero pt-14 pb-20 overflow-hidden">
+      <div class="absolute -top-24 -right-24 w-96 h-96 bg-rose-200/40 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-red-100/50 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div class="text-center max-w-4xl mx-auto">
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-100 border border-rose-200 text-rose-700 text-xs sm:text-sm font-semibold mb-6">
+            <i class="fa-solid fa-sparkles"></i> Trung tâm Sản Phụ Khoa Uy Tín & Chu Đáo
+          </span>
+
+          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-serif font-bold text-slate-900 leading-tight sm:leading-tight mb-6 tracking-tight">
+            Thấu hiểu phụ nữ - Chăm sóc tận tâm
+          </h1>
+
+          <p class="text-base sm:text-xl text-slate-600 leading-relaxed font-normal mb-8 max-w-3xl mx-auto">
+            Phòng khám Sản Phụ khoa Hoàng Dịu mang đến không gian thăm khám riêng tư, ấm áp cùng đội ngũ y bác sĩ chuyên môn cao, đồng hành cùng sức khỏe và hạnh phúc của phái đẹp.
+          </p>
+
+          <div class="flex flex-wrap items-center justify-center gap-4 mb-8">
+            <button type="button" onclick="switchTab('dat-lich')" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-rose-600 hover:bg-rose-700 text-white font-bold px-8 py-3.5 rounded-full shadow-lg shadow-rose-300 hover:shadow-rose-400 hover:-translate-y-0.5 transition-all text-base">
+              <i class="fa-regular fa-calendar-check text-lg"></i>
+              <span>Đặt lịch khám</span>
+            </button>
+
+            <a href="https://zalo.me/0964058462" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-sky-500 hover:bg-sky-600 text-white font-bold px-8 py-3.5 rounded-full shadow-lg shadow-sky-200 hover:shadow-sky-300 hover:-translate-y-0.5 transition-all text-base">
+              <span class="w-6 h-6 rounded-full bg-white text-sky-500 flex items-center justify-center font-black text-xs">Z</span>
+              <span>Nhận tư vấn Zalo</span>
+            </a>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto text-left pt-6">
+            <button type="button" onclick="switchTab('dich-vu')" class="p-4 bg-white/90 hover:bg-white rounded-2xl border border-rose-100 shadow-sm hover:shadow-md transition-all flex items-center gap-3 group">
+              <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-stethoscope"></i>
+              </div>
+              <div>
+                <div class="text-xs text-slate-400 uppercase font-bold tracking-wider">Xem nhanh</div>
+                <div class="font-bold text-slate-800 text-sm group-hover:text-rose-600">Dịch vụ chuyên sâu</div>
+              </div>
+            </button>
+
+            <button type="button" onclick="switchTab('bac-si')" class="p-4 bg-white/90 hover:bg-white rounded-2xl border border-rose-100 shadow-sm hover:shadow-md transition-all flex items-center gap-3 group">
+              <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-user-doctor"></i>
+              </div>
+              <div>
+                <div class="text-xs text-slate-400 uppercase font-bold tracking-wider">Bác sĩ</div>
+                <div class="font-bold text-slate-800 text-sm group-hover:text-rose-600">BS. CKI Hoàng Dịu</div>
+              </div>
+            </button>
+
+            <button type="button" onclick="switchTab('lich-lam-viec')" class="p-4 bg-white/90 hover:bg-white rounded-2xl border border-rose-100 shadow-sm hover:shadow-md transition-all flex items-center gap-3 group">
+              <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+                <i class="fa-regular fa-clock"></i>
+              </div>
+              <div>
+                <div class="text-xs text-slate-400 uppercase font-bold tracking-wider">Thời gian</div>
+                <div class="font-bold text-slate-800 text-sm group-hover:text-rose-600">Lịch làm việc tuần</div>
+              </div>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- MỤC LỊCH LÀM VIỆC -->
+    <section id="tab-lich-lam-viec" class="tab-content hidden py-16 bg-gradient-to-b from-rose-50/70 to-white">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-10">
+          <span class="text-rose-600 font-bold uppercase tracking-wider text-xs">Giờ làm việc & Thăm khám</span>
+          <h2 class="text-3xl sm:text-4xl font-serif font-bold text-slate-900 mt-2">Lịch Làm Việc Trong Tuần</h2>
+          <div class="w-16 h-1 bg-rose-500 mx-auto rounded-full mt-3"></div>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-rose-100">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-100">
+            <div>
+              <span class="text-rose-500 text-xs font-bold uppercase tracking-wider flex items-center gap-2">
+                <i class="fa-solid fa-clock"></i> Khung giờ đón tiếp
+              </span>
+              <h3 class="text-xl font-bold text-slate-800 font-serif mt-1">Phòng Khám Sản Phụ Khoa Hoàng Dịu</h3>
+            </div>
+            
+
+          </div>
+
+          <div class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div class="lg:col-span-6 overflow-hidden rounded-2xl border border-rose-200 shadow-inner bg-rose-50/50 group relative">
+              <img 
+                src="phongkham.jpg" 
+                alt="Lịch làm việc phòng khám sản phụ khoa Hoàng Dịu" 
+                class="w-full h-80 object-cover rounded-2xl group-hover:scale-105 transition-transform duration-500"
+                onerror="this.src='https://placehold.co/800x500/ffe4e6/be123c?text=Anh+Lich+Lam+Viec+Trong+Tuan'"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex flex-col justify-end p-5 text-white">
+                <span class="font-bold text-base">Bảng Lịch Khám Trực Tiếp Tại Phòng Khám</span>
+                <span class="text-xs text-rose-200">Luôn cập nhật theo ca trực của Bác sĩ Hoàng Dịu</span>
+              </div>
+            </div>
+
+            <div class="lg:col-span-6 space-y-4">
+              <div class="p-4 bg-rose-50/80 rounded-2xl border border-rose-100 flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-rose-500 text-white flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-calendar-days text-lg"></i>
+                </div>
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-wider text-rose-600 block">Thứ 2 - Thứ 7</span>
+ 		
+                  <div class="text-slate-800 font-semibold text-sm mt-1">
+                    
+                    <div>Buổi chiều: <strong class="text-rose-700">17:10 - 19:45</strong></div>
+                  </div>
+                </div>
+              </div>
+
+
+ 	
+
+              <div class="p-4 bg-rose-50/80 rounded-2xl border border-rose-100 flex items-start gap-4">
+                <div class="w-10 h-10 rounded-xl bg-rose-500 text-white flex items-center justify-center shrink-0">
+                  <i class="fa-regular fa-calendar-check text-lg"></i>
+                </div>
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-wider text-rose-600 block">Chủ Nhật</span>
+                  <div class="text-slate-800 font-semibold text-sm mt-1">
+                    <div>Buổi sáng: <strong class="text-rose-700">07:30 - 11:00</strong></div>
+                    <div>Buổi chiều: <strong class="text-rose-700">14:30 - 19:00</strong></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-sm text-slate-600 leading-relaxed">
+                <div class="flex items-start gap-2.5">
+                  <i class="fa-solid fa-circle-info text-rose-500 mt-1"></i>
+                  <p>
+                    <strong>Lưu ý:</strong> Để chủ động thời gian và không phải chờ đợi lâu, quý khách nên đăng ký trước lịch khám trực tuyến bên dưới.
+                  </p>
+                </div>
+              </div>
+
+              <button type="button" onclick="switchTab('dat-lich')" class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-md shadow-rose-200 transition-all flex items-center justify-center gap-2">
+                <i class="fa-regular fa-calendar-check"></i>
+                <span>Đặt lịch khám theo khung giờ này</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MỤC DỊCH VỤ -->
+    <section id="tab-dich-vu" class="tab-content hidden py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-14">
+          <span class="text-slate-500 font-semibold tracking-wider uppercase text-xs">Danh mục chăm sóc toàn diện</span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-serif font-extrabold text-red-600 mt-2 mb-4 tracking-tight">
+            Dịch vụ chuyên sâu
+          </h2>
+          <div class="w-20 h-1 bg-red-600 mx-auto rounded-full mb-4"></div>
+          <p class="text-slate-600 text-base sm:text-lg">
+            Trang thiết bị hiện đại, quy trình vô trùng tuyệt đối cùng phương pháp y khoa tiên tiến mang lại sự an tâm cho mọi chị em.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <!-- Khung 1 -->
+          <div class="bg-rose-50 hover:bg-rose-100/90 border border-rose-200 rounded-3xl p-6 sm:p-7 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl hover:shadow-rose-100 flex flex-col justify-between group">
+            <div>
+              <div class="w-16 h-16 rounded-2xl bg-white text-rose-600 flex items-center justify-center text-3xl shadow-sm mb-6 group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-baby"></i>
+              </div>
+              <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-rose-700 transition-colors">
+                Quản lý thai kỳ
+              </h3>
+              <ul class="text-slate-600 text-sm space-y-2.5">
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-rose-500 text-xs"></i>
+                  <span>Khám thai định kỳ chuẩn y khoa</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-rose-500 text-xs"></i>
+                  <span>Siêu âm thai màu 4D / 5D sắc nét</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-rose-500 text-xs"></i>
+                  <span>Xét nghiệm Double/Triple test, NIPT</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-rose-500 text-xs"></i>
+                  <span>Tư vấn dinh dưỡng suốt 9 tháng 10 ngày</span>
+                </li>
+              </ul>
+            </div>
+            <div class="pt-6 mt-6 border-t border-rose-200/60">
+              <button type="button" onclick="selectServiceAndBook('Khám và quản lý thai kỳ')" class="text-sm font-bold text-rose-700 hover:text-rose-900 inline-flex items-center gap-1.5 group-hover:gap-2 transition-all">
+                Đặt lịch khám này <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Khung 2 -->
+          <div class="bg-rose-50 hover:bg-rose-100/90 border border-rose-200 rounded-3xl p-6 sm:p-7 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl hover:shadow-rose-100 flex flex-col justify-between group">
+            <div>
+              <div class="w-16 h-16 rounded-2xl bg-white text-rose-600 flex items-center justify-center text-3xl shadow-sm mb-6 group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-venus"></i>
+              </div>
+              <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-rose-700 transition-colors">
+                Khám phụ khoa
+              </h3>
+              <ul class="text-slate-600 text-sm space-y-2.5">
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-rose-500 text-xs"></i>
+                  <span>Điều trị viêm nhiễm, nấm ngứa</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-rose-500 text-xs"></i>
+                  <span>Soi tươi dịch âm đạo & polyp cổ tử cung</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-rose-500 text-xs"></i>
+                  <span>Khám và điều trị u nang, u xơ</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-rose-500 text-xs"></i>
+                  <span>Tư vấn rối loạn kinh nguyệt, nội tiết</span>
+                </li>
+              </ul>
+            </div>
+            <div class="pt-6 mt-6 border-t border-rose-200/60">
+              <button type="button" onclick="selectServiceAndBook('Khám phụ khoa')" class="text-sm font-bold text-rose-700 hover:text-rose-900 inline-flex items-center gap-1.5 group-hover:gap-2 transition-all">
+                Đặt lịch khám này <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Khung 3 -->
+          <div class="bg-rose-50 hover:bg-rose-100/90 border border-rose-200 rounded-3xl p-6 sm:p-7 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl hover:shadow-rose-100 flex flex-col justify-between group">
+            <div>
+              <div class="w-16 h-16 rounded-2xl bg-white text-rose-600 flex items-center justify-center text-3xl shadow-sm mb-6 group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-shield-virus"></i>
+              </div>
+              <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-rose-700 transition-colors">
+                Tầm soát ung thư
+              </h3>
+              <ul class="text-slate-600 text-sm space-y-2.5">
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-rose-500 text-xs"></i>
+                  <span>Tầm soát ung thư cổ tử cung (Pap smear, HPV)</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-rose-500 text-xs"></i>
+                  <span>Tầm soát ung thư vú & siêu âm tuyến vú</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-rose-500 text-xs"></i>
+                  <span>Tầm soát ung thư buồng trứng sớm</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-rose-500 text-xs"></i>
+                  <span>Chẩn đoán tế bào học hiện đại</span>
+                </li>
+              </ul>
+            </div>
+            <div class="pt-6 mt-6 border-t border-rose-200/60">
+              <button type="button" onclick="selectServiceAndBook('Tầm soát ung thư')" class="text-sm font-bold text-rose-700 hover:text-rose-900 inline-flex items-center gap-1.5 group-hover:gap-2 transition-all">
+                Đặt lịch khám này <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Khung 4 -->
+          <div class="bg-rose-50 hover:bg-rose-100/90 border border-rose-200 rounded-3xl p-6 sm:p-7 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-xl hover:shadow-rose-100 flex flex-col justify-between group">
+            <div>
+              <div class="w-16 h-16 rounded-2xl bg-white text-rose-600 flex items-center justify-center text-3xl shadow-sm mb-6 group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-ring"></i>
+              </div>
+              <h3 class="text-xl font-bold text-slate-800 mb-3 group-hover:text-rose-700 transition-colors">
+                Tiền hôn nhân
+              </h3>
+              <ul class="text-slate-600 text-sm space-y-2.5">
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-rose-500 text-xs"></i>
+                  <span>Đánh giá sức khỏe sinh sản cặp đôi</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-rose-500 text-xs"></i>
+                  <span>Xét nghiệm bệnh truyền nhiễm</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-rose-500 text-xs"></i>
+                  <span>Tư vấn tiêm phòng vắc-xin trước thai kỳ</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <i class="fa-solid fa-check text-rose-500 text-xs"></i>
+                  <span>Tư vấn kế hoạch hóa và chuẩn bị mang thai</span>
+                </li>
+              </ul>
+            </div>
+            <div class="pt-6 mt-6 border-t border-rose-200/60">
+              <button type="button" onclick="selectServiceAndBook('Dịch vụ khác')" class="text-sm font-bold text-rose-700 hover:text-rose-900 inline-flex items-center gap-1.5 group-hover:gap-2 transition-all">
+                Đặt lịch khám này <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- MỤC BÁC SỸ -->
+    <section id="tab-bac-si" class="tab-content hidden py-16 bg-rose-50/50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-12">
+          
+          <h2 class="text-3xl sm:text-4xl font-serif font-bold text-slate-900 mt-2">Bác sĩ phụ trách chuyên môn</h2>
+          <div class="w-16 h-1 bg-rose-500 mx-auto rounded-full mt-3"></div>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-rose-100 max-w-5xl mx-auto">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center">
+            
+            <div class="md:col-span-5 text-center">
+              <div class="relative inline-block mx-auto">
+                <div class="w-64 h-80 sm:w-72 sm:h-96 rounded-2xl overflow-hidden shadow-2xl border-4 border-rose-200 mx-auto bg-rose-100">
+                  <img 
+                    id="doctorImage"
+                    src="bacsy.jpg" 
+                    alt="Bác sĩ Chuyên khoa Hoàng Dịu"
+                    class="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                    onerror="this.src='https://placehold.co/600x800/ffe4e6/9f1239?text=BS.+Hoang+Diu'"
+                  />
+                </div>
+                <div class="absolute -bottom-4 right-4 bg-rose-600 text-white px-4 py-2 rounded-full font-bold text-xs shadow-lg flex items-center gap-1.5">
+                  <i class="fa-solid fa-award"></i> 15+ Năm Kinh Nghiệm
+                </div>
+              </div>
+              <!--<p class="text-xs text-slate-400 mt-5 italic">
+                * Hình ảnh đại diện Bác sĩ Hoàng Dịu
+              </p>-->
+            </div>
+
+            <div class="md:col-span-7 space-y-5">
+              <div>
+                <span class="inline-block px-3 py-1 bg-rose-100 text-rose-700 text-xs font-bold rounded-lg mb-2">
+                  Bác sĩ Chuyên khoa Sản Phụ Khoa
+                </span>
+                <h3 class="text-2xl sm:text-3xl font-serif font-bold text-slate-900">
+                  BS. CKI HOÀNG DỊU
+                </h3>
+                <p class="text-rose-600 font-medium text-sm mt-1">
+                  Tận tâm - Chu đáo - Kỹ thuật cao
+                </p>
+              </div>
+
+              <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                Với nhiều năm kinh nghiệm công tác trong lĩnh vực Sản Phụ khoa và Chăm sóc sức khỏe sinh sản, Bác sĩ Hoàng Dịu luôn được nhiều sản phụ và chị em phụ nữ tin tưởng, quý mến nhờ sự nhẹ nhàng, thấu hiểu tâm lý và phác đồ điều trị chuẩn xác, an toàn.
+              </p>
+
+              <div class="space-y-3 pt-2">
+                <div class="flex items-start gap-3">
+                  <div class="w-7 h-7 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center shrink-0 mt-0.5">
+                    <i class="fa-solid fa-graduation-cap text-xs"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-slate-800 text-sm">Học vị & Đào tạo</h4>
+                    <p class="text-slate-600 text-xs sm:text-sm">Bác sĩ Chuyên khoa I Sản Phụ khoa, tốt nghiệp trường Đại học Y Thái Bình, Chuyên khoa I Đại học Y Hà Nội.</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                  <div class="w-7 h-7 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center shrink-0 mt-0.5">
+                    <i class="fa-solid fa-hospital-user text-xs"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-slate-800 text-sm">Kinh nghiệm lâm sàng</h4>
+                    <p class="text-slate-600 text-xs sm:text-sm">trực tiếp thăm khám và theo dõi cho hàng ngàn ca thai sản an toàn.</p>
+                  </div>
+                </div>
+
+                <div class="flex items-start gap-3">
+                  <div class="w-7 h-7 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center shrink-0 mt-0.5">
+                    <i class="fa-solid fa-certificate text-xs"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-slate-800 text-sm">Chứng chỉ chuyên khoa</h4>
+                    <p class="text-slate-600 text-xs sm:text-sm">Chứng chỉ Siêu âm Sản Phụ khoa cơ bản, chứng chỉ phẫu thuật nội soi trong sản phụ khoa.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-4 flex items-center gap-4">
+                <button type="button" onclick="switchTab('dat-lich')" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm px-6 py-3 rounded-full transition-all shadow-md">
+                  <i class="fa-solid fa-stethoscope"></i>
+                  <span>Đặt lịch khám với Bác sĩ Dịu</span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MỤC ĐẶT LỊCH KHÁM (LƯU VÀO GOOGLE SHEET) -->
+    <section id="tab-dat-lich" class="tab-content hidden py-16 bg-white">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-gradient-to-br from-rose-500 to-rose-600 rounded-3xl p-8 sm:p-12 shadow-2xl text-white relative overflow-hidden">
+          
+          <div class="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-white/10 pointer-events-none"></div>
+
+          <div class="text-center max-w-2xl mx-auto mb-10">
+            <span class="bg-white/20 px-3.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-rose-100">Đăng Ký Nhanh Chóng</span>
+            <h2 class="text-3xl sm:text-4xl font-serif font-bold mt-3">Đặt Lịch Khám Trực Tuyến</h2>
+            <p class="text-rose-100 text-sm sm:text-base mt-2">
+              Điền đầy đủ thông tin để nhân viên phòng khám sắp xếp lịch riêng tư và liên hệ xác nhận trong thời gian sớm nhất.
+            </p>
+          </div>
+
+          <!-- Form Đặt Lịch Khám -->
+          <form id="bookingForm" class="bg-white rounded-2xl p-6 sm:p-8 text-slate-800 shadow-xl space-y-5">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              
+              <!-- Họ và tên -->
+              <div>
+                <label for="fullName" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                  Họ và tên <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <i class="fa-regular fa-user absolute left-4 top-3.5 text-slate-400"></i>
+                  <input 
+                    type="text" 
+                    id="fullName" 
+                    name="fullName" 
+                    required 
+                    placeholder="Ví dụ: Nguyễn Thị Lan"
+                    pattern="^[A-Za-zÀ-ỹà-ỹ\s]+$"
+                    title="Vui lòng nhập họ tên bằng chữ cái"
+                    class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-sm transition-all"
+                  >
+                </div>
+              </div>
+
+              <!-- Số điện thoại -->
+              <div>
+                <label for="phoneNumber" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                  Số điện thoại <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <i class="fa-solid fa-phone absolute left-4 top-3.5 text-slate-400"></i>
+                  <input 
+                    type="tel" 
+                    id="phoneNumber" 
+                    name="phoneNumber" 
+                    required 
+                    inputmode="numeric"
+                    pattern="[0-9]{10,11}"
+                    placeholder="Ví dụ: 0964058462"
+                    title="Vui lòng nhập 10 hoặc 11 chữ số điện thoại"
+                    class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-sm transition-all"
+                  >
+                </div>
+              </div>
+
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              
+              <!-- Ngày khám -->
+              <div>
+                <label for="bookingDate" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                  Ngày khám <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <i class="fa-regular fa-calendar absolute left-4 top-3.5 text-slate-400"></i>
+                  <input 
+                    type="date" 
+                    id="bookingDate" 
+                    name="bookingDate" 
+                    required 
+                    class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-sm transition-all"
+                  >
+                </div>
+              </div>
+
+              <!-- Mục khám -->
+              <div>
+                <label for="serviceCategory" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                  Mục khám <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                  <i class="fa-solid fa-stethoscope absolute left-4 top-3.5 text-slate-400"></i>
+                  <select 
+                    id="serviceCategory" 
+                    name="serviceCategory" 
+                    required
+                    class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-sm transition-all appearance-none cursor-pointer"
+                  >
+                    <option value="" disabled selected>-- Vui lòng chọn mục khám --</option>
+                    <option value="Khám và quản lý thai kỳ">Khám và quản lý thai kỳ</option>
+                    <option value="Khám phụ khoa">Khám phụ khoa</option>
+                    <option value="Tầm soát ung thư">Tầm soát ung thư</option>
+                    <option value="Dịch vụ khác">Dịch vụ khác</option>
+                  </select>
+                  <i class="fa-solid fa-chevron-down absolute right-4 top-4 text-xs text-slate-400 pointer-events-none"></i>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Ghi chú thêm -->
+            <div>
+              <label for="notes" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                Ghi chú thêm (Triệu chứng, yêu cầu riêng)
+              </label>
+              <textarea 
+                id="notes" 
+                name="notes" 
+                rows="3" 
+                placeholder="Bạn có triệu chứng gì hoặc muốn bác sĩ chuẩn bị nội dung thăm khám nào..." 
+                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-sm transition-all"
+              ></textarea>
+            </div>
+
+            <!-- Nút gửi lịch và trạng thái kết nối Google Sheet -->
+            <div class="pt-2">
+              <button 
+                type="submit" 
+                id="submitBookingBtn"
+                class="w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg shadow-rose-200 transition-all flex items-center justify-center gap-2 text-base active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                <i id="btnIcon" class="fa-solid fa-paper-plane"></i>
+                <span id="btnText">Xác nhận gửi thông tin đặt lịch</span>
+              </button>
+              
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between mt-3 text-xs text-slate-500 gap-2 px-1">
+                <span id="sheetConnectionBadge" class="flex items-center gap-1.5 text-amber-600 font-medium">
+                  <i class="fa-solid fa-circle-dot animate-pulse"></i> Đang tải cấu hình Sheet...
+                </span>
+                <button type="button" onclick="openConfigModal()" class="text-rose-600 hover:text-rose-700 font-semibold inline-flex items-center gap-1">
+                  <i class="fa-solid fa-gear"></i> Hướng dẫn & Cài đặt Google Sheet
+                </button>
+              </div>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL THÔNG BÁO ĐẶT LỊCH THÀNH CÔNG -->
+  <div id="successModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-rose-100 transform transition-all text-center">
+      <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl mb-4 shadow-sm">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      
+      <h3 class="text-2xl font-serif font-bold text-slate-900">Đặt Lịch Khám Thành Công!</h3>
+      <p class="text-slate-600 text-sm mt-2">
+        Thông tin lịch hẹn đã được ghi nhận và lưu tự động vào Google Sheet phòng khám.
+      </p>
+
+      <div class="mt-6 bg-rose-50/70 border border-rose-200/60 rounded-2xl p-4 text-left space-y-2.5 text-sm">
+        <div class="flex justify-between border-b border-rose-100 pb-2">
+          <span class="text-slate-500 font-medium">Họ và tên:</span>
+          <span id="resName" class="font-bold text-slate-800">--</span>
+        </div>
+        <div class="flex justify-between border-b border-rose-100 pb-2">
+          <span class="text-slate-500 font-medium">Số điện thoại:</span>
+          <span id="resPhone" class="font-bold text-slate-800">--</span>
+        </div>
+        <div class="flex justify-between border-b border-rose-100 pb-2">
+          <span class="text-slate-500 font-medium">Ngày hẹn khám:</span>
+          <span id="resDate" class="font-bold text-rose-600">--</span>
+        </div>
+        <div class="flex justify-between border-b border-rose-100 pb-2">
+          <span class="text-slate-500 font-medium">Mục dịch vụ:</span>
+          <span id="resService" class="font-bold text-slate-800">--</span>
+        </div>
+        <div class="flex justify-between pt-1">
+          <span class="text-slate-500 font-medium">Trạng thái lưu:</span>
+          <span id="resSyncStatus" class="font-semibold text-emerald-700 flex items-center gap-1">
+            <i class="fa-solid fa-file-excel text-emerald-600"></i> Đã đồng bộ Google Sheet
+          </span>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <button 
+          type="button" 
+          id="closeModalBtn"
+          class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 px-6 rounded-xl transition-all shadow"
+        >
+          Hoàn tất & Đóng
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL HƯỚNG DẪN & CÀI ĐẶT LINK GOOGLE APPS SCRIPT -->
+  <div id="configModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-rose-100 transform transition-all text-left">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl">
+            <i class="fa-solid fa-file-excel"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-slate-900">Kết Nối Lưu Dữ Liệu Vào Google Sheet</h3>
+            <p class="text-xs text-slate-500">Tự động ghi lại khách đặt lịch vào Google Trang tính</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeConfigModal()" class="text-slate-400 hover:text-slate-600 text-xl p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="mt-4 space-y-4 text-xs sm:text-sm text-slate-600">
+        <div>
+          <label for="scriptUrlInput" class="block font-bold text-slate-700 mb-1.5 flex items-center justify-between">
+            <span>Link Web App Google Apps Script của bạn:</span>
+            <span id="urlStatusBadge" class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">Chưa thiết lập</span>
+          </label>
+          <input 
+            type="url" 
+            id="scriptUrlInput" 
+            placeholder="https://script.google.com/macros/s/AKfycb.../exec"
+            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 font-mono text-xs text-slate-800"
+          />
+        </div>
+
+        <div class="p-4 bg-emerald-50/70 rounded-2xl border border-emerald-200 space-y-2.5">
+          <div class="font-bold text-emerald-900 text-xs uppercase tracking-wider flex items-center gap-1.5">
+            <i class="fa-solid fa-circle-check text-emerald-600"></i> Các bước cài đặt (chỉ cần làm 1 lần duy nhất):
+          </div>
+          <ol class="list-decimal list-inside space-y-2 text-slate-700 leading-relaxed text-xs">
+            <li>Mở một file <strong>Google Trang tính (Google Sheets)</strong> mới trên Google Drive của bạn.</li>
+            <li>Trên thanh menu chọn: <strong>Tiện ích mở rộng (Extensions)</strong> &rarr; <strong>Apps Script</strong>.</li>
+            <li>Xóa hết nội dung cũ, nhấn nút <strong>"Sao chép mã Script"</strong> ở dưới rồi dán vào. Nhấn <strong>Lưu (Ctrl+S)</strong>.</li>
+            <li>Bấm nút <strong>Triển khai (Deploy)</strong> &rarr; <strong>Triển khai mới (New deployment)</strong> &rarr; Bấm biểu tượng bánh răng chọn <strong>Web App (Ứng dụng web)</strong>.</li>
+            <li>Tại mục <strong>"Ai có quyền truy cập (Who has access)"</strong>, chọn <strong>Bất kỳ ai (Anyone)</strong>. Bấm <strong>Triển khai</strong> &rarr; Sao chép đường link URL dán vào ô trên rồi bấm <strong>Lưu đường dẫn</strong> (hoặc dán trực tiếp vào dòng <code>DEFAULT_GOOGLE_SHEET_URL</code> trong file code).</li>
+          </ol>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="font-bold text-slate-700">Mã Google Apps Script (tự động kẻ cột tiêu đề):</span>
+            <button type="button" id="copyCodeBtn" onclick="copyScriptCode()" class="text-xs font-semibold px-3 py-1 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-700 inline-flex items-center gap-1.5 transition-colors">
+              <i class="fa-regular fa-copy"></i>
+              <span id="copyBtnText">Sao chép mã Script</span>
+            </button>
+          </div>
+          <textarea id="scriptSourceCode" readonly rows="8" class="w-full bg-slate-900 text-emerald-400 p-3 rounded-xl font-mono text-[11px] leading-relaxed select-all focus:outline-none">function doPost(e) {
+  var lock = LockService.getScriptLock();
+  lock.tryLock(10000);
+  try {
+    var doc = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = doc.getActiveSheet();
+    
+    // Tự động tạo dòng tiêu đề nếu trang tính đang trống
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(["Thời gian gửi", "Họ và tên", "Số điện thoại", "Ngày khám", "Mục khám", "Ghi chú"]);
+      sheet.getRange(1, 1, 1, 6).setFontWeight("bold").setBackground("#FFE4E6");
+    }
+    
+    var p = e.parameter || {};
+    if (e.postData && e.postData.contents) {
+      try {
+        var json = JSON.parse(e.postData.contents);
+        for (var k in json) { p[k] = json[k]; }
+      } catch (err) {}
+    }
+    
+    var timestamp = Utilities.formatDate(new Date(), "Asia/Ho_Chi_Minh", "HH:mm:ss dd/MM/yyyy");
+    sheet.appendRow([
+      timestamp,
+      p.fullName || "",
+      p.phoneNumber || "",
+      p.bookingDate || "",
+      p.serviceCategory || "",
+      p.notes || ""
+    ]);
+    
+    return ContentService.createTextOutput(JSON.stringify({ "status": "success" }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ "status": "error", "message": err.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  } finally {
+    lock.releaseLock();
+  }
+}</textarea>
+        </div>
+      </div>
+
+      <div class="mt-6 flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
+        <button type="button" onclick="testSheetConnection()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs sm:text-sm inline-flex items-center gap-1.5">
+          <i id="testIcon" class="fa-solid fa-flask"></i>
+          <span id="testBtnText">Gửi thử nghiệm 1 dòng vào Sheet</span>
+        </button>
+
+        <div class="flex items-center gap-2">
+          <button type="button" onclick="closeConfigModal()" class="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-xl font-medium text-xs sm:text-sm">
+            Đóng
+          </button>
+          <button type="button" onclick="saveConfigUrl()" class="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-xs sm:text-sm shadow-md shadow-rose-200">
+            Lưu đường dẫn
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER LUÔN HIỂN THỊ -->
+  <footer class="bg-slate-900 text-slate-300 pt-16 pb-12 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-12 pb-12 border-b border-slate-800">
+        
+        <!-- Cột trái footer -->
+        <div class="md:col-span-4 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-full p-0.5 bg-white shadow-md overflow-hidden shrink-0">
+              <img 
+                src="logo.jpg" 
+                alt="Logo Phòng Khám Hoàng Dịu" 
+                class="w-full h-full object-contain rounded-full"
+                onerror="this.onerror=null; this.src='https://placehold.co/200x200/ffe4e6/e11d48?text=Hoàng+Dịu';"
+              />
+            </div>
+            <div>
+              <div class="text-xs uppercase tracking-wider text-rose-400 font-semibold">Phòng Khám</div>
+              <div class="text-xl font-serif font-bold text-white tracking-wide uppercase">
+                Hoàng Dịu
+              </div>
+            </div>
+          </div>
+          
+          <p class="text-rose-200/90 text-sm italic font-medium leading-relaxed">
+            "Nơi khởi nguồn sức khỏe và hạnh phúc phái đẹp."
+          </p>
+
+          <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
+            Tận tâm chăm sóc, đồng hành cùng mẹ và bé cũng như sự an tâm, tự tin của mọi phụ nữ qua từng giai đoạn cuộc đời.
+          </p>
+
+          <div class="pt-2 flex items-center gap-3">
+            <a href="https://zalo.me/0964058462" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-sky-500 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-sm" title="Zalo tư vấn">
+              <span class="font-bold">Z</span>
+            </a>
+            <a href="tel:0964058462" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-rose-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-sm" title="Gọi Hotline">
+              <i class="fa-solid fa-phone"></i>
+            </a>
+            <a href="mailto:bacsyhoangdiu@gmail.com" class="w-9 h-9 rounded-full bg-slate-800 hover:bg-amber-600 text-slate-300 hover:text-white flex items-center justify-center transition-colors text-sm" title="Gửi thư điện tử">
+              <i class="fa-regular fa-envelope"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Cột giữa footer -->
+        <div class="md:col-span-4 space-y-4">
+          <h4 class="text-white text-base font-bold uppercase tracking-wider font-sans border-b border-slate-800 pb-2">
+            Địa chỉ liên hệ
+          </h4>
+          
+          <ul class="space-y-3.5 text-xs sm:text-sm text-slate-300">
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-location-dot text-rose-500 mt-1 shrink-0"></i>
+              <div>
+                <span class="font-medium text-white">Địa chỉ:</span> 
+                <span>Số nhà 246, thôn Đại Cường, xã Ứng Hòa, Hà Nội (gần trường cấp 3 Đại Cường)</span>
+              </div>
+            </li>
+
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-phone-volume text-rose-500 mt-1 shrink-0"></i>
+              <div>
+                <span class="font-medium text-white">Số điện thoại:</span>
+                <div class="mt-0.5 space-x-2">
+                  <a href="tel:0964058462" class="text-rose-300 hover:text-white font-semibold underline decoration-rose-500/50">0964.058.462</a>
+                  <span>-</span>
+                  <a href="tel:0396896215" class="text-rose-300 hover:text-white font-semibold underline decoration-rose-500/50">0396.896.215</a>
+                </div>
+              </div>
+            </li>
+
+            <li class="flex items-start gap-3">
+              <i class="fa-regular fa-envelope text-rose-500 mt-1 shrink-0"></i>
+              <div>
+                <span class="font-medium text-white">Email:</span>
+                <a href="mailto:bacsyhoangdiu@gmail.com" class="block text-rose-300 hover:text-white mt-0.5">
+                  bacsyhoangdiu@gmail.com
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Cột phải footer: Bản đồ -->
+        <div class="md:col-span-4 space-y-4">
+          <h4 class="text-white text-base font-bold uppercase tracking-wider font-sans border-b border-slate-800 pb-2 flex items-center justify-between">
+            <span>Bản đồ định vị</span>
+            <span class="text-xs text-rose-400 font-normal"><i class="fa-solid fa-map-pin"></i> Ứng Hòa, Hà Nội</span>
+          </h4>
+          
+          <div class="rounded-2xl overflow-hidden border border-slate-700 shadow-lg h-44 bg-slate-800">
+            <iframe 
+              title="Bản đồ chỉ đường Phòng khám Sản Phụ Khoa Hoàng Dịu"
+              src="https://maps.google.com/maps?q=Đại%20Cường,%20Ứng%20Hòa,%20Hà%20Nội&t=&z=14&ie=UTF8&iwloc=&output=embed"
+              class="w-full h-full border-0" 
+              allowfullscreen="" 
+              loading="lazy" 
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+          <p class="text-xs text-slate-400 italic">
+            * Nhấp vào bản đồ để mở chỉ đường trực tiếp bằng Google Maps trên điện thoại.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Copyright -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-3">
+        <div>
+          © 2026 Phòng khám Sản Phụ Khoa Hoàng Dịu. Tất cả quyền được bảo lưu.
+        </div>
+        <div class="flex items-center gap-4">
+          <button type="button" onclick="switchTab('trang-chu'); window.scrollTo({top: 0, behavior: 'smooth'});" class="hover:text-rose-400 transition-colors">Về đầu trang <i class="fa-solid fa-arrow-up ml-1"></i></button>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    // ==============================================================================================
+    // 🔗 1. KHU VỰC CẤU HÌNH LINK GOOGLE SHEET (DÁN LINK WEB APP CỦA BẠN VÀO GIỮA CẶP DẤU ""):
+    // ==============================================================================================
+    // Bạn chỉ cần thay link bên dưới bằng link Web App Google Apps Script của bạn:
+    const DEFAULT_GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbwSgHZ70KTkWWlDy3pOSgbMNQwJTFfolT4XYQ8G7YR0PhWsU1xfofjkCXTjuTF7cmE/exec";
+    // ==============================================================================================
+
+    const STORAGE_KEY = "hoangdiu_google_sheet_url";
+
+    // Khởi tạo URL: Ưu tiên link được dán trực tiếp trong biến code trên, nếu link mẫu thì lấy theo cấu hình người dùng lưu
+    function getActiveScriptUrl() {
+      const savedUrl = localStorage.getItem(STORAGE_KEY);
+      if (DEFAULT_GOOGLE_SHEET_URL && DEFAULT_GOOGLE_SHEET_URL.startsWith("https://script.google.com") && !DEFAULT_GOOGLE_SHEET_URL.includes("AKfycbx_DANG_KY_WEBAPP_CUA_BAN_TAI_DAY")) {
+        return DEFAULT_GOOGLE_SHEET_URL;
+      }
+      return savedUrl || DEFAULT_GOOGLE_SHEET_URL;
+    }
+
+    let GOOGLE_SCRIPT_URL = getActiveScriptUrl();
+
+    // Quản lý trạng thái hiển thị các mục (Tabs)
+    const validTabs = ['trang-chu', 'dich-vu', 'bac-si', 'lich-lam-viec', 'dat-lich'];
+
+    function switchTab(tabId) {
+      if (!validTabs.includes(tabId)) {
+        tabId = 'trang-chu';
+      }
+
+      // Ẩn tất cả các mục
+      document.querySelectorAll('.tab-content').forEach(section => {
+        section.classList.add('hidden');
+      });
+
+      // Hiện thị mục được chọn
+      const activeSection = document.getElementById(`tab-${tabId}`);
+      if (activeSection) {
+        activeSection.classList.remove('hidden');
+      }
+
+      // Cập nhật phong cách Desktop Tab
+      document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+        const btnTarget = btn.getAttribute('data-tab');
+        if (btnTarget === 'dat-lich') return;
+
+        if (btnTarget === tabId) {
+          btn.className = 'nav-tab-btn px-4 py-2 rounded-xl transition-all font-semibold text-rose-600 bg-rose-50 border border-rose-200 shadow-sm';
+        } else {
+          btn.className = 'nav-tab-btn px-4 py-2 rounded-xl transition-all font-medium text-slate-600 hover:text-rose-600 hover:bg-rose-50';
+        }
+      });
+
+      // Cập nhật menu Mobile
+      document.querySelectorAll('.nav-mobile-btn').forEach(btn => {
+        const btnTarget = btn.getAttribute('data-tab-mobile');
+        if (btnTarget === tabId) {
+          btn.className = 'nav-mobile-btn w-full text-left px-3 py-2 rounded-lg font-medium text-rose-600 bg-rose-50';
+        } else {
+          btn.className = 'nav-mobile-btn w-full text-left px-3 py-2 rounded-lg font-medium text-slate-700 hover:bg-rose-50 hover:text-rose-600';
+        }
+      });
+
+      const mobileMenu = document.getElementById('mobileMenu');
+      if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+        mobileMenu.classList.add('hidden');
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function selectServiceAndBook(serviceName) {
+      switchTab('dat-lich');
+      const selectElem = document.getElementById('serviceCategory');
+      if (selectElem) {
+        selectElem.value = serviceName;
+      }
+    }
+
+    // Toggle Mobile Menu
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (mobileMenuBtn && mobileMenu) {
+      mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    // Ngày khám tối thiểu là ngày hôm nay
+    const bookingDateInput = document.getElementById('bookingDate');
+    if (bookingDateInput) {
+      const today = new Date().toISOString().split('T')[0];
+      bookingDateInput.min = today;
+    }
+
+    function isUrlConfigured(url) {
+      return url && url.startsWith('https://script.google.com') && !url.includes("AKfycbx_DANG_KY_WEBAPP_CUA_BAN_TAI_DAY");
+    }
+
+    function updateConnectionBadge() {
+      const badge = document.getElementById('sheetConnectionBadge');
+      const modalStatus = document.getElementById('urlStatusBadge');
+      const currentUrl = getActiveScriptUrl();
+
+      if (isUrlConfigured(currentUrl)) {
+        if (badge) {
+          badge.className = "flex items-center gap-1.5 text-emerald-600 font-semibold";
+          badge.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-500"></i> Đã kết nối Google Sheet`;
+        }
+        if (modalStatus) {
+          modalStatus.className = "text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700";
+          modalStatus.textContent = "Đã kết nối link";
+        }
+      } else {
+        if (badge) {
+          badge.className = "flex items-center gap-1.5 text-amber-600 font-medium";
+          badge.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-amber-500"></i> Chưa dán link Google Sheet (nhấp cài đặt)`;
+        }
+        if (modalStatus) {
+          modalStatus.className = "text-[11px] font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700";
+          modalStatus.textContent = "Chưa kết nối link";
+        }
+      }
+    }
+
+    function openConfigModal() {
+      const input = document.getElementById('scriptUrlInput');
+      if (input) input.value = getActiveScriptUrl();
+      updateConnectionBadge();
+      const modal = document.getElementById('configModal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeConfigModal() {
+      const modal = document.getElementById('configModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function saveConfigUrl() {
+      const input = document.getElementById('scriptUrlInput');
+      if (input) {
+        const val = input.value.trim();
+        GOOGLE_SCRIPT_URL = val;
+        localStorage.setItem(STORAGE_KEY, val);
+        updateConnectionBadge();
+      }
+      closeConfigModal();
+    }
+
+    function copyScriptCode() {
+      const textarea = document.getElementById('scriptSourceCode');
+      const copyBtnText = document.getElementById('copyBtnText');
+      if (textarea) {
+        textarea.select();
+        document.execCommand('copy');
+        if (copyBtnText) {
+          const original = copyBtnText.textContent;
+          copyBtnText.textContent = "Đã sao chép!";
+          setTimeout(() => {
+            copyBtnText.textContent = original;
+          }, 2500);
+        }
+      }
+    }
+
+    async function testSheetConnection() {
+      const input = document.getElementById('scriptUrlInput');
+      const url = input ? input.value.trim() : getActiveScriptUrl();
+      const testIcon = document.getElementById('testIcon');
+      const testBtnText = document.getElementById('testBtnText');
+
+      if (!url || !url.startsWith('https://script.google.com') || url.includes("AKfycbx_DANG_KY_WEBAPP_CUA_BAN_TAI_DAY")) {
+        alert("Vui lòng dán link Web App Google Apps Script hợp lệ vào ô trước khi gửi thử.");
+        return;
+      }
+
+      if (testIcon) testIcon.className = "fa-solid fa-spinner fa-spin";
+      if (testBtnText) testBtnText.textContent = "Đang gửi thử...";
+
+      const testData = new FormData();
+      testData.append('fullName', 'Nguyễn Thị Hoa (Thử nghiệm)');
+      testData.append('phoneNumber', '0964058462');
+      testData.append('bookingDate', new Date().toISOString().split('T')[0]);
+      testData.append('serviceCategory', 'Khám phụ khoa');
+      testData.append('notes', 'Kiểm tra đường truyền lưu dữ liệu Google Sheet');
+
+      try {
+        await fetch(url, {
+          method: 'POST',
+          body: testData,
+          mode: 'no-cors'
+        });
+        if (testBtnText) testBtnText.textContent = "Đã gửi! Vui lòng mở Google Sheet kiểm tra dòng mới";
+      } catch (err) {
+        console.error(err);
+        if (testBtnText) testBtnText.textContent = "Lỗi khi gửi, kiểm tra lại link Web App";
+      } finally {
+        setTimeout(() => {
+          if (testIcon) testIcon.className = "fa-solid fa-flask";
+          if (testBtnText) testBtnText.textContent = "Gửi thử nghiệm 1 dòng vào Sheet";
+        }, 3000);
+      }
+    }
+
+    // Xử lý nộp form đặt lịch khám và đồng bộ Google Sheet
+    const bookingForm = document.getElementById('bookingForm');
+    const submitBtn = document.getElementById('submitBookingBtn');
+    const btnIcon = document.getElementById('btnIcon');
+    const btnText = document.getElementById('btnText');
+    const successModal = document.getElementById('successModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    if (bookingForm) {
+      bookingForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const fullName = document.getElementById('fullName').value.trim();
+        const phoneNumber = document.getElementById('phoneNumber').value.trim();
+        const bookingDate = document.getElementById('bookingDate').value;
+        const serviceCategory = document.getElementById('serviceCategory').value;
+        const notes = document.getElementById('notes') ? document.getElementById('notes').value.trim() : '';
+
+        // Hiển thị trạng thái đang gửi
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          if (btnIcon) btnIcon.className = "fa-solid fa-spinner fa-spin";
+          if (btnText) btnText.textContent = "Đang lưu vào Google Sheet...";
+        }
+
+        const formData = new FormData();
+        formData.append('fullName', fullName);
+        formData.append('phoneNumber', phoneNumber);
+        formData.append('bookingDate', bookingDate);
+        formData.append('serviceCategory', serviceCategory);
+        formData.append('notes', notes);
+        formData.append('submittedAt', new Date().toISOString());
+
+        const targetUrl = getActiveScriptUrl();
+
+        try {
+          if (isUrlConfigured(targetUrl)) {
+            await fetch(targetUrl, {
+              method: 'POST',
+              body: formData,
+              mode: 'no-cors'
+            });
+          }
+        } catch (error) {
+          console.warn('Lưu ý kết nối Google Sheet:', error);
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            if (btnIcon) btnIcon.className = "fa-solid fa-paper-plane";
+            if (btnText) btnText.textContent = "Xác nhận gửi thông tin đặt lịch";
+          }
+
+          let formattedDate = bookingDate;
+          if (bookingDate) {
+            const parts = bookingDate.split('-');
+            if (parts.length === 3) {
+              formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+            }
+          }
+
+          const resName = document.getElementById('resName');
+          const resPhone = document.getElementById('resPhone');
+          const resDate = document.getElementById('resDate');
+          const resService = document.getElementById('resService');
+          const resSyncStatus = document.getElementById('resSyncStatus');
+
+          if (resName) resName.textContent = fullName;
+          if (resPhone) resPhone.textContent = phoneNumber;
+          if (resDate) resDate.textContent = formattedDate;
+          if (resService) resService.textContent = serviceCategory;
+
+          if (resSyncStatus) {
+            if (isUrlConfigured(targetUrl)) {
+              resSyncStatus.innerHTML = `<i class="fa-solid fa-file-excel text-emerald-600"></i> Đã đồng bộ vào Google Sheet`;
+              resSyncStatus.className = "font-semibold text-emerald-700 flex items-center gap-1";
+            } else {
+              resSyncStatus.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-amber-500"></i> Chưa cấu hình link Google Sheet`;
+              resSyncStatus.className = "font-semibold text-amber-600 flex items-center gap-1";
+            }
+          }
+
+          if (successModal) {
+            successModal.classList.remove('hidden');
+          }
+
+          bookingForm.reset();
+        }
+      });
+    }
+
+    if (closeModalBtn) {
+      closeModalBtn.addEventListener('click', function() {
+        if (successModal) successModal.classList.add('hidden');
+      });
+    }
+
+    if (successModal) {
+      successModal.addEventListener('click', function(e) {
+        if (e.target === successModal) {
+          successModal.classList.add('hidden');
+        }
+      });
+    }
+
+    const configModal = document.getElementById('configModal');
+    if (configModal) {
+      configModal.addEventListener('click', function(e) {
+        if (e.target === configModal) {
+          closeConfigModal();
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      switchTab('trang-chu');
+      updateConnectionBadge();
+    });
+  </script>
+</body>
+</html>
