@@ -210,8 +210,6 @@
               </span>
               <h3 class="text-xl font-bold text-slate-800 font-serif mt-1">Phòng Khám Sản Phụ Khoa Hoàng Dịu</h3>
             </div>
-            
-
           </div>
 
           <div class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
@@ -234,38 +232,29 @@
                   <i class="fa-solid fa-calendar-days text-lg"></i>
                 </div>
                 <div>
-                  <span class="text-xs font-bold uppercase tracking-wider text-rose-600 block">Thứ 2 - Thứ 6 (ngày 05/10 - 09/10) </span>
- 		
+                  <span class="text-xs font-bold uppercase tracking-wider text-rose-600 block">Thứ 2 - Thứ 6</span>
                   <div class="text-slate-800 font-semibold text-sm mt-1">
-                    
                     <div>Buổi chiều: <strong class="text-rose-700">17:15 - 19:45</strong></div>
                   </div>
                 </div>
               </div>
 
-                          <div class="lg:col-span-6 space-y-4">
               <div class="p-4 bg-rose-50/80 rounded-2xl border border-rose-100 flex items-start gap-4">
-                <div class="w-10 h-10 rounded-xl bg-rose-500 text-white flex items-center justify-center shrink-0">
-                  <i class="fa-solid fa-calendar-days text-lg"></i>
+                <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-calendar-xmark text-lg"></i>
                 </div>
                 <div>
-                  <span class="text-xs font-bold uppercase tracking-wider text-rose-600 block">Thứ 7 (ngày 10/10 ): PHÒNG KHÁM NGHỈ</span>
- 		
-                  <div class="text-slate-800 font-semibold text-sm mt-1">
-                    
-                    
-                  </div>
+                  <span class="text-xs font-bold uppercase tracking-wider text-amber-700 block">Thứ 7: Nghỉ định kỳ</span>
+                  <div class="text-slate-600 text-xs mt-0.5">Phòng khám nghỉ không nhận khám trực tiếp</div>
                 </div>
               </div>
-
- 	
 
               <div class="p-4 bg-rose-50/80 rounded-2xl border border-rose-100 flex items-start gap-4">
                 <div class="w-10 h-10 rounded-xl bg-rose-500 text-white flex items-center justify-center shrink-0">
                   <i class="fa-regular fa-calendar-check text-lg"></i>
                 </div>
                 <div>
-                  <span class="text-xs font-bold uppercase tracking-wider text-rose-600 block">Chủ Nhật(11/10) </span>
+                  <span class="text-xs font-bold uppercase tracking-wider text-rose-600 block">Chủ Nhật</span>
                   <div class="text-slate-800 font-semibold text-sm mt-1">
                     <div>Buổi sáng: <strong class="text-rose-700">07:30 - 11:00</strong></div>
                     <div>Buổi chiều: <strong class="text-rose-700">14:30 - 19:00</strong></div>
@@ -277,7 +266,7 @@
                 <div class="flex items-start gap-2.5">
                   <i class="fa-solid fa-circle-info text-rose-500 mt-1"></i>
                   <p>
-                    <strong>Lưu ý:</strong> Để chủ động thời gian và không phải chờ đợi lâu, quý khách nên đăng ký trước lịch khám trực tuyến bên dưới.
+                    <strong>Lưu ý:</strong> Để chủ động thời gian và không phải chờ đợi lâu, quý khách nên đăng ký trước ngày và giờ khám trực tuyến bên dưới.
                   </p>
                 </div>
               </div>
@@ -458,7 +447,6 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div class="text-center max-w-3xl mx-auto mb-12">
-          
           <h2 class="text-3xl sm:text-4xl font-serif font-bold text-slate-900 mt-2">Bác sĩ phụ trách chuyên môn</h2>
           <div class="w-16 h-1 bg-rose-500 mx-auto rounded-full mt-3"></div>
         </div>
@@ -481,9 +469,6 @@
                   <i class="fa-solid fa-award"></i> 15+ Năm Kinh Nghiệm
                 </div>
               </div>
-              <!--<p class="text-xs text-slate-400 mt-5 italic">
-                * Hình ảnh đại diện Bác sĩ Hoàng Dịu
-              </p>-->
             </div>
 
             <div class="md:col-span-7 space-y-5">
@@ -559,7 +544,7 @@
             <span class="bg-white/20 px-3.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-rose-100">Đăng Ký Nhanh Chóng</span>
             <h2 class="text-3xl sm:text-4xl font-serif font-bold mt-3">Đặt Lịch Khám Trực Tuyến</h2>
             <p class="text-rose-100 text-sm sm:text-base mt-2">
-              Điền đầy đủ thông tin để nhân viên phòng khám sắp xếp lịch riêng tư và liên hệ xác nhận trong thời gian sớm nhất.
+              Điền ngày và khung giờ thuận tiện để bác sĩ và nhân viên phòng khám đón tiếp chu đáo nhất.
             </p>
           </div>
 
@@ -615,8 +600,9 @@
               
               <!-- Ngày khám -->
               <div>
-                <label for="bookingDate" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
-                  Ngày khám <span class="text-red-500">*</span>
+                <label for="bookingDate" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 flex items-center justify-between">
+                  <span>Ngày khám <span class="text-red-500">*</span></span>
+                  <span id="dayNameTag" class="text-[11px] font-semibold text-rose-600 bg-rose-50 px-2 py-0.5 rounded-md hidden"></span>
                 </label>
                 <div class="relative">
                   <i class="fa-regular fa-calendar absolute left-4 top-3.5 text-slate-400"></i>
@@ -625,34 +611,80 @@
                     id="bookingDate" 
                     name="bookingDate" 
                     required 
-                    class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-sm transition-all"
+                    class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-sm transition-all cursor-pointer"
                   >
                 </div>
+                <!-- Cảnh báo khi chọn Thứ 7 -->
+                <p id="saturdayAlert" class="hidden text-xs text-amber-600 mt-1.5 flex items-center gap-1 bg-amber-50 p-2 rounded-lg border border-amber-200">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  <span>Thứ 7 phòng khám nghỉ định kỳ. Bạn vẫn có thể gửi lịch hoặc ưu tiên chọn ngày khác.</span>
+                </p>
               </div>
 
-              <!-- Mục khám -->
+              <!-- KHUNG GIỜ KHÁM (NGƯỜI DÙNG TỰ ĐIỀN) -->
               <div>
-                <label for="serviceCategory" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
-                  Mục khám <span class="text-red-500">*</span>
+                <label for="bookingTime" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 flex items-center justify-between">
+                  <span>Giờ khám dự kiến <span class="text-red-500">*</span></span>
+                  <span id="timeHintTag" class="text-[11px] font-medium text-slate-400">Tự do điền giờ</span>
                 </label>
                 <div class="relative">
-                  <i class="fa-solid fa-stethoscope absolute left-4 top-3.5 text-slate-400"></i>
-                  <select 
-                    id="serviceCategory" 
-                    name="serviceCategory" 
+                  <i class="fa-regular fa-clock absolute left-4 top-3.5 text-slate-400"></i>
+                  <input 
+                    type="text" 
+                    id="bookingTime" 
+                    name="bookingTime" 
+                    list="suggestedTimes"
                     required
-                    class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-sm transition-all appearance-none cursor-pointer"
-                  >
-                    <option value="" disabled selected>-- Vui lòng chọn mục khám --</option>
-                    <option value="Khám và quản lý thai kỳ">Khám và quản lý thai kỳ</option>
-                    <option value="Khám phụ khoa">Khám phụ khoa</option>
-                    <option value="Tầm soát ung thư">Tầm soát ung thư</option>
-                    <option value="Dịch vụ khác">Dịch vụ khác</option>
-                  </select>
-                  <i class="fa-solid fa-chevron-down absolute right-4 top-4 text-xs text-slate-400 pointer-events-none"></i>
+                    placeholder="Ví dụ: 17:30 hoặc 18h15..."
+                    class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-sm transition-all"
+                  />
+                  <!-- Danh sách gợi ý giờ khám tiện ích khi người dùng gõ -->
+                  <datalist id="suggestedTimes">
+                    <option value="17:15 (Chiều tối)"></option>
+                    <option value="17:30 (Chiều tối)"></option>
+                    <option value="18:00 (Chiều tối)"></option>
+                    <option value="18:30 (Chiều tối)"></option>
+                    <option value="19:00 (Tối)"></option>
+                    <option value="19:30 (Tối)"></option>
+                    <option value="08:00 (Sáng Chủ Nhật)"></option>
+                    <option value="09:00 (Sáng Chủ Nhật)"></option>
+                    <option value="10:00 (Sáng Chủ Nhật)"></option>
+                    <option value="15:00 (Chiều Chủ Nhật)"></option>
+                    <option value="16:30 (Chiều Chủ Nhật)"></option>
+                  </datalist>
+                </div>
+                <div class="flex flex-wrap items-center gap-1.5 mt-2">
+                  <span class="text-[11px] text-slate-400">Gợi ý nhanh:</span>
+                  <button type="button" onclick="setQuickTime('17:30')" class="text-[11px] bg-rose-50 hover:bg-rose-100 text-rose-600 px-2 py-0.5 rounded-md border border-rose-100 transition-colors">17:30</button>
+                  <button type="button" onclick="setQuickTime('18:00')" class="text-[11px] bg-rose-50 hover:bg-rose-100 text-rose-600 px-2 py-0.5 rounded-md border border-rose-100 transition-colors">18:00</button>
+                  <button type="button" onclick="setQuickTime('18:45')" class="text-[11px] bg-rose-50 hover:bg-rose-100 text-rose-600 px-2 py-0.5 rounded-md border border-rose-100 transition-colors">18:45</button>
+                  <button type="button" onclick="setQuickTime('08:30 (CN)')" class="text-[11px] bg-rose-50 hover:bg-rose-100 text-rose-600 px-2 py-0.5 rounded-md border border-rose-100 transition-colors">08:30 (CN)</button>
                 </div>
               </div>
 
+            </div>
+
+            <!-- Hàng Mục khám -->
+            <div>
+              <label for="serviceCategory" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                Mục khám <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <i class="fa-solid fa-stethoscope absolute left-4 top-3.5 text-slate-400"></i>
+                <select 
+                  id="serviceCategory" 
+                  name="serviceCategory" 
+                  required
+                  class="w-full pl-11 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-sm transition-all appearance-none cursor-pointer"
+                >
+                  <option value="" disabled selected>-- Vui lòng chọn mục khám --</option>
+                  <option value="Khám và quản lý thai kỳ">Khám và quản lý thai kỳ</option>
+                  <option value="Khám phụ khoa">Khám phụ khoa</option>
+                  <option value="Tầm soát ung thư">Tầm soát ung thư</option>
+                  <option value="Dịch vụ khác">Dịch vụ khác</option>
+                </select>
+                <i class="fa-solid fa-chevron-down absolute right-4 top-4 text-xs text-slate-400 pointer-events-none"></i>
+              </div>
             </div>
 
             <!-- Ghi chú thêm -->
@@ -723,6 +755,12 @@
           <span id="resDate" class="font-bold text-rose-600">--</span>
         </div>
         <div class="flex justify-between border-b border-rose-100 pb-2">
+          <span class="text-slate-500 font-medium">Giờ khám dự kiến:</span>
+          <span id="resTime" class="font-bold text-rose-600 flex items-center gap-1.5">
+            <i class="fa-regular fa-clock text-xs"></i> <span>--</span>
+          </span>
+        </div>
+        <div class="flex justify-between border-b border-rose-100 pb-2">
           <span class="text-slate-500 font-medium">Mục dịch vụ:</span>
           <span id="resService" class="font-bold text-slate-800">--</span>
         </div>
@@ -756,7 +794,7 @@
           </div>
           <div>
             <h3 class="text-lg font-bold text-slate-900">Kết Nối Lưu Dữ Liệu Vào Google Sheet</h3>
-            <p class="text-xs text-slate-500">Tự động ghi lại khách đặt lịch vào Google Trang tính</p>
+            <p class="text-xs text-slate-500">Tự động ghi lại khách đặt lịch và giờ khám vào Google Trang tính</p>
           </div>
         </div>
         <button type="button" onclick="closeConfigModal()" class="text-slate-400 hover:text-slate-600 text-xl p-1">
@@ -780,38 +818,36 @@
 
         <div class="p-4 bg-emerald-50/70 rounded-2xl border border-emerald-200 space-y-2.5">
           <div class="font-bold text-emerald-900 text-xs uppercase tracking-wider flex items-center gap-1.5">
-            <i class="fa-solid fa-circle-check text-emerald-600"></i> Các bước cài đặt (chỉ cần làm 1 lần duy nhất):
+            <i class="fa-solid fa-circle-check text-emerald-600"></i> Hướng dẫn cập nhật để Google Sheet tự có cột "Giờ khám":
           </div>
           <ol class="list-decimal list-inside space-y-2 text-slate-700 leading-relaxed text-xs">
-            <li>Mở một file <strong>Google Trang tính (Google Sheets)</strong> mới trên Google Drive của bạn.</li>
-            <li>Trên thanh menu chọn: <strong>Tiện ích mở rộng (Extensions)</strong> &rarr; <strong>Apps Script</strong>.</li>
-            <li>Xóa hết nội dung cũ, nhấn nút <strong>"Sao chép mã Script"</strong> ở dưới rồi dán vào. Nhấn <strong>Lưu (Ctrl+S)</strong>.</li>
-            <li>Bấm nút <strong>Triển khai (Deploy)</strong> &rarr; <strong>Triển khai mới (New deployment)</strong> &rarr; Bấm biểu tượng bánh răng chọn <strong>Web App (Ứng dụng web)</strong>.</li>
-            <li>Tại mục <strong>"Ai có quyền truy cập (Who has access)"</strong>, chọn <strong>Bất kỳ ai (Anyone)</strong>. Bấm <strong>Triển khai</strong> &rarr; Sao chép đường link URL dán vào ô trên rồi bấm <strong>Lưu đường dẫn</strong> (hoặc dán trực tiếp vào dòng <code>DEFAULT_GOOGLE_SHEET_URL</code> trong file code).</li>
+            <li>Mở file <strong>Google Trang tính (Google Sheets)</strong> của bạn trên Google Drive.</li>
+            <li>Chọn menu: <strong>Tiện ích mở rộng (Extensions)</strong> &rarr; <strong>Apps Script</strong>.</li>
+            <li>Xóa toàn bộ mã cũ trong Apps Script, nhấn nút <strong>"Sao chép mã Script"</strong> ở dưới rồi dán vào. Nhấn <strong>Lưu (Ctrl + S)</strong>.</li>
+            <li>Bấm <strong>Triển khai (Deploy)</strong> &rarr; <strong>Quản lý bản triển khai (Manage deployments)</strong> &rarr; Bấm vào <strong>biểu tượng cây bút (Chỉnh sửa)</strong>.</li>
+            <li>Tại mục <strong>Phiên bản (Version)</strong>, chọn <strong>"Phiên bản mới" (New version)</strong> &rarr; Bấm <strong>Triển khai (Deploy)</strong>.</li>
           </ol>
+          <div class="mt-2 text-[11px] text-emerald-800 bg-emerald-100/80 p-2 rounded-lg">
+            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> <strong>Tính năng tự động:</strong> Mã Script mới bên dưới sẽ <strong>tự động phát hiện và tự chèn cột "Giờ khám"</strong> ngay cạnh cột "Ngày khám" trên Google Sheet của bạn mà không làm xáo trộn dữ liệu cũ!
+          </div>
         </div>
 
         <div>
           <div class="flex items-center justify-between mb-1.5">
-            <span class="font-bold text-slate-700">Mã Google Apps Script (tự động kẻ cột tiêu đề):</span>
+            <span class="font-bold text-slate-700">Mã Google Apps Script (Tự động thêm & căn chỉnh cột Giờ khám):</span>
             <button type="button" id="copyCodeBtn" onclick="copyScriptCode()" class="text-xs font-semibold px-3 py-1 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-700 inline-flex items-center gap-1.5 transition-colors">
               <i class="fa-regular fa-copy"></i>
               <span id="copyBtnText">Sao chép mã Script</span>
             </button>
           </div>
-          <textarea id="scriptSourceCode" readonly rows="8" class="w-full bg-slate-900 text-emerald-400 p-3 rounded-xl font-mono text-[11px] leading-relaxed select-all focus:outline-none">function doPost(e) {
+          <textarea id="scriptSourceCode" readonly rows="10" class="w-full bg-slate-900 text-emerald-400 p-3 rounded-xl font-mono text-[11px] leading-relaxed select-all focus:outline-none">function doPost(e) {
   var lock = LockService.getScriptLock();
   lock.tryLock(10000);
   try {
     var doc = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = doc.getActiveSheet();
     
-    // Tự động tạo dòng tiêu đề nếu trang tính đang trống
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow(["Thời gian gửi", "Họ và tên", "Số điện thoại", "Ngày khám", "Mục khám", "Ghi chú"]);
-      sheet.getRange(1, 1, 1, 6).setFontWeight("bold").setBackground("#FFE4E6");
-    }
-    
+    // Nhận dữ liệu gửi từ website
     var p = e.parameter || {};
     if (e.postData && e.postData.contents) {
       try {
@@ -820,15 +856,48 @@
       } catch (err) {}
     }
     
+    var expectedHeaders = ["Thời gian gửi", "Họ và tên", "Số điện thoại", "Ngày khám", "Giờ khám", "Mục khám", "Ghi chú"];
+    
+    // 1. Nếu trang tính hoàn toàn mới (chưa có dòng nào): Tạo đủ 7 cột tiêu đề
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow(expectedHeaders);
+      sheet.getRange(1, 1, 1, expectedHeaders.length).setFontWeight("bold").setBackground("#FFE4E6");
+    } else {
+      // 2. Nếu trang tính đã có sẵn: Tự động kiểm tra xem đã có cột "Giờ khám" chưa
+      var headers = sheet.getRange(1, 1, 1, Math.max(sheet.getLastColumn(), 1)).getValues()[0];
+      var hasTimeCol = headers.indexOf("Giờ khám") !== -1;
+      
+      if (!hasTimeCol) {
+        var dateColIndex = headers.indexOf("Ngày khám");
+        if (dateColIndex !== -1) {
+          // Tự động chèn thêm 1 cột "Giờ khám" ngay sau cột "Ngày khám"
+          sheet.insertColumnAfter(dateColIndex + 1);
+          sheet.getRange(1, dateColIndex + 2).setValue("Giờ khám").setFontWeight("bold").setBackground("#FFE4E6");
+        } else {
+          // Nếu không thấy cột Ngày khám, chèn vào cuối tiêu đề
+          sheet.getRange(1, headers.length + 1).setValue("Giờ khám").setFontWeight("bold").setBackground("#FFE4E6");
+        }
+      }
+    }
+    
+    // Đọc danh sách tiêu đề mới nhất để đưa đúng dữ liệu vào từng cột
+    var currentHeaders = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
     var timestamp = Utilities.formatDate(new Date(), "Asia/Ho_Chi_Minh", "HH:mm:ss dd/MM/yyyy");
-    sheet.appendRow([
-      timestamp,
-      p.fullName || "",
-      p.phoneNumber || "",
-      p.bookingDate || "",
-      p.serviceCategory || "",
-      p.notes || ""
-    ]);
+    
+    var rowData = [];
+    for (var i = 0; i < currentHeaders.length; i++) {
+      var col = currentHeaders[i].toString().trim();
+      if (col === "Thời gian gửi") rowData.push(timestamp);
+      else if (col === "Họ và tên") rowData.push(p.fullName || "");
+      else if (col === "Số điện thoại") rowData.push("'" + (p.phoneNumber || "")); // Dấu nháy đơn ' giữ nguyên số 0 ở đầu
+      else if (col === "Ngày khám") rowData.push(p.bookingDate || "");
+      else if (col === "Giờ khám") rowData.push(p.bookingTime || "");
+      else if (col === "Mục khám") rowData.push(p.serviceCategory || "");
+      else if (col === "Ghi chú") rowData.push(p.notes || "");
+      else rowData.push("");
+    }
+    
+    sheet.appendRow(rowData);
     
     return ContentService.createTextOutput(JSON.stringify({ "status": "success" }))
       .setMimeType(ContentService.MimeType.JSON);
@@ -982,17 +1051,14 @@
     </div>
   </footer>
 
+  <!-- JAVASCRIPT LOGIC -->
   <script>
     // ==============================================================================================
-    // 🔗 1. KHU VỰC CẤU HÌNH LINK GOOGLE SHEET (DÁN LINK WEB APP CỦA BẠN VÀO GIỮA CẶP DẤU ""):
+    // 🔗 CẤU HÌNH LINK GOOGLE SHEET (WEB APP URL):
     // ==============================================================================================
-    // Bạn chỉ cần thay link bên dưới bằng link Web App Google Apps Script của bạn:
-    const DEFAULT_GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbwSgHZ70KTkWWlDy3pOSgbMNQwJTFfolT4XYQ8G7YR0PhWsU1xfofjkCXTjuTF7cmE/exec";
-    // ==============================================================================================
-
+    const DEFAULT_GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbwcKwbi1la-0FA1EwHpDou2MlmYWoHtRdSY9BcA_rAtm-FQSIQs5Dg1lTPXef5XSjw/exec";
     const STORAGE_KEY = "hoangdiu_google_sheet_url";
 
-    // Khởi tạo URL: Ưu tiên link được dán trực tiếp trong biến code trên, nếu link mẫu thì lấy theo cấu hình người dùng lưu
     function getActiveScriptUrl() {
       const savedUrl = localStorage.getItem(STORAGE_KEY);
       if (DEFAULT_GOOGLE_SHEET_URL && DEFAULT_GOOGLE_SHEET_URL.startsWith("https://script.google.com") && !DEFAULT_GOOGLE_SHEET_URL.includes("AKfycbx_DANG_KY_WEBAPP_CUA_BAN_TAI_DAY")) {
@@ -1003,7 +1069,7 @@
 
     let GOOGLE_SCRIPT_URL = getActiveScriptUrl();
 
-    // Quản lý trạng thái hiển thị các mục (Tabs)
+    // Quản lý Tabs
     const validTabs = ['trang-chu', 'dich-vu', 'bac-si', 'lich-lam-viec', 'dat-lich'];
 
     function switchTab(tabId) {
@@ -1011,18 +1077,15 @@
         tabId = 'trang-chu';
       }
 
-      // Ẩn tất cả các mục
       document.querySelectorAll('.tab-content').forEach(section => {
         section.classList.add('hidden');
       });
 
-      // Hiện thị mục được chọn
       const activeSection = document.getElementById(`tab-${tabId}`);
       if (activeSection) {
         activeSection.classList.remove('hidden');
       }
 
-      // Cập nhật phong cách Desktop Tab
       document.querySelectorAll('.nav-tab-btn').forEach(btn => {
         const btnTarget = btn.getAttribute('data-tab');
         if (btnTarget === 'dat-lich') return;
@@ -1034,7 +1097,6 @@
         }
       });
 
-      // Cập nhật menu Mobile
       document.querySelectorAll('.nav-mobile-btn').forEach(btn => {
         const btnTarget = btn.getAttribute('data-tab-mobile');
         if (btnTarget === tabId) {
@@ -1060,6 +1122,14 @@
       }
     }
 
+    function setQuickTime(val) {
+      const timeInput = document.getElementById('bookingTime');
+      if (timeInput) {
+        timeInput.value = val;
+        timeInput.focus();
+      }
+    }
+
     // Toggle Mobile Menu
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -1069,11 +1139,49 @@
       });
     }
 
-    // Ngày khám tối thiểu là ngày hôm nay
+    // Khởi tạo ngày tối thiểu là ngày hôm nay & Tự động thích ứng khung giờ theo ngày đã chọn
     const bookingDateInput = document.getElementById('bookingDate');
+    const bookingTimeInput = document.getElementById('bookingTime');
+    const saturdayAlert = document.getElementById('saturdayAlert');
+    const dayNameTag = document.getElementById('dayNameTag');
+    const timeHintTag = document.getElementById('timeHintTag');
+
+    const dayNames = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+
     if (bookingDateInput) {
       const today = new Date().toISOString().split('T')[0];
       bookingDateInput.min = today;
+
+      bookingDateInput.addEventListener('change', function() {
+        const selectedVal = this.value;
+        if (!selectedVal) {
+          if (dayNameTag) dayNameTag.classList.add('hidden');
+          if (saturdayAlert) saturdayAlert.classList.add('hidden');
+          return;
+        }
+
+        const dateObj = new Date(selectedVal + 'T00:00:00');
+        const dayOfWeek = dateObj.getDay(); // 0: Chủ Nhật, 6: Thứ Bảy
+
+        // Hiển thị thứ trong tuần
+        if (dayNameTag) {
+          dayNameTag.textContent = dayNames[dayOfWeek];
+          dayNameTag.classList.remove('hidden');
+        }
+
+        // Kiểm tra Thứ 7 nghỉ
+        if (dayOfWeek === 6) {
+          if (saturdayAlert) saturdayAlert.classList.remove('hidden');
+          if (timeHintTag) timeHintTag.textContent = 'Phòng khám nghỉ Thứ 7';
+        } else {
+          if (saturdayAlert) saturdayAlert.classList.add('hidden');
+          if (dayOfWeek === 0) {
+            if (timeHintTag) timeHintTag.textContent = 'Sáng (07:30-11:00) & Chiều (14:30-19:00)';
+          } else {
+            if (timeHintTag) timeHintTag.textContent = 'Chiều tối: 17:15 - 19:45';
+          }
+        }
+      });
     }
 
     function isUrlConfigured(url) {
@@ -1164,8 +1272,9 @@
       testData.append('fullName', 'Nguyễn Thị Hoa (Thử nghiệm)');
       testData.append('phoneNumber', '0964058462');
       testData.append('bookingDate', new Date().toISOString().split('T')[0]);
+      testData.append('bookingTime', '17:15 - 18:00');
       testData.append('serviceCategory', 'Khám phụ khoa');
-      testData.append('notes', 'Kiểm tra đường truyền lưu dữ liệu Google Sheet');
+      testData.append('notes', 'Kiểm tra đường truyền lưu dữ liệu Google Sheet kèm giờ khám');
 
       try {
         await fetch(url, {
@@ -1200,6 +1309,7 @@
         const fullName = document.getElementById('fullName').value.trim();
         const phoneNumber = document.getElementById('phoneNumber').value.trim();
         const bookingDate = document.getElementById('bookingDate').value;
+        const bookingTime = document.getElementById('bookingTime').value.trim();
         const serviceCategory = document.getElementById('serviceCategory').value;
         const notes = document.getElementById('notes') ? document.getElementById('notes').value.trim() : '';
 
@@ -1214,6 +1324,7 @@
         formData.append('fullName', fullName);
         formData.append('phoneNumber', phoneNumber);
         formData.append('bookingDate', bookingDate);
+        formData.append('bookingTime', bookingTime);
         formData.append('serviceCategory', serviceCategory);
         formData.append('notes', notes);
         formData.append('submittedAt', new Date().toISOString());
@@ -1248,12 +1359,14 @@
           const resName = document.getElementById('resName');
           const resPhone = document.getElementById('resPhone');
           const resDate = document.getElementById('resDate');
+          const resTime = document.getElementById('resTime');
           const resService = document.getElementById('resService');
           const resSyncStatus = document.getElementById('resSyncStatus');
 
           if (resName) resName.textContent = fullName;
           if (resPhone) resPhone.textContent = phoneNumber;
           if (resDate) resDate.textContent = formattedDate;
+          if (resTime) resTime.innerHTML = `<i class="fa-regular fa-clock text-xs"></i> <span>${bookingTime || '--'}</span>`;
           if (resService) resService.textContent = serviceCategory;
 
           if (resSyncStatus) {
@@ -1271,6 +1384,9 @@
           }
 
           bookingForm.reset();
+          if (dayNameTag) dayNameTag.classList.add('hidden');
+          if (saturdayAlert) saturdayAlert.classList.add('hidden');
+          if (timeHintTag) timeHintTag.textContent = 'Tự do điền giờ';
         }
       });
     }
