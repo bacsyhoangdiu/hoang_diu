@@ -37,9 +37,9 @@
     }
   </script>
   <style>
-    /* Thanh cuộn tinh chỉnh cho giao diện */
     ::-webkit-scrollbar {
       width: 8px;
+      height: 8px;
     }
     ::-webkit-scrollbar-track {
       background: #FFF1F2;
@@ -53,6 +53,13 @@
     }
     .gradient-hero {
       background: linear-gradient(135deg, #FFF5F7 0%, #FFFFFF 50%, #FEE2E2 100%);
+    }
+    @keyframes highlightRow {
+      0% { background-color: #FEE2E2; }
+      100% { background-color: transparent; }
+    }
+    .row-highlight {
+      animation: highlightRow 3s ease-out;
     }
   </style>
 </head>
@@ -82,7 +89,7 @@
         </a>
 
         <!-- Menu ở giữa -->
-        <nav class="hidden md:flex items-center space-x-1 lg:space-x-8 font-medium text-slate-700">
+        <nav class="hidden md:flex items-center space-x-1 lg:space-x-6 font-medium text-slate-700">
           <button type="button" onclick="switchTab('trang-chu')" data-tab="trang-chu" class="nav-tab-btn px-4 py-2 rounded-xl transition-all font-semibold text-rose-600 bg-rose-50 border border-rose-200 shadow-sm">
             Trang chủ
           </button>
@@ -94,6 +101,14 @@
           </button>
           <button type="button" onclick="switchTab('lich-lam-viec')" data-tab="lich-lam-viec" class="nav-tab-btn px-4 py-2 rounded-xl transition-all text-slate-600 hover:text-rose-600 hover:bg-rose-50">
             Lịch làm việc
+          </button>
+          <button type="button" onclick="switchTab('dat-lich'); scrollToAppointmentTable();" class="nav-tab-btn px-3.5 py-2 rounded-xl transition-all text-slate-600 hover:text-rose-600 hover:bg-rose-50 inline-flex items-center gap-1.5 text-sm">
+            <i class="fa-solid fa-list-check text-rose-500"></i>
+            <span>Xem lịch đã đặt</span>
+          </button>
+          <button type="button" onclick="switchTab('dat-lich'); scrollToAppointmentTable(); handleAdminButtonClick();" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-500 hover:text-rose-600 hover:bg-rose-50 border border-dashed border-slate-300 transition-colors inline-flex items-center gap-1" title="Khu vực quản lý dành cho phòng khám">
+            <i class="fa-solid fa-shield-halved text-rose-500"></i>
+            <span>Quản trị</span>
           </button>
         </nav>
 
@@ -112,19 +127,23 @@
       </div>
     </div>
 
-    <!-- Menu thả xuống di động -->
+    <!-- Menu di động -->
     <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-rose-100 px-4 pt-3 pb-5 space-y-2">
       <button type="button" onclick="switchTab('trang-chu')" data-tab-mobile="trang-chu" class="nav-mobile-btn w-full text-left px-3 py-2 rounded-lg font-medium text-rose-600 bg-rose-50">Trang chủ</button>
       <button type="button" onclick="switchTab('dich-vu')" data-tab-mobile="dich-vu" class="nav-mobile-btn w-full text-left px-3 py-2 rounded-lg font-medium text-slate-700 hover:bg-rose-50 hover:text-rose-600">Dịch vụ</button>
       <button type="button" onclick="switchTab('bac-si')" data-tab-mobile="bac-si" class="nav-mobile-btn w-full text-left px-3 py-2 rounded-lg font-medium text-slate-700 hover:bg-rose-50 hover:text-rose-600">Bác sỹ</button>
       <button type="button" onclick="switchTab('lich-lam-viec')" data-tab-mobile="lich-lam-viec" class="nav-mobile-btn w-full text-left px-3 py-2 rounded-lg font-medium text-slate-700 hover:bg-rose-50 hover:text-rose-600">Lịch làm việc</button>
+      <button type="button" onclick="switchTab('dat-lich'); scrollToAppointmentTable();" class="nav-mobile-btn w-full text-left px-3 py-2 rounded-lg font-medium text-rose-600 bg-rose-50 flex items-center justify-between">
+        <span>📋 Danh sách lịch đã đặt</span>
+        <span id="mobileBadgeCount" class="text-xs bg-rose-600 text-white px-2 py-0.5 rounded-full font-bold">--</span>
+      </button>
       <button type="button" onclick="switchTab('dat-lich')" data-tab-mobile="dat-lich" class="w-full block text-center mt-3 bg-rose-500 text-white font-semibold py-2.5 rounded-full shadow">
         Đặt lịch khám ngay
       </button>
     </div>
   </header>
 
-  <!-- KHU VỰC CÁC MỤC (CHỈ HIỂN THỊ MỤC ĐƯỢC CHỌN) -->
+  <!-- KHU VỰC CÁC MỤC CHÍNH -->
   <main id="mainTabContainer" class="min-h-[70vh]">
     <!-- MỤC TRANG CHỦ -->
     <section id="tab-trang-chu" class="tab-content relative gradient-hero pt-14 pb-20 overflow-hidden">
@@ -148,10 +167,15 @@
           <div class="flex flex-wrap items-center justify-center gap-4 mb-8">
             <button type="button" onclick="switchTab('dat-lich')" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-rose-600 hover:bg-rose-700 text-white font-bold px-8 py-3.5 rounded-full shadow-lg shadow-rose-300 hover:shadow-rose-400 hover:-translate-y-0.5 transition-all text-base">
               <i class="fa-regular fa-calendar-check text-lg"></i>
-              <span>Đặt lịch khám</span>
+              <span>Đặt lịch khám ngay</span>
             </button>
 
-            <a href="https://zalo.me/0964058462" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-sky-500 hover:bg-sky-600 text-white font-bold px-8 py-3.5 rounded-full shadow-lg shadow-sky-200 hover:shadow-sky-300 hover:-translate-y-0.5 transition-all text-base">
+            <button type="button" onclick="switchTab('dat-lich'); scrollToAppointmentTable();" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white hover:bg-rose-50 text-rose-600 font-bold px-7 py-3.5 rounded-full shadow-md border border-rose-200 hover:-translate-y-0.5 transition-all text-base">
+              <i class="fa-solid fa-table-list"></i>
+              <span>Xem danh sách đã đặt</span>
+            </button>
+
+            <a href="https://zalo.me/0964058462" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-sky-500 hover:bg-sky-600 text-white font-bold px-7 py-3.5 rounded-full shadow-lg shadow-sky-200 hover:shadow-sky-300 hover:-translate-y-0.5 transition-all text-base">
               <span class="w-6 h-6 rounded-full bg-white text-sky-500 flex items-center justify-center font-black text-xs">Z</span>
               <span>Nhận tư vấn Zalo</span>
             </a>
@@ -505,7 +529,7 @@
                   </div>
                   <div>
                     <h4 class="font-bold text-slate-800 text-sm">Kinh nghiệm lâm sàng</h4>
-                    <p class="text-slate-600 text-xs sm:text-sm">trực tiếp thăm khám và theo dõi cho hàng ngàn ca thai sản an toàn.</p>
+                    <p class="text-slate-600 text-xs sm:text-sm">Trực tiếp thăm khám và theo dõi cho hàng ngàn ca thai sản an toàn.</p>
                   </div>
                 </div>
 
@@ -533,19 +557,28 @@
       </div>
     </section>
 
-    <!-- MỤC ĐẶT LỊCH KHÁM (LƯU VÀO GOOGLE SHEET) -->
+    <!-- MỤC ĐẶT LỊCH KHÁM & DANH SÁCH LỊCH ĐÃ ĐẶT -->
     <section id="tab-dat-lich" class="tab-content hidden py-16 bg-white">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-gradient-to-br from-rose-500 to-rose-600 rounded-3xl p-8 sm:p-12 shadow-2xl text-white relative overflow-hidden">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        
+        <!-- Form Đặt Lịch -->
+        <div class="bg-gradient-to-br from-rose-500 to-rose-600 rounded-3xl p-6 sm:p-10 shadow-2xl text-white relative overflow-hidden">
           
           <div class="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-white/10 pointer-events-none"></div>
 
-          <div class="text-center max-w-2xl mx-auto mb-10">
-            <span class="bg-white/20 px-3.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-rose-100">Đăng Ký Nhanh Chóng</span>
-            <h2 class="text-3xl sm:text-4xl font-serif font-bold mt-3">Đặt Lịch Khám Trực Tuyến</h2>
-            <p class="text-rose-100 text-sm sm:text-base mt-2">
-              Điền ngày và khung giờ thuận tiện để bác sĩ và nhân viên phòng khám đón tiếp chu đáo nhất.
-            </p>
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
+            <div>
+              <span class="bg-white/20 px-3.5 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-rose-100">Đăng Ký Nhanh Chóng</span>
+              <h2 class="text-2xl sm:text-4xl font-serif font-bold mt-2">Đặt Lịch Khám Trực Tuyến</h2>
+              <p class="text-rose-100 text-sm mt-1">
+                Điền ngày và khung giờ thuận tiện để bác sĩ và nhân viên phòng khám đón tiếp chu đáo nhất.
+              </p>
+            </div>
+            
+            <button type="button" onclick="scrollToAppointmentTable()" class="shrink-0 bg-white/95 hover:bg-white text-rose-600 font-bold px-4 py-2.5 rounded-xl shadow text-xs sm:text-sm flex items-center gap-2 transition-all">
+              <i class="fa-solid fa-list-check"></i>
+              <span>Xem danh sách đã đặt bên dưới</span>
+            </button>
           </div>
 
           <!-- Form Đặt Lịch Khám -->
@@ -621,7 +654,7 @@
                 </p>
               </div>
 
-              <!-- KHUNG GIỜ KHÁM (NGƯỜI DÙNG TỰ ĐIỀN) -->
+              <!-- Giờ khám -->
               <div>
                 <label for="bookingTime" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2 flex items-center justify-between">
                   <span>Giờ khám dự kiến <span class="text-red-500">*</span></span>
@@ -638,7 +671,7 @@
                     placeholder="Ví dụ: 17:30 hoặc 18h15..."
                     class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-sm transition-all"
                   />
-                  <!-- Danh sách gợi ý giờ khám tiện ích khi người dùng gõ -->
+                  <!-- Danh sách gợi ý giờ khám -->
                   <datalist id="suggestedTimes">
                     <option value="17:15 (Chiều tối)"></option>
                     <option value="17:30 (Chiều tối)"></option>
@@ -664,7 +697,7 @@
 
             </div>
 
-            <!-- Hàng Mục khám -->
+            <!-- Mục khám -->
             <div>
               <label for="serviceCategory" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
                 Mục khám <span class="text-red-500">*</span>
@@ -695,13 +728,13 @@
               <textarea 
                 id="notes" 
                 name="notes" 
-                rows="3" 
+                rows="2" 
                 placeholder="Bạn có triệu chứng gì hoặc muốn bác sĩ chuẩn bị nội dung thăm khám nào..." 
-                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-sm transition-all"
+                class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 text-sm transition-all"
               ></textarea>
             </div>
 
-            <!-- Nút gửi lịch và trạng thái kết nối Google Sheet -->
+            <!-- Nút gửi lịch -->
             <div class="pt-2">
               <button 
                 type="submit" 
@@ -725,6 +758,183 @@
           </form>
 
         </div>
+
+        <!-- BẢNG DANH SÁCH KHÁCH HÀNG ĐÃ ĐẶT LỊCH -->
+        <div id="appointmentListContainer" class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-rose-100">
+          
+          <!-- Tiêu đề & Thông báo bảo mật -->
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-100">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="p-2 rounded-xl bg-rose-100 text-rose-600">
+                  <i class="fa-solid fa-table-list text-lg"></i>
+                </span>
+                <div>
+                  <h3 class="text-xl sm:text-2xl font-bold font-serif text-slate-900">
+                    Danh Sách Khách Hàng Đã Đặt Lịch
+                  </h3>
+                  <p class="text-xs text-slate-500 mt-0.5">
+                    Quý khách có thể xem trước danh sách bên dưới để chọn giờ khám thông thoáng nhất.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Huy hiệu bảo mật thông tin & Nút Quản trị viên -->
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <i class="fa-solid fa-shield-halved text-emerald-600"></i>
+                <span>Bảo mật SĐT (096***)</span>
+              </span>
+              <button 
+                type="button" 
+                onclick="refreshAppointmentList(true)" 
+                id="refreshListBtn"
+                class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+                title="Tải lại danh sách"
+              >
+                <i id="refreshIcon" class="fa-solid fa-rotate-right"></i>
+                <span>Làm mới</span>
+              </button>
+
+              <!-- Nút Quản trị viên bật tắt chế độ xóa -->
+              <button 
+                type="button" 
+                id="adminToggleBtn" 
+                onclick="handleAdminButtonClick()"
+                class="inline-flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white shadow-md shadow-rose-200 transition-all cursor-pointer"
+                title="Bật tính năng xóa & quản lý lịch hẹn"
+              >
+                <i class="fa-solid fa-user-shield"></i>
+                <span id="adminToggleText">Quản Trị & Xóa Lịch</span>
+              </button>
+
+              <!-- Các thao tác khi đã đăng nhập Admin -->
+              <div id="adminActiveBadge" class="hidden items-center gap-2">
+                <button 
+                  type="button" 
+                  onclick="promptClearCompleted()" 
+                  class="inline-flex items-center gap-1 text-xs font-bold px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white transition-all shadow-sm"
+                  title="Chỉ xóa các ca đã hoàn tất khám"
+                >
+                  <i class="fa-solid fa-check-double text-xs"></i>
+                  <span>Xóa ca đã khám</span>
+                </button>
+                <button 
+                  type="button" 
+                  onclick="promptClearAll()" 
+                  class="inline-flex items-center gap-1 text-xs font-bold px-3 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white transition-all shadow-sm"
+                  title="Xóa toàn bộ danh sách hiện tại"
+                >
+                  <i class="fa-solid fa-trash-can text-xs"></i>
+                  <span>Xóa tất cả</span>
+                </button>
+                <button 
+                  type="button" 
+                  onclick="adminLogout()" 
+                  class="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 transition-all"
+                  title="Thoát chế độ quản trị"
+                >
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                  <span>Thoát</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Thanh Bộ Lọc & Tìm Kiếm -->
+          <div class="mt-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-200/70">
+            <!-- Nút chọn bộ lọc nhanh theo ngày -->
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-wider mr-1">Lọc ngày:</span>
+              <button type="button" onclick="filterAppointments('all')" id="filterBtn-all" class="filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-600 text-white shadow-sm transition-all">
+                Tất cả
+              </button>
+              <button type="button" onclick="filterAppointments('today')" id="filterBtn-today" class="filter-btn px-3 py-1.5 rounded-xl text-xs font-medium bg-white text-slate-700 hover:bg-rose-50 hover:text-rose-600 border border-slate-200 transition-all">
+                Hôm nay
+              </button>
+              <button type="button" onclick="filterAppointments('tomorrow')" id="filterBtn-tomorrow" class="filter-btn px-3 py-1.5 rounded-xl text-xs font-medium bg-white text-slate-700 hover:bg-rose-50 hover:text-rose-600 border border-slate-200 transition-all">
+                Ngày mai
+              </button>
+              <button type="button" onclick="filterAppointments('upcoming')" id="filterBtn-upcoming" class="filter-btn px-3 py-1.5 rounded-xl text-xs font-medium bg-white text-slate-700 hover:bg-rose-50 hover:text-rose-600 border border-slate-200 transition-all">
+                Sắp tới
+              </button>
+            </div>
+
+            <!-- Tìm kiếm theo tên / Chọn ngày chỉ định -->
+            <div class="flex flex-col sm:flex-row items-center gap-2.5">
+              <div class="relative w-full sm:w-auto">
+                <i class="fa-regular fa-calendar absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                <input 
+                  type="date" 
+                  id="customFilterDate" 
+                  onchange="filterByCustomDate(this.value)"
+                  class="w-full sm:w-44 pl-8 pr-3 py-1.5 text-xs bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500 text-slate-700" 
+                  title="Chọn ngày cụ thể"
+                />
+              </div>
+
+              <div class="relative w-full sm:w-auto">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+                <input 
+                  type="text" 
+                  id="searchAppointmentInput" 
+                  oninput="handleSearchAppointments(this.value)"
+                  placeholder="Tìm tên hoặc dịch vụ..." 
+                  class="w-full sm:w-52 pl-8 pr-3 py-1.5 text-xs bg-white border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-rose-500 text-slate-700"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Thống kê số lượng -->
+          <div class="mt-4 flex items-center justify-between text-xs text-slate-500 px-1">
+            <div>
+              Hiển thị: <strong id="visibleCount" class="text-rose-600 font-bold">0</strong> lượt đặt lịch
+              <span id="activeFilterDesc" class="italic text-slate-400 ml-1">(Tất cả các ngày)</span>
+            </div>
+            <div class="text-[11px] text-slate-400">
+              * Dữ liệu tự động đồng bộ khi có lịch hẹn mới
+            </div>
+          </div>
+
+          <!-- Bảng Dữ Liệu -->
+          <div class="mt-3 overflow-x-auto rounded-2xl border border-slate-200 shadow-sm">
+            <table class="w-full text-left text-sm border-collapse min-w-[700px]">
+              <thead class="bg-rose-50/70 text-slate-700 uppercase text-[11px] font-bold tracking-wider border-b border-rose-200/60">
+                <tr>
+                  <th scope="col" class="py-3.5 px-4 text-center w-12">STT</th>
+                  <th scope="col" class="py-3.5 px-4">Họ và tên khách</th>
+                  <th scope="col" class="py-3.5 px-4">Số điện thoại</th>
+                  <th scope="col" class="py-3.5 px-4">Ngày khám</th>
+                  <th scope="col" class="py-3.5 px-4">Khung giờ hẹn</th>
+                  <th scope="col" class="py-3.5 px-4">Mục khám</th>
+                  <th scope="col" class="py-3.5 px-4 text-center">Trạng thái</th>
+                  <th id="adminHeaderCol" scope="col" class="py-3.5 px-4 text-center hidden text-rose-700 font-bold bg-rose-100/50">Thao tác Xóa</th>
+                </tr>
+              </thead>
+              <tbody id="appointmentTableBody" class="divide-y divide-slate-100 bg-white text-slate-700">
+                <!-- Nội dung các dòng lịch khám sẽ do JavaScript render -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Trạng thái trống (Không có lịch phù hợp) -->
+          <div id="emptyTableState" class="hidden text-center py-12 px-4">
+            <div class="w-16 h-16 rounded-full bg-rose-50 text-rose-400 flex items-center justify-center mx-auto text-2xl mb-3">
+              <i class="fa-regular fa-calendar-xmark"></i>
+            </div>
+            <h4 class="font-bold text-slate-800 text-base">Chưa có lịch khám nào trong danh sách</h4>
+            <p class="text-slate-500 text-xs mt-1 max-w-sm mx-auto">
+              Danh sách hiện đang trống. Quý khách vui lòng điền thông tin vào form phía trên để đặt lịch khám!
+            </p>
+            <button type="button" onclick="filterAppointments('all')" class="mt-4 px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl text-xs font-semibold">
+              Xem toàn bộ danh sách
+            </button>
+          </div>
+
+        </div>
+
       </div>
     </section>
   </main>
@@ -738,7 +948,7 @@
       
       <h3 class="text-2xl font-serif font-bold text-slate-900">Đặt Lịch Khám Thành Công!</h3>
       <p class="text-slate-600 text-sm mt-2">
-        Thông tin lịch hẹn đã được ghi nhận và lưu tự động vào Google Sheet phòng khám.
+        Thông tin của bạn đã được ghi nhận và cập nhật trực tiếp vào danh sách hẹn khám!
       </p>
 
       <div class="mt-6 bg-rose-50/70 border border-rose-200/60 rounded-2xl p-4 text-left space-y-2.5 text-sm">
@@ -765,20 +975,27 @@
           <span id="resService" class="font-bold text-slate-800">--</span>
         </div>
         <div class="flex justify-between pt-1">
-          <span class="text-slate-500 font-medium">Trạng thái lưu:</span>
+          <span class="text-slate-500 font-medium">Trạng thái đồng bộ:</span>
           <span id="resSyncStatus" class="font-semibold text-emerald-700 flex items-center gap-1">
-            <i class="fa-solid fa-file-excel text-emerald-600"></i> Đã đồng bộ Google Sheet
+            <i class="fa-solid fa-file-excel text-emerald-600"></i> Đã lưu vào hệ thống
           </span>
         </div>
       </div>
 
-      <div class="mt-6">
+      <div class="mt-6 flex flex-col sm:flex-row gap-3">
+        <button 
+          type="button" 
+          onclick="closeModalAndShowTable()"
+          class="flex-1 bg-rose-600 hover:bg-rose-700 text-white font-bold py-3 px-6 rounded-xl transition-all shadow"
+        >
+          Xem vị trí trên bảng lịch
+        </button>
         <button 
           type="button" 
           id="closeModalBtn"
-          class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 px-6 rounded-xl transition-all shadow"
+          class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 px-5 rounded-xl transition-all"
         >
-          Hoàn tất & Đóng
+          Đóng
         </button>
       </div>
     </div>
@@ -793,15 +1010,15 @@
             <i class="fa-solid fa-file-excel"></i>
           </div>
           <div>
-            <h3 class="text-lg font-bold text-slate-900">Kết Nối Lưu Dữ Liệu Vào Google Sheet</h3>
-            <p class="text-xs text-slate-500">Tự động ghi lại khách đặt lịch và giờ khám vào Google Trang tính</p>
+            <h3 class="text-lg font-bold text-slate-900">Kết Nối & Cài Đặt Google Sheet</h3>
+            <p class="text-xs text-slate-500">Tự động ghi nhận lịch hẹn và đồng bộ hiển thị lên bảng</p>
           </div>
         </div>
         <button type="button" onclick="closeConfigModal()" class="text-slate-400 hover:text-slate-600 text-xl p-1">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
-
+      
       <div class="mt-4 space-y-4 text-xs sm:text-sm text-slate-600">
         <div>
           <label for="scriptUrlInput" class="block font-bold text-slate-700 mb-1.5 flex items-center justify-between">
@@ -815,116 +1032,117 @@
             class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 font-mono text-xs text-slate-800"
           />
         </div>
-
-        <div class="p-4 bg-emerald-50/70 rounded-2xl border border-emerald-200 space-y-2.5">
-          <div class="font-bold text-emerald-900 text-xs uppercase tracking-wider flex items-center gap-1.5">
-            <i class="fa-solid fa-circle-check text-emerald-600"></i> Hướng dẫn cập nhật để Google Sheet tự có cột "Giờ khám":
-          </div>
-          <ol class="list-decimal list-inside space-y-2 text-slate-700 leading-relaxed text-xs">
-            <li>Mở file <strong>Google Trang tính (Google Sheets)</strong> của bạn trên Google Drive.</li>
-            <li>Chọn menu: <strong>Tiện ích mở rộng (Extensions)</strong> &rarr; <strong>Apps Script</strong>.</li>
-            <li>Xóa toàn bộ mã cũ trong Apps Script, nhấn nút <strong>"Sao chép mã Script"</strong> ở dưới rồi dán vào. Nhấn <strong>Lưu (Ctrl + S)</strong>.</li>
-            <li>Bấm <strong>Triển khai (Deploy)</strong> &rarr; <strong>Quản lý bản triển khai (Manage deployments)</strong> &rarr; Bấm vào <strong>biểu tượng cây bút (Chỉnh sửa)</strong>.</li>
-            <li>Tại mục <strong>Phiên bản (Version)</strong>, chọn <strong>"Phiên bản mới" (New version)</strong> &rarr; Bấm <strong>Triển khai (Deploy)</strong>.</li>
-          </ol>
-          <div class="mt-2 text-[11px] text-emerald-800 bg-emerald-100/80 p-2 rounded-lg">
-            <i class="fa-solid fa-wand-magic-sparkles mr-1"></i> <strong>Tính năng tự động:</strong> Mã Script mới bên dưới sẽ <strong>tự động phát hiện và tự chèn cột "Giờ khám"</strong> ngay cạnh cột "Ngày khám" trên Google Sheet của bạn mà không làm xáo trộn dữ liệu cũ!
-          </div>
-        </div>
-
-        <div>
-          <div class="flex items-center justify-between mb-1.5">
-            <span class="font-bold text-slate-700">Mã Google Apps Script (Tự động thêm & căn chỉnh cột Giờ khám):</span>
-            <button type="button" id="copyCodeBtn" onclick="copyScriptCode()" class="text-xs font-semibold px-3 py-1 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-700 inline-flex items-center gap-1.5 transition-colors">
-              <i class="fa-regular fa-copy"></i>
-              <span id="copyBtnText">Sao chép mã Script</span>
-            </button>
-          </div>
-          <textarea id="scriptSourceCode" readonly rows="10" class="w-full bg-slate-900 text-emerald-400 p-3 rounded-xl font-mono text-[11px] leading-relaxed select-all focus:outline-none">function doPost(e) {
-  var lock = LockService.getScriptLock();
-  lock.tryLock(10000);
-  try {
-    var doc = SpreadsheetApp.getActiveSpreadsheet();
-    var sheet = doc.getActiveSheet();
-    
-    // Nhận dữ liệu gửi từ website
-    var p = e.parameter || {};
-    if (e.postData && e.postData.contents) {
-      try {
-        var json = JSON.parse(e.postData.contents);
-        for (var k in json) { p[k] = json[k]; }
-      } catch (err) {}
-    }
-    
-    var expectedHeaders = ["Thời gian gửi", "Họ và tên", "Số điện thoại", "Ngày khám", "Giờ khám", "Mục khám", "Ghi chú"];
-    
-    // 1. Nếu trang tính hoàn toàn mới (chưa có dòng nào): Tạo đủ 7 cột tiêu đề
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow(expectedHeaders);
-      sheet.getRange(1, 1, 1, expectedHeaders.length).setFontWeight("bold").setBackground("#FFE4E6");
-    } else {
-      // 2. Nếu trang tính đã có sẵn: Tự động kiểm tra xem đã có cột "Giờ khám" chưa
-      var headers = sheet.getRange(1, 1, 1, Math.max(sheet.getLastColumn(), 1)).getValues()[0];
-      var hasTimeCol = headers.indexOf("Giờ khám") !== -1;
-      
-      if (!hasTimeCol) {
-        var dateColIndex = headers.indexOf("Ngày khám");
-        if (dateColIndex !== -1) {
-          // Tự động chèn thêm 1 cột "Giờ khám" ngay sau cột "Ngày khám"
-          sheet.insertColumnAfter(dateColIndex + 1);
-          sheet.getRange(1, dateColIndex + 2).setValue("Giờ khám").setFontWeight("bold").setBackground("#FFE4E6");
-        } else {
-          // Nếu không thấy cột Ngày khám, chèn vào cuối tiêu đề
-          sheet.getRange(1, headers.length + 1).setValue("Giờ khám").setFontWeight("bold").setBackground("#FFE4E6");
-        }
-      }
-    }
-    
-    // Đọc danh sách tiêu đề mới nhất để đưa đúng dữ liệu vào từng cột
-    var currentHeaders = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
-    var timestamp = Utilities.formatDate(new Date(), "Asia/Ho_Chi_Minh", "HH:mm:ss dd/MM/yyyy");
-    
-    var rowData = [];
-    for (var i = 0; i < currentHeaders.length; i++) {
-      var col = currentHeaders[i].toString().trim();
-      if (col === "Thời gian gửi") rowData.push(timestamp);
-      else if (col === "Họ và tên") rowData.push(p.fullName || "");
-      else if (col === "Số điện thoại") rowData.push("'" + (p.phoneNumber || "")); // Dấu nháy đơn ' giữ nguyên số 0 ở đầu
-      else if (col === "Ngày khám") rowData.push(p.bookingDate || "");
-      else if (col === "Giờ khám") rowData.push(p.bookingTime || "");
-      else if (col === "Mục khám") rowData.push(p.serviceCategory || "");
-      else if (col === "Ghi chú") rowData.push(p.notes || "");
-      else rowData.push("");
-    }
-    
-    sheet.appendRow(rowData);
-    
-    return ContentService.createTextOutput(JSON.stringify({ "status": "success" }))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (err) {
-    return ContentService.createTextOutput(JSON.stringify({ "status": "error", "message": err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
-  } finally {
-    lock.releaseLock();
-  }
-}</textarea>
-        </div>
       </div>
 
       <div class="mt-6 flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
-        <button type="button" onclick="testSheetConnection()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs sm:text-sm inline-flex items-center gap-1.5">
+        <button type="button" onclick="testSheetConnection()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs inline-flex items-center gap-1.5">
           <i id="testIcon" class="fa-solid fa-flask"></i>
           <span id="testBtnText">Gửi thử nghiệm 1 dòng vào Sheet</span>
         </button>
 
         <div class="flex items-center gap-2">
-          <button type="button" onclick="closeConfigModal()" class="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-xl font-medium text-xs sm:text-sm">
+          <button type="button" onclick="closeConfigModal()" class="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-xl font-medium text-xs">
             Đóng
           </button>
-          <button type="button" onclick="saveConfigUrl()" class="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-xs sm:text-sm shadow-md shadow-rose-200">
+          <button type="button" onclick="saveConfigUrl()" class="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl text-xs shadow-md shadow-rose-200">
             Lưu đường dẫn
           </button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL ĐĂNG NHẬP QUẢN TRỊ VIÊN -->
+  <div id="adminLoginModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-rose-100 transform transition-all text-center">
+      <div class="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto text-3xl mb-4 shadow-sm">
+        <i class="fa-solid fa-user-shield"></i>
+      </div>
+      <h3 class="text-2xl font-serif font-bold text-slate-900">Xác Thực Quản Trị Viên</h3>
+      <p class="text-slate-600 text-xs sm:text-sm mt-1.5">
+        Nhập mật khẩu bảo mật để bật quyền xóa và quản lý danh sách bệnh nhân đã đặt khám.
+      </p>
+
+      <form onsubmit="handleAdminLoginSubmit(event)" class="mt-6 space-y-4 text-left">
+        <div>
+          <label for="adminPasswordInput" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+            Mật khẩu quản trị
+          </label>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="adminPasswordInput" 
+              placeholder="Nhập mật khẩu" 
+              required
+              class="w-full pl-4 pr-11 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm font-medium"
+            />
+            <button 
+              type="button" 
+              onclick="togglePasswordVisibility()" 
+              class="absolute right-3.5 top-3.5 text-slate-400 hover:text-slate-600"
+              title="Hiện/Ẩn mật khẩu"
+            >
+              <i id="toggleEyeIcon" class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+          <p id="adminLoginError" class="hidden text-xs text-red-600 mt-2 flex items-center gap-1 font-semibold bg-red-50 p-2 rounded-lg border border-red-200">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <span>Mật khẩu không chính xác! Vui lòng thử lại.</span>
+          </p>
+          <div class="mt-2.5 flex items-center justify-between text-[11px] text-slate-500 bg-slate-50 p-2.5 rounded-xl border border-slate-200/80">
+            
+            <button type="button" onclick="fillDefaultPassword()" class="text-rose-600 font-bold hover:underline">
+            
+          </div>
+        </div>
+
+        <div class="flex gap-2.5 pt-2">
+          <button 
+            type="button" 
+            onclick="closeAdminLoginModal()" 
+            class="flex-1 py-3 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm transition-all"
+          >
+            Đóng
+          </button>
+          <button 
+            type="submit" 
+            class="flex-1 py-3 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm shadow-md shadow-rose-200 transition-all flex items-center justify-center gap-2"
+          >
+            <i class="fa-solid fa-unlock-keyhole"></i>
+            <span>Mở quyền xóa</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL XÁC NHẬN XÓA LỊCH HẸN -->
+  <div id="deleteConfirmModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-red-100 transform transition-all text-center">
+      <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto text-3xl mb-4 shadow-sm">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      </div>
+      <h3 id="deleteModalTitle" class="text-xl font-bold font-serif text-slate-900">Xác Nhận Xóa Lịch Đặt</h3>
+      <p id="deleteModalDesc" class="text-slate-600 text-sm mt-2 leading-relaxed">
+        Bạn có chắc muốn thực hiện thao tác xóa này không? Hành động này không thể hoàn tác.
+      </p>
+
+      <div class="mt-6 flex gap-3">
+        <button 
+          type="button" 
+          onclick="closeDeleteConfirmModal()" 
+          class="flex-1 py-3 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm transition-all"
+        >
+          Hủy bỏ
+        </button>
+        <button 
+          type="button" 
+          onclick="executeDelete()" 
+          class="flex-1 py-3 px-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-md shadow-red-200 transition-all flex items-center justify-center gap-1.5"
+        >
+          <i class="fa-solid fa-trash-can text-xs"></i>
+          <span>Đồng ý xóa</span>
+        </button>
       </div>
     </div>
   </div>
@@ -1051,13 +1269,20 @@
     </div>
   </footer>
 
-  <!-- JAVASCRIPT LOGIC -->
   <script>
     // ==============================================================================================
-    // 🔗 CẤU HÌNH LINK GOOGLE SHEET (WEB APP URL):
+    // CẤU HÌNH LINK GOOGLE SHEET & LƯU TRỮ LỊCH HẸN
     // ==============================================================================================
     const DEFAULT_GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbwcKwbi1la-0FA1EwHpDou2MlmYWoHtRdSY9BcA_rAtm-FQSIQs5Dg1lTPXef5XSjw/exec";
     const STORAGE_KEY = "hoangdiu_google_sheet_url";
+    const APPOINTMENTS_STORAGE_KEY = "hoangdiu_appointments_data";
+    const ADMIN_PASSWORD_KEY = "hoangdiu_admin_pin";
+    const ADMIN_SESSION_KEY = "hoangdiu_admin_session";
+    const DEFAULT_ADMIN_PIN = "123456";
+
+    // Trạng thái Quản trị viên (lưu vào localStorage để duy trì tiện lợi)
+    let isAdmin = localStorage.getItem(ADMIN_SESSION_KEY) === "true";
+    let pendingDeleteTarget = null; // id hoặc 'ALL' hoặc 'COMPLETED'
 
     function getActiveScriptUrl() {
       const savedUrl = localStorage.getItem(STORAGE_KEY);
@@ -1069,7 +1294,503 @@
 
     let GOOGLE_SCRIPT_URL = getActiveScriptUrl();
 
-    // Quản lý Tabs
+    // Hàm tiện ích lấy định dạng ngày YYYY-MM-DD
+    function getTodayString(offsetDays = 0) {
+      const d = new Date();
+      d.setDate(d.getDate() + offsetDays);
+      return d.toISOString().split('T')[0];
+    }
+
+    // Lấy dữ liệu danh sách lịch thực tế từ LocalStorage
+    function getStoredAppointments() {
+      const stored = localStorage.getItem(APPOINTMENTS_STORAGE_KEY);
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed)) {
+            // Tự động lọc sạch các ID mẫu cũ nếu còn lưu trong trình duyệt
+            const cleanList = parsed.filter(item => !['AP-101', 'AP-102', 'AP-103', 'AP-104', 'AP-105'].includes(item.id));
+            localStorage.setItem(APPOINTMENTS_STORAGE_KEY, JSON.stringify(cleanList));
+            return cleanList;
+          }
+        } catch (e) {
+          console.error("Lỗi đọc dữ liệu hẹn:", e);
+        }
+      }
+      localStorage.setItem(APPOINTMENTS_STORAGE_KEY, JSON.stringify([]));
+      return [];
+    }
+
+    let appointmentList = getStoredAppointments();
+    let currentFilter = 'all';
+    let searchQuery = '';
+    let customDateFilter = '';
+
+    // Hàm che số điện thoại để bảo mật danh tính khách hàng
+    function maskPhoneNumber(phone) {
+      if (!phone) return '09********';
+      const cleanPhone = phone.replace(/[^0-9]/g, '');
+      if (cleanPhone.length >= 10) {
+        return cleanPhone.slice(0, 4) + '***' + cleanPhone.slice(-3);
+      }
+      return cleanPhone.slice(0, 3) + '***';
+    }
+
+    // Định dạng hiển thị ngày từ YYYY-MM-DD sang DD/MM/YYYY
+    function formatDateDisplay(dateStr) {
+      if (!dateStr) return '--';
+      if (dateStr.includes('/')) return dateStr;
+      const parts = dateStr.split('-');
+      if (parts.length === 3) {
+        return `${parts[2]}/${parts[1]}/${parts[0]}`;
+      }
+      return dateStr;
+    }
+
+    // Màu sắc huy hiệu cho từng dịch vụ
+    function getServiceBadge(service) {
+      if (service.includes('thai kỳ')) {
+        return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200"><i class="fa-solid fa-baby text-[10px]"></i> ${service}</span>`;
+      } else if (service.includes('phụ khoa')) {
+        return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-pink-50 text-pink-700 border border-pink-200"><i class="fa-solid fa-venus text-[10px]"></i> ${service}</span>`;
+      } else if (service.includes('ung thư')) {
+        return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-200"><i class="fa-solid fa-shield-virus text-[10px]"></i> ${service}</span>`;
+      }
+      return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200"><i class="fa-solid fa-notes-medical text-[10px]"></i> ${service}</span>`;
+    }
+
+    // Chuyển đổi trạng thái giữa: "Đang chờ khám" và "Đã khám"
+    function updateAppointmentStatus(id, newStatus) {
+      const item = appointmentList.find(x => x.id === id);
+      if (item) {
+        item.status = newStatus;
+        localStorage.setItem(APPOINTMENTS_STORAGE_KEY, JSON.stringify(appointmentList));
+        renderAppointmentTable();
+      }
+    }
+
+    // Hiển thị dropdown cho trạng thái
+    function renderStatusControl(id, currentStatus, isNew = false) {
+      const isExamined = currentStatus === 'Đã khám';
+      const selectClass = isExamined 
+        ? 'bg-emerald-50 text-emerald-800 border-emerald-300 focus:ring-emerald-400' 
+        : 'bg-amber-50 text-amber-800 border-amber-300 focus:ring-amber-400';
+      const icon = isExamined ? 'fa-circle-check text-emerald-600' : 'fa-clock-rotate-left text-amber-500';
+
+      return `
+        <div class="relative inline-flex items-center">
+          <i class="fa-solid ${icon} absolute left-2.5 text-xs pointer-events-none"></i>
+          <select 
+            onchange="updateAppointmentStatus('${id}', this.value)"
+            class="pl-7 pr-7 py-1 rounded-full text-xs font-bold border transition-all cursor-pointer outline-none appearance-none shadow-sm ${selectClass}"
+            title="Nhấp để thay đổi trạng thái"
+          >
+            <option value="Đang chờ khám" ${!isExamined ? 'selected' : ''}>⏳ Đang chờ khám</option>
+            <option value="Đã khám" ${isExamined ? 'selected' : ''}>✅ Đã khám</option>
+          </select>
+          <i class="fa-solid fa-chevron-down absolute right-2 text-[10px] opacity-60 pointer-events-none"></i>
+        </div>
+      `;
+    }
+
+    // Hàm render bảng danh sách ra giao diện
+    function renderAppointmentTable(newlyAddedId = null) {
+      const tbody = document.getElementById('appointmentTableBody');
+      const emptyState = document.getElementById('emptyTableState');
+      const visibleCountElem = document.getElementById('visibleCount');
+      const mobileBadge = document.getElementById('mobileBadgeCount');
+      const adminColHeader = document.getElementById('adminHeaderCol');
+
+      if (!tbody) return;
+
+      // Cập nhật hiển thị cột Thao tác Admin trên tiêu đề
+      if (adminColHeader) {
+        if (isAdmin) {
+          adminColHeader.classList.remove('hidden');
+        } else {
+          adminColHeader.classList.add('hidden');
+        }
+      }
+
+      const todayStr = getTodayString(0);
+      const tomorrowStr = getTodayString(1);
+
+      // Lọc danh sách theo tiêu chí
+      let filtered = appointmentList.filter(item => {
+        let matchDate = true;
+        if (customDateFilter) {
+          matchDate = item.bookingDate === customDateFilter;
+        } else if (currentFilter === 'today') {
+          matchDate = item.bookingDate === todayStr;
+        } else if (currentFilter === 'tomorrow') {
+          matchDate = item.bookingDate === tomorrowStr;
+        } else if (currentFilter === 'upcoming') {
+          matchDate = item.bookingDate >= todayStr;
+        }
+
+        let matchSearch = true;
+        if (searchQuery.trim() !== '') {
+          const q = searchQuery.toLowerCase();
+          const name = (item.fullName || '').toLowerCase();
+          const service = (item.serviceCategory || '').toLowerCase();
+          const phone = (item.phoneNumber || '').toLowerCase();
+          const status = (item.status || '').toLowerCase();
+          matchSearch = name.includes(q) || service.includes(q) || phone.includes(q) || status.includes(q);
+        }
+
+        return matchDate && matchSearch;
+      });
+
+      filtered.sort((a, b) => {
+        if (a.bookingDate !== b.bookingDate) {
+          return a.bookingDate.localeCompare(b.bookingDate);
+        }
+        return (a.bookingTime || '').localeCompare(b.bookingTime || '');
+      });
+
+      if (visibleCountElem) {
+        visibleCountElem.textContent = filtered.length;
+      }
+      if (mobileBadge) {
+        mobileBadge.textContent = appointmentList.length;
+      }
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        if (emptyState) emptyState.classList.remove('hidden');
+        return;
+      }
+
+      if (emptyState) emptyState.classList.add('hidden');
+
+      let html = '';
+      filtered.forEach((item, index) => {
+        const isNew = item.id === newlyAddedId;
+        const rowClass = isNew ? 'row-highlight bg-rose-50/70 font-medium' : 'hover:bg-rose-50/30 transition-colors';
+
+        // Nút xóa riêng từng lịch khi đã bật quyền Quản trị
+        const adminDeleteCell = isAdmin ? `
+          <td class="py-3.5 px-4 text-center bg-rose-50/40">
+            <button 
+              type="button" 
+              onclick="promptDeleteAppointment('${item.id}', '${item.fullName ? item.fullName.replace(/'/g, "\\'") : 'Khách'}')"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-600 text-red-600 hover:text-white border border-red-200 transition-all font-semibold text-xs shadow-sm" 
+              title="Xóa lịch hẹn của ${item.fullName || 'khách'}"
+            >
+              <i class="fa-regular fa-trash-can"></i>
+              <span>Xóa</span>
+            </button>
+          </td>
+        ` : '';
+
+        html += `
+          <tr class="${rowClass}">
+            <td class="py-3.5 px-4 text-center font-bold text-slate-500">${index + 1}</td>
+            <td class="py-3.5 px-4 font-semibold text-slate-900">
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-xs uppercase shrink-0">
+                  ${(item.fullName || 'K').charAt(0)}
+                </div>
+                <span>${item.fullName || 'Khách hàng'}</span>
+              </div>
+            </td>
+            <td class="py-3.5 px-4 text-slate-600 font-mono text-xs">
+              <span class="inline-flex items-center gap-1 bg-slate-100 px-2 py-1 rounded-md text-slate-700">
+                <i class="fa-solid fa-phone text-[10px] text-slate-400"></i>
+                ${maskPhoneNumber(item.phoneNumber)}
+              </span>
+            </td>
+            <td class="py-3.5 px-4 font-bold text-rose-600 whitespace-nowrap">
+              <i class="fa-regular fa-calendar text-xs mr-1 text-rose-400"></i>
+              ${formatDateDisplay(item.bookingDate)}
+            </td>
+            <td class="py-3.5 px-4 font-medium text-slate-800 whitespace-nowrap">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200/70 font-semibold text-xs">
+                <i class="fa-regular fa-clock text-amber-600"></i>
+                ${item.bookingTime || '--'}
+              </span>
+            </td>
+            <td class="py-3.5 px-4">
+              ${getServiceBadge(item.serviceCategory || 'Khám tổng quát')}
+            </td>
+            <td class="py-3.5 px-4 text-center">
+              ${renderStatusControl(item.id, item.status || 'Đang chờ khám', isNew)}
+            </td>
+            ${adminDeleteCell}
+          </tr>
+        `;
+      });
+
+      tbody.innerHTML = html;
+    }
+
+    // ==============================================================================================
+    // LOGIC QUẢN TRỊ VIÊN & XÓA LỊCH ĐÃ ĐẶT
+    // ==============================================================================================
+    function updateAdminUI() {
+      const toggleBtn = document.getElementById('adminToggleBtn');
+      const toggleText = document.getElementById('adminToggleText');
+      const activeBadge = document.getElementById('adminActiveBadge');
+
+      if (isAdmin) {
+        if (toggleBtn) {
+          toggleBtn.className = "inline-flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-xl bg-emerald-600 text-white shadow-sm transition-all";
+          if (toggleText) toggleText.textContent = "🟢 Đang Quản Trị";
+        }
+        if (activeBadge) {
+          activeBadge.classList.remove('hidden');
+          activeBadge.classList.add('inline-flex');
+        }
+      } else {
+        if (toggleBtn) {
+          toggleBtn.className = "inline-flex items-center gap-1.5 text-xs font-bold px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white shadow-md shadow-rose-200 transition-all cursor-pointer";
+          if (toggleText) toggleText.textContent = "Quản Trị & Xóa Lịch";
+        }
+        if (activeBadge) {
+          activeBadge.classList.add('hidden');
+          activeBadge.classList.remove('inline-flex');
+        }
+      }
+
+      renderAppointmentTable();
+    }
+
+    function handleAdminButtonClick() {
+      if (isAdmin) {
+        adminLogout();
+      } else {
+        openAdminLoginModal();
+      }
+    }
+
+    function openAdminLoginModal() {
+      const modal = document.getElementById('adminLoginModal');
+      const errorMsg = document.getElementById('adminLoginError');
+      const input = document.getElementById('adminPasswordInput');
+      if (errorMsg) errorMsg.classList.add('hidden');
+      if (input) {
+        input.value = '';
+        setTimeout(() => input.focus(), 150);
+      }
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeAdminLoginModal() {
+      const modal = document.getElementById('adminLoginModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function fillDefaultPassword() {
+      const input = document.getElementById('adminPasswordInput');
+      if (input) {
+        input.value = DEFAULT_ADMIN_PIN;
+        input.focus();
+      }
+    }
+
+    function togglePasswordVisibility() {
+      const input = document.getElementById('adminPasswordInput');
+      const icon = document.getElementById('toggleEyeIcon');
+      if (input && icon) {
+        if (input.type === 'password') {
+          input.type = 'text';
+          icon.className = 'fa-regular fa-eye-slash';
+        } else {
+          input.type = 'password';
+          icon.className = 'fa-regular fa-eye';
+        }
+      }
+    }
+
+    function handleAdminLoginSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('adminPasswordInput');
+      const errorMsg = document.getElementById('adminLoginError');
+      const enteredPass = input ? input.value.trim() : '';
+      const savedPass = localStorage.getItem(ADMIN_PASSWORD_KEY) || DEFAULT_ADMIN_PIN;
+
+      if (enteredPass === savedPass) {
+        isAdmin = true;
+        localStorage.setItem(ADMIN_SESSION_KEY, "true");
+        closeAdminLoginModal();
+        updateAdminUI();
+      } else {
+        if (errorMsg) errorMsg.classList.remove('hidden');
+        if (input) {
+          input.value = '';
+          input.focus();
+        }
+      }
+    }
+
+    function adminLogout() {
+      isAdmin = false;
+      localStorage.removeItem(ADMIN_SESSION_KEY);
+      updateAdminUI();
+    }
+
+    function promptDeleteAppointment(id, clientName) {
+      pendingDeleteTarget = id;
+      const title = document.getElementById('deleteModalTitle');
+      const desc = document.getElementById('deleteModalDesc');
+      if (title) title.textContent = "Xóa lịch của bệnh nhân?";
+      if (desc) desc.innerHTML = `Bạn có chắc muốn xóa lịch hẹn của <strong>${clientName}</strong>? Lịch khám này sẽ bị xóa vĩnh viễn khỏi danh sách.`;
+
+      const modal = document.getElementById('deleteConfirmModal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function promptClearAll() {
+      if (appointmentList.length === 0) return;
+      pendingDeleteTarget = 'ALL';
+      const title = document.getElementById('deleteModalTitle');
+      const desc = document.getElementById('deleteModalDesc');
+      if (title) title.textContent = "Xóa toàn bộ danh sách?";
+      if (desc) desc.innerHTML = `Thao tác này sẽ xóa sạch <strong>tất cả ${appointmentList.length} lịch khám</strong> hiện có. Bạn có chắc chắn muốn xóa không?`;
+
+      const modal = document.getElementById('deleteConfirmModal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function promptClearCompleted() {
+      const completedCount = appointmentList.filter(x => x.status === 'Đã khám').length;
+      if (completedCount === 0) {
+        alert("Hiện không có lịch khám nào ở trạng thái 'Đã khám'.");
+        return;
+      }
+      pendingDeleteTarget = 'COMPLETED';
+      const title = document.getElementById('deleteModalTitle');
+      const desc = document.getElementById('deleteModalDesc');
+      if (title) title.textContent = "Dọn dẹp ca đã khám?";
+      if (desc) desc.innerHTML = `Thao tác này sẽ xóa <strong>${completedCount} lịch đã hoàn thành khám</strong>, giữ lại các ca đang chờ khám.`;
+
+      const modal = document.getElementById('deleteConfirmModal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeDeleteConfirmModal() {
+      pendingDeleteTarget = null;
+      const modal = document.getElementById('deleteConfirmModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function executeDelete() {
+      if (pendingDeleteTarget === 'ALL') {
+        appointmentList = [];
+      } else if (pendingDeleteTarget === 'COMPLETED') {
+        appointmentList = appointmentList.filter(item => item.status !== 'Đã khám');
+      } else if (pendingDeleteTarget) {
+        appointmentList = appointmentList.filter(item => item.id !== pendingDeleteTarget);
+      }
+
+      localStorage.setItem(APPOINTMENTS_STORAGE_KEY, JSON.stringify(appointmentList));
+      closeDeleteConfirmModal();
+      renderAppointmentTable();
+    }
+
+    function filterAppointments(type) {
+      currentFilter = type;
+      customDateFilter = '';
+      const customInput = document.getElementById('customFilterDate');
+      if (customInput) customInput.value = '';
+
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.className = 'filter-btn px-3 py-1.5 rounded-xl text-xs font-medium bg-white text-slate-700 hover:bg-rose-50 hover:text-rose-600 border border-slate-200 transition-all';
+      });
+
+      const activeBtn = document.getElementById(`filterBtn-${type}`);
+      if (activeBtn) {
+        activeBtn.className = 'filter-btn px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-600 text-white shadow-sm transition-all';
+      }
+
+      const desc = document.getElementById('activeFilterDesc');
+      if (desc) {
+        if (type === 'today') desc.textContent = '(Hôm nay)';
+        else if (type === 'tomorrow') desc.textContent = '(Ngày mai)';
+        else if (type === 'upcoming') desc.textContent = '(Lịch sắp tới)';
+        else desc.textContent = '(Tất cả các ngày)';
+      }
+
+      renderAppointmentTable();
+    }
+
+    function filterByCustomDate(val) {
+      if (!val) {
+        filterAppointments('all');
+        return;
+      }
+      customDateFilter = val;
+      currentFilter = 'custom';
+
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.className = 'filter-btn px-3 py-1.5 rounded-xl text-xs font-medium bg-white text-slate-700 hover:bg-rose-50 hover:text-rose-600 border border-slate-200 transition-all';
+      });
+
+      const desc = document.getElementById('activeFilterDesc');
+      if (desc) {
+        desc.textContent = `(Ngày ${formatDateDisplay(val)})`;
+      }
+
+      renderAppointmentTable();
+    }
+
+    function handleSearchAppointments(val) {
+      searchQuery = val || '';
+      renderAppointmentTable();
+    }
+
+    function scrollToAppointmentTable() {
+      const container = document.getElementById('appointmentListContainer');
+      if (container) {
+        container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function closeModalAndShowTable() {
+      const modal = document.getElementById('successModal');
+      if (modal) modal.classList.add('hidden');
+      scrollToAppointmentTable();
+    }
+
+    async function refreshAppointmentList(showFeedback = false) {
+      const refreshIcon = document.getElementById('refreshIcon');
+      if (refreshIcon) refreshIcon.classList.add('fa-spin');
+
+      const targetUrl = getActiveScriptUrl();
+
+      if (isUrlConfigured(targetUrl)) {
+        try {
+          const res = await fetch(targetUrl);
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.appointments && Array.isArray(data.appointments) && data.appointments.length > 0) {
+              const formattedList = data.appointments.map((row, idx) => ({
+                id: `GS-${idx}`,
+                fullName: row["Họ và tên"] || row["fullName"] || "Khách hàng",
+                phoneNumber: String(row["Số điện thoại"] || row["phoneNumber"] || ""),
+                bookingDate: row["Ngày khám"] || row["bookingDate"] || getTodayString(0),
+                bookingTime: row["Giờ khám"] || row["bookingTime"] || "--",
+                serviceCategory: row["Mục khám"] || row["serviceCategory"] || "Khám phụ khoa",
+                status: "Đang chờ khám",
+                notes: row["Ghi chú"] || row["notes"] || ""
+              }));
+
+              appointmentList = formattedList;
+              localStorage.setItem(APPOINTMENTS_STORAGE_KEY, JSON.stringify(appointmentList));
+            }
+          }
+        } catch (err) {
+          console.warn("Không thể tải danh sách từ Google Apps Script (Sử dụng dữ liệu cục bộ):", err);
+        }
+      }
+
+      renderAppointmentTable();
+
+      setTimeout(() => {
+        if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+      }, 600);
+    }
+
     const validTabs = ['trang-chu', 'dich-vu', 'bac-si', 'lich-lam-viec', 'dat-lich'];
 
     function switchTab(tabId) {
@@ -1139,9 +1860,7 @@
       });
     }
 
-    // Khởi tạo ngày tối thiểu là ngày hôm nay & Tự động thích ứng khung giờ theo ngày đã chọn
     const bookingDateInput = document.getElementById('bookingDate');
-    const bookingTimeInput = document.getElementById('bookingTime');
     const saturdayAlert = document.getElementById('saturdayAlert');
     const dayNameTag = document.getElementById('dayNameTag');
     const timeHintTag = document.getElementById('timeHintTag');
@@ -1151,6 +1870,7 @@
     if (bookingDateInput) {
       const today = new Date().toISOString().split('T')[0];
       bookingDateInput.min = today;
+      bookingDateInput.value = today;
 
       bookingDateInput.addEventListener('change', function() {
         const selectedVal = this.value;
@@ -1161,15 +1881,13 @@
         }
 
         const dateObj = new Date(selectedVal + 'T00:00:00');
-        const dayOfWeek = dateObj.getDay(); // 0: Chủ Nhật, 6: Thứ Bảy
+        const dayOfWeek = dateObj.getDay();
 
-        // Hiển thị thứ trong tuần
         if (dayNameTag) {
           dayNameTag.textContent = dayNames[dayOfWeek];
           dayNameTag.classList.remove('hidden');
         }
 
-        // Kiểm tra Thứ 7 nghỉ
         if (dayOfWeek === 6) {
           if (saturdayAlert) saturdayAlert.classList.remove('hidden');
           if (timeHintTag) timeHintTag.textContent = 'Phòng khám nghỉ Thứ 7';
@@ -1234,6 +1952,7 @@
         GOOGLE_SCRIPT_URL = val;
         localStorage.setItem(STORAGE_KEY, val);
         updateConnectionBadge();
+        refreshAppointmentList();
       }
       closeConfigModal();
     }
@@ -1261,7 +1980,8 @@
       const testBtnText = document.getElementById('testBtnText');
 
       if (!url || !url.startsWith('https://script.google.com') || url.includes("AKfycbx_DANG_KY_WEBAPP_CUA_BAN_TAI_DAY")) {
-        alert("Vui lòng dán link Web App Google Apps Script hợp lệ vào ô trước khi gửi thử.");
+        const badge = document.getElementById('urlStatusBadge');
+        if (badge) badge.textContent = "Cần dán link hợp lệ!";
         return;
       }
 
@@ -1274,7 +1994,7 @@
       testData.append('bookingDate', new Date().toISOString().split('T')[0]);
       testData.append('bookingTime', '17:15 - 18:00');
       testData.append('serviceCategory', 'Khám phụ khoa');
-      testData.append('notes', 'Kiểm tra đường truyền lưu dữ liệu Google Sheet kèm giờ khám');
+      testData.append('notes', 'Kiểm tra đường truyền lưu dữ liệu Google Sheet');
 
       try {
         await fetch(url, {
@@ -1294,7 +2014,6 @@
       }
     }
 
-    // Xử lý nộp form đặt lịch khám và đồng bộ Google Sheet
     const bookingForm = document.getElementById('bookingForm');
     const submitBtn = document.getElementById('submitBookingBtn');
     const btnIcon = document.getElementById('btnIcon');
@@ -1317,9 +2036,31 @@
         if (submitBtn) {
           submitBtn.disabled = true;
           if (btnIcon) btnIcon.className = "fa-solid fa-spinner fa-spin";
-          if (btnText) btnText.textContent = "Đang lưu vào Google Sheet...";
+          if (btnText) btnText.textContent = "Đang lưu lịch hẹn...";
         }
 
+        // Tạo đối tượng lịch mới
+        const newAppointmentId = 'AP-' + Date.now().toString().slice(-4);
+        const newRecord = {
+          id: newAppointmentId,
+          fullName: fullName,
+          phoneNumber: phoneNumber,
+          bookingDate: bookingDate,
+          bookingTime: bookingTime,
+          serviceCategory: serviceCategory,
+          status: 'Đang chờ khám',
+          notes: notes,
+          createdAt: new Date().toISOString()
+        };
+
+        // Đưa ngay vào đầu danh sách và lưu vào LocalStorage
+        appointmentList.unshift(newRecord);
+        localStorage.setItem(APPOINTMENTS_STORAGE_KEY, JSON.stringify(appointmentList));
+
+        // Cập nhật bảng dữ liệu ngay lập tức kèm hiệu ứng nổi bật
+        renderAppointmentTable(newAppointmentId);
+
+        // Gửi ngầm tới Google Sheet (nếu đã kết nối)
         const formData = new FormData();
         formData.append('fullName', fullName);
         formData.append('phoneNumber', phoneNumber);
@@ -1348,14 +2089,7 @@
             if (btnText) btnText.textContent = "Xác nhận gửi thông tin đặt lịch";
           }
 
-          let formattedDate = bookingDate;
-          if (bookingDate) {
-            const parts = bookingDate.split('-');
-            if (parts.length === 3) {
-              formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
-            }
-          }
-
+          // Cập nhật thông tin lên Modal
           const resName = document.getElementById('resName');
           const resPhone = document.getElementById('resPhone');
           const resDate = document.getElementById('resDate');
@@ -1364,18 +2098,18 @@
           const resSyncStatus = document.getElementById('resSyncStatus');
 
           if (resName) resName.textContent = fullName;
-          if (resPhone) resPhone.textContent = phoneNumber;
-          if (resDate) resDate.textContent = formattedDate;
+          if (resPhone) resPhone.textContent = maskPhoneNumber(phoneNumber);
+          if (resDate) resDate.textContent = formatDateDisplay(bookingDate);
           if (resTime) resTime.innerHTML = `<i class="fa-regular fa-clock text-xs"></i> <span>${bookingTime || '--'}</span>`;
           if (resService) resService.textContent = serviceCategory;
 
           if (resSyncStatus) {
             if (isUrlConfigured(targetUrl)) {
-              resSyncStatus.innerHTML = `<i class="fa-solid fa-file-excel text-emerald-600"></i> Đã đồng bộ vào Google Sheet`;
+              resSyncStatus.innerHTML = `<i class="fa-solid fa-file-excel text-emerald-600"></i> Đã lưu bảng & Google Sheet`;
               resSyncStatus.className = "font-semibold text-emerald-700 flex items-center gap-1";
             } else {
-              resSyncStatus.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-amber-500"></i> Chưa cấu hình link Google Sheet`;
-              resSyncStatus.className = "font-semibold text-amber-600 flex items-center gap-1";
+              resSyncStatus.innerHTML = `<i class="fa-solid fa-check text-emerald-600"></i> Đã lưu vào bảng danh sách`;
+              resSyncStatus.className = "font-semibold text-emerald-700 flex items-center gap-1";
             }
           }
 
@@ -1417,6 +2151,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       switchTab('trang-chu');
       updateConnectionBadge();
+      updateAdminUI();
     });
   </script>
 </body>
