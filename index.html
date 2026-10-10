@@ -1331,7 +1331,7 @@
       if (!phone) return '09********';
       const cleanPhone = phone.replace(/[^0-9]/g, '');
       if (cleanPhone.length >= 10) {
-        return cleanPhone.slice(0, 4) + '***' + cleanPhone.slice(-3);
+        return cleanPhone.slice(0, 2) + '***' + cleanPhone.slice(-1);
       }
       return cleanPhone.slice(0, 3) + '***';
     }
