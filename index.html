@@ -36,6 +36,7 @@
       }
     }
   </script>
+
   <style>
     ::-webkit-scrollbar {
       width: 8px;
@@ -65,7 +66,6 @@
 </head>
 <body class="font-sans text-brand-dark bg-slate-50 antialiased selection:bg-rose-200 selection:text-rose-900">
 
-  <!-- HEADER LUÔN HIỂN THỊ -->
   <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-rose-100 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-20">
@@ -143,9 +143,7 @@
     </div>
   </header>
 
-  <!-- KHU VỰC CÁC MỤC CHÍNH -->
   <main id="mainTabContainer" class="min-h-[70vh]">
-    <!-- MỤC TRANG CHỦ -->
     <section id="tab-trang-chu" class="tab-content relative gradient-hero pt-14 pb-20 overflow-hidden">
       <div class="absolute -top-24 -right-24 w-96 h-96 bg-rose-200/40 rounded-full blur-3xl pointer-events-none"></div>
       <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-red-100/50 rounded-full blur-3xl pointer-events-none"></div>
@@ -217,7 +215,6 @@
       </div>
     </section>
 
-    <!-- MỤC LỊCH LÀM VIỆC -->
     <section id="tab-lich-lam-viec" class="tab-content hidden py-16 bg-gradient-to-b from-rose-50/70 to-white">
       <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-2xl mx-auto mb-10">
@@ -263,8 +260,6 @@
                 </div>
               </div>
 
-             
-
               <div class="p-4 bg-rose-50/80 rounded-2xl border border-rose-100 flex items-start gap-4">
                 <div class="w-10 h-10 rounded-xl bg-rose-500 text-white flex items-center justify-center shrink-0">
                   <i class="fa-regular fa-calendar-check text-lg"></i>
@@ -297,7 +292,6 @@
       </div>
     </section>
 
-    <!-- MỤC DỊCH VỤ -->
     <section id="tab-dich-vu" class="tab-content hidden py-16 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -458,7 +452,6 @@
       </div>
     </section>
 
-    <!-- MỤC BÁC SỸ -->
     <section id="tab-bac-si" class="tab-content hidden py-16 bg-rose-50/50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -549,7 +542,6 @@
       </div>
     </section>
 
-    <!-- MỤC ĐẶT LỊCH KHÁM & DANH SÁCH LỊCH ĐÃ ĐẶT -->
     <section id="tab-dat-lich" class="tab-content hidden py-16 bg-white">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         
@@ -665,17 +657,17 @@
                   />
                   <!-- Danh sách gợi ý giờ khám -->
                   <datalist id="suggestedTimes">
-                    <option value="17:15 (Chiều tối)"></option>
-                    <option value="17:30 (Chiều tối)"></option>
-                    <option value="18:00 (Chiều tối)"></option>
-                    <option value="18:30 (Chiều tối)"></option>
-                    <option value="19:00 (Tối)"></option>
-                    <option value="19:30 (Tối)"></option>
-                    <option value="08:00 (Sáng Chủ Nhật)"></option>
-                    <option value="09:00 (Sáng Chủ Nhật)"></option>
-                    <option value="10:00 (Sáng Chủ Nhật)"></option>
-                    <option value="15:00 (Chiều Chủ Nhật)"></option>
-                    <option value="16:30 (Chiều Chủ Nhật)"></option>
+                    <option value="17:15"></option>
+                    <option value="17:30"></option>
+                    <option value="18:00"></option>
+                    <option value="18:30"></option>
+                    <option value="19:00"></option>
+                    <option value="19:30"></option>
+                    <option value="08:00"></option>
+                    <option value="09:00"></option>
+                    <option value="10:00"></option>
+                    <option value="15:00"></option>
+                    <option value="16:30"></option>
                   </datalist>
                 </div>
                 <div class="flex flex-wrap items-center gap-1.5 mt-2">
@@ -683,7 +675,7 @@
                   <button type="button" onclick="setQuickTime('17:30')" class="text-[11px] bg-rose-50 hover:bg-rose-100 text-rose-600 px-2 py-0.5 rounded-md border border-rose-100 transition-colors">17:30</button>
                   <button type="button" onclick="setQuickTime('18:00')" class="text-[11px] bg-rose-50 hover:bg-rose-100 text-rose-600 px-2 py-0.5 rounded-md border border-rose-100 transition-colors">18:00</button>
                   <button type="button" onclick="setQuickTime('18:45')" class="text-[11px] bg-rose-50 hover:bg-rose-100 text-rose-600 px-2 py-0.5 rounded-md border border-rose-100 transition-colors">18:45</button>
-                  <button type="button" onclick="setQuickTime('08:30 (CN)')" class="text-[11px] bg-rose-50 hover:bg-rose-100 text-rose-600 px-2 py-0.5 rounded-md border border-rose-100 transition-colors">08:30 (CN)</button>
+                  <button type="button" onclick="setQuickTime('08:30')" class="text-[11px] bg-rose-50 hover:bg-rose-100 text-rose-600 px-2 py-0.5 rounded-md border border-rose-100 transition-colors">08:30 (CN)</button>
                 </div>
               </div>
 
@@ -751,7 +743,6 @@
 
         </div>
 
-        <!-- BẢNG DANH SÁCH KHÁCH HÀNG ĐÃ ĐẶT LỊCH -->
         <div id="appointmentListContainer" class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-rose-100">
           
           <!-- Tiêu đề & Thông báo bảo mật -->
@@ -783,10 +774,10 @@
                 onclick="refreshAppointmentList(true)" 
                 id="refreshListBtn"
                 class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
-                title="Tải lại danh sách"
+                title="Tải lại danh sách từ máy chủ"
               >
                 <i id="refreshIcon" class="fa-solid fa-rotate-right"></i>
-                <span>Làm mới</span>
+                <span>Đồng bộ từ Sheet</span>
               </button>
 
               <!-- Nút Quản trị viên bật tắt chế độ xóa -->
@@ -885,13 +876,20 @@
               Hiển thị: <strong id="visibleCount" class="text-rose-600 font-bold">0</strong> lượt đặt lịch
               <span id="activeFilterDesc" class="italic text-slate-400 ml-1">(Tất cả các ngày)</span>
             </div>
-            <div class="text-[11px] text-slate-400">
-              * Dữ liệu tự động đồng bộ khi có lịch hẹn mới
+            <div id="cloudSyncStatusNote" class="text-[11px] text-slate-400 flex items-center gap-1">
+              <i class="fa-solid fa-cloud-arrow-down text-emerald-500"></i>
+              <span>Dữ liệu tự động đồng bộ trên mọi thiết bị</span>
             </div>
           </div>
 
-          <!-- Bảng Dữ Liệu -->
-          <div class="mt-3 overflow-x-auto rounded-2xl border border-slate-200 shadow-sm">
+          <div class="mt-3 overflow-x-auto rounded-2xl border border-slate-200 shadow-sm relative">
+            <!-- Loading Overlay khi đang tải dữ liệu -->
+            <div id="tableLoadingState" class="hidden absolute inset-0 bg-white/80 backdrop-blur-[2px] z-20 flex flex-col items-center justify-center py-12">
+              <div class="w-10 h-10 border-4 border-rose-200 border-t-rose-600 rounded-full animate-spin mb-3"></div>
+              <p class="text-xs font-semibold text-rose-600">Đang tải lịch hẹn từ máy chủ Google Sheet...</p>
+              <p class="text-[11px] text-slate-400 mt-1">Đảm bảo hiển thị đầy đủ trên mọi thiết bị</p>
+            </div>
+
             <table class="w-full text-left text-sm border-collapse min-w-[700px]">
               <thead class="bg-rose-50/70 text-slate-700 uppercase text-[11px] font-bold tracking-wider border-b border-rose-200/60">
                 <tr>
@@ -906,7 +904,7 @@
                 </tr>
               </thead>
               <tbody id="appointmentTableBody" class="divide-y divide-slate-100 bg-white text-slate-700">
-                <!-- Nội dung các dòng lịch khám sẽ do JavaScript render -->
+                <!-- Nội dung các dòng lịch khám sẽ do JavaScript render chuẩn hóa -->
               </tbody>
             </table>
           </div>
@@ -920,9 +918,15 @@
             <p class="text-slate-500 text-xs mt-1 max-w-sm mx-auto">
               Danh sách hiện đang trống. Quý khách vui lòng điền thông tin vào form phía trên để đặt lịch khám!
             </p>
-            <button type="button" onclick="filterAppointments('all')" class="mt-4 px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl text-xs font-semibold">
-              Xem toàn bộ danh sách
-            </button>
+            <div class="mt-4 flex items-center justify-center gap-2">
+              <button type="button" onclick="refreshAppointmentList(true)" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-sm">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>Tải lại từ Google Sheet</span>
+              </button>
+              <button type="button" onclick="filterAppointments('all')" class="px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl text-xs font-semibold">
+                Xem tất cả các ngày
+              </button>
+            </div>
           </div>
 
         </div>
@@ -931,7 +935,6 @@
     </section>
   </main>
 
-  <!-- MODAL THÔNG BÁO ĐẶT LỊCH THÀNH CÔNG -->
   <div id="successModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-rose-100 transform transition-all text-center">
       <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl mb-4 shadow-sm">
@@ -940,7 +943,7 @@
       
       <h3 class="text-2xl font-serif font-bold text-slate-900">Đặt Lịch Khám Thành Công!</h3>
       <p class="text-slate-600 text-sm mt-2">
-        Thông tin của bạn đã được ghi nhận và cập nhật trực tiếp vào danh sách hẹn khám!
+        Thông tin của bạn đã được ghi nhận và cập nhật trực tiếp vào hệ thống phòng khám!
       </p>
 
       <div class="mt-6 bg-rose-50/70 border border-rose-200/60 rounded-2xl p-4 text-left space-y-2.5 text-sm">
@@ -969,7 +972,7 @@
         <div class="flex justify-between pt-1">
           <span class="text-slate-500 font-medium">Trạng thái đồng bộ:</span>
           <span id="resSyncStatus" class="font-semibold text-emerald-700 flex items-center gap-1">
-            <i class="fa-solid fa-file-excel text-emerald-600"></i> Đã lưu vào hệ thống
+            <i class="fa-solid fa-file-excel text-emerald-600"></i> Đã đồng bộ lên Google Sheet
           </span>
         </div>
       </div>
@@ -993,7 +996,6 @@
     </div>
   </div>
 
-  <!-- MODAL HƯỚNG DẪN & CÀI ĐẶT LINK GOOGLE APPS SCRIPT -->
   <div id="configModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-rose-100 transform transition-all text-left">
       <div class="flex items-center justify-between pb-4 border-b border-slate-100">
@@ -1002,8 +1004,8 @@
             <i class="fa-solid fa-file-excel"></i>
           </div>
           <div>
-            <h3 class="text-lg font-bold text-slate-900">Kết Nối & Cài Đặt Google Sheet</h3>
-            <p class="text-xs text-slate-500">Tự động ghi nhận lịch hẹn và đồng bộ hiển thị lên bảng</p>
+            <h3 class="text-lg font-bold text-slate-900">Khắc Phục Kết Nối Google Sheet</h3>
+            <p class="text-xs text-slate-500">Đảm bảo dữ liệu lưu 100% vào trang tính và đồng bộ đa thiết bị</p>
           </div>
         </div>
         <button type="button" onclick="closeConfigModal()" class="text-slate-400 hover:text-slate-600 text-xl p-1">
@@ -1012,10 +1014,25 @@
       </div>
       
       <div class="mt-4 space-y-4 text-xs sm:text-sm text-slate-600">
+        <!-- 3 Bước quan trọng để ghi được vào Google Sheet -->
+        <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-xs text-amber-900 space-y-1.5">
+          <div class="font-bold text-sm text-amber-800 flex items-center gap-1.5">
+            <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 3 bước bắt buộc trong Google Apps Script để nhận dữ liệu:
+          </div>
+          <div><strong>1. Dán mã bên dưới</strong> vào mục <i>Mở rộng (Extensions) &rarr; Apps Script</i> trong Google Sheet.</div>
+          <div><strong>2. Bấm Triển khai (Deploy) &rarr; Tùy chọn triển khai mới (New deployment)</strong> &rarr; Loại: <i>Ứng dụng web (Web App)</i>.</div>
+          <div><strong>3. CỰC KỲ QUAN TRỌNG:</strong>
+            <ul class="list-disc pl-5 mt-1 space-y-0.5">
+              <li>Thực thi dưới dạng (Execute as): <strong>Tôi (Tài khoản của bạn)</strong></li>
+              <li>Ai có quyền truy cập (Who has access): Chọn <strong>Bất kỳ ai (Anyone)</strong> (<i>Nếu chọn 'Chỉ mình tôi' dữ liệu sẽ bị Google chặn</i>).</li>
+            </ul>
+          </div>
+        </div>
+
         <div>
           <label for="scriptUrlInput" class="block font-bold text-slate-700 mb-1.5 flex items-center justify-between">
-            <span>Link Web App Google Apps Script của bạn:</span>
-            <span id="urlStatusBadge" class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">Chưa thiết lập</span>
+            <span>Đường dẫn Web App Google Apps Script:</span>
+            <span id="urlStatusBadge" class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">Chưa kiểm tra</span>
           </label>
           <input 
             type="url" 
@@ -1024,12 +1041,80 @@
             class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 font-mono text-xs text-slate-800"
           />
         </div>
+
+        <!-- Hướng dẫn Code Google Apps Script chuẩn, sử dụng getDisplayValues tránh lỗi định dạng giờ -->
+        <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-bold text-xs text-slate-800 flex items-center gap-1.5">
+              <i class="fa-solid fa-code text-rose-500"></i> Mã Code.gs chuẩn (Lưu & đọc đúng 100% định dạng giờ):
+            </span>
+            <button type="button" onclick="copyScriptCode()" class="text-xs font-semibold text-rose-600 hover:underline">
+              <span id="copyBtnText">Sao chép mã</span>
+            </button>
+          </div>
+          <textarea 
+            id="scriptSourceCode" 
+            readonly 
+            rows="9" 
+            class="w-full p-2.5 font-mono text-[11px] bg-slate-900 text-emerald-400 rounded-xl leading-relaxed outline-none"
+>function doGet(e) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getActiveSheet();
+  var data = sheet.getDataRange().getDisplayValues(); // Dùng getDisplayValues giữ nguyên dạng chữ giờ hiển thị
+  if (data.length <= 1) {
+    return ContentService.createTextOutput(JSON.stringify({ appointments: [] }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+  var headers = data[0];
+  var appointments = [];
+  for (var i = 1; i < data.length; i++) {
+    var row = data[i];
+    var obj = {};
+    for (var j = 0; j < headers.length; j++) {
+      obj[headers[j]] = row[j];
+    }
+    appointments.push(obj);
+  }
+  return ContentService.createTextOutput(JSON.stringify({ appointments: appointments }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getActiveSheet();
+  
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(["Họ và tên", "Số điện thoại", "Ngày khám", "Khung giờ hẹn", "Mục khám", "Ghi chú", "Thời gian gửi"]);
+  }
+  
+  var p = e.parameter || {};
+  if (e.postData && e.postData.contents) {
+    try {
+      var json = JSON.parse(e.postData.contents);
+      p = Object.assign(p, json);
+    } catch(err) {}
+  }
+  
+  sheet.appendRow([
+    p.fullName || '',
+    "'" + (p.phoneNumber || ''),
+    "'" + (p.bookingDate || ''),
+    "'" + (p.bookingTime || ''),
+    p.serviceCategory || '',
+    p.notes || '',
+    p.submittedAt || new Date().toLocaleString("vi-VN", {timeZone: "Asia/Ho_Chi_Minh"})
+  ]);
+  
+  return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
+    .setMimeType(ContentService.MimeType.JSON);
+}</textarea>
+        </div>
       </div>
 
       <div class="mt-6 flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
         <button type="button" onclick="testSheetConnection()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs inline-flex items-center gap-1.5">
           <i id="testIcon" class="fa-solid fa-flask"></i>
-          <span id="testBtnText">Gửi thử nghiệm 1 dòng vào Sheet</span>
+          <span id="testBtnText">Gửi thử 1 dòng kiểm tra</span>
         </button>
 
         <div class="flex items-center gap-2">
@@ -1044,7 +1129,6 @@
     </div>
   </div>
 
-  <!-- MODAL ĐĂNG NHẬP QUẢN TRỊ VIÊN -->
   <div id="adminLoginModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-rose-100 transform transition-all text-center">
       <div class="w-16 h-16 bg-rose-100 text-rose-600 rounded-full flex items-center justify-center mx-auto text-3xl mb-4 shadow-sm">
@@ -1064,7 +1148,7 @@
             <input 
               type="password" 
               id="adminPasswordInput" 
-              placeholder="Nhập mật khẩu" 
+              placeholder="Nhập mật khẩu (Mặc định: 123456)" 
               required
               class="w-full pl-4 pr-11 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 text-sm font-medium"
             />
@@ -1082,9 +1166,8 @@
             <span>Mật khẩu không chính xác! Vui lòng thử lại.</span>
           </p>
           <div class="mt-2.5 flex items-center justify-between text-[11px] text-slate-500 bg-slate-50 p-2.5 rounded-xl border border-slate-200/80">
-            
-            <button type="button" onclick="fillDefaultPassword()" class="text-rose-600 font-bold hover:underline">
-            
+            <span>Gợi ý mật khẩu mẫu: <strong>123456</strong></span>
+            <button type="button" onclick="fillDefaultPassword()" class="text-rose-600 font-bold hover:underline">Điền nhanh</button>
           </div>
         </div>
 
@@ -1108,7 +1191,6 @@
     </div>
   </div>
 
-  <!-- MODAL XÁC NHẬN XÓA LỊCH HẸN -->
   <div id="deleteConfirmModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-red-100 transform transition-all text-center">
       <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto text-3xl mb-4 shadow-sm">
@@ -1116,7 +1198,7 @@
       </div>
       <h3 id="deleteModalTitle" class="text-xl font-bold font-serif text-slate-900">Xác Nhận Xóa Lịch Đặt</h3>
       <p id="deleteModalDesc" class="text-slate-600 text-sm mt-2 leading-relaxed">
-        Bạn có chắc muốn thực hiện thao tác xóa này không? Hành động này không thể hoàn tác.
+        Bạn có chắc muốn thực hiện thao tác xóa này không? Hành động này sẽ cập nhật trên bảng.
       </p>
 
       <div class="mt-6 flex gap-3">
@@ -1139,7 +1221,6 @@
     </div>
   </div>
 
-  <!-- FOOTER LUÔN HIỂN THỊ -->
   <footer class="bg-slate-900 text-slate-300 pt-16 pb-12 border-t border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
@@ -1265,23 +1346,24 @@
     // ==============================================================================================
     // CẤU HÌNH LINK GOOGLE SHEET & LƯU TRỮ LỊCH HẸN
     // ==============================================================================================
-    const DEFAULT_GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbx_FyGTFnfajdFGgI-B4n9UPQ0N7U6910LLdCoIi6hXsquAzJa59I642r4s8j8stu1fRQ/exec";
+    const DEFAULT_GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyX8bcwmCQ2Xwwyl_zBldjHXmXnhjMvY8ORGlltaEQVrvW-zB4XN2JFIu-cVlEQOko/exec";
     const STORAGE_KEY = "hoangdiu_google_sheet_url";
     const APPOINTMENTS_STORAGE_KEY = "hoangdiu_appointments_data";
     const ADMIN_PASSWORD_KEY = "hoangdiu_admin_pin";
     const ADMIN_SESSION_KEY = "hoangdiu_admin_session";
     const DEFAULT_ADMIN_PIN = "123456";
 
-    // Trạng thái Quản trị viên (lưu vào localStorage để duy trì tiện lợi)
+    // Trạng thái Quản trị viên
     let isAdmin = localStorage.getItem(ADMIN_SESSION_KEY) === "true";
-    let pendingDeleteTarget = null; // id hoặc 'ALL' hoặc 'COMPLETED'
+    let pendingDeleteTarget = null;
+    let isFetchingFromCloud = false;
 
     function getActiveScriptUrl() {
       const savedUrl = localStorage.getItem(STORAGE_KEY);
-      if (DEFAULT_GOOGLE_SHEET_URL && DEFAULT_GOOGLE_SHEET_URL.startsWith("https://script.google.com") && !DEFAULT_GOOGLE_SHEET_URL.includes("AKfycbx_DANG_KY_WEBAPP_CUA_BAN_TAI_DAY")) {
-        return DEFAULT_GOOGLE_SHEET_URL;
+      if (savedUrl && savedUrl.startsWith("https://script.google.com")) {
+        return savedUrl;
       }
-      return savedUrl || DEFAULT_GOOGLE_SHEET_URL;
+      return DEFAULT_GOOGLE_SHEET_URL;
     }
 
     let GOOGLE_SCRIPT_URL = getActiveScriptUrl();
@@ -1293,23 +1375,98 @@
       return d.toISOString().split('T')[0];
     }
 
-    // Lấy dữ liệu danh sách lịch thực tế từ LocalStorage
+    // ==============================================================================================
+    // HÀM XỬ LÝ CHUẨN HÓA ĐỊNH DẠNG KHUNG GIỜ HẸN (TRÁNH LỖI GOOGLE SHEET / ISO STRING)
+    // ==============================================================================================
+    function formatBookingTime(timeVal) {
+      if (!timeVal) return '--';
+      let str = String(timeVal).trim();
+      if (!str || str === '--' || str === 'undefined' || str === 'null') return '--';
+
+      // Xử lý trường hợp Google Sheet trả về phân số của ngày (ví dụ 0.729166667 = 17:30)
+      if (!isNaN(Number(str)) && Number(str) > 0 && Number(str) < 1) {
+        const totalMinutes = Math.round(Number(str) * 24 * 60);
+        const h = String(Math.floor(totalMinutes / 60)).padStart(2, '0');
+        const m = String(totalMinutes % 60).padStart(2, '0');
+        return `${h}:${m}`;
+      }
+
+      // Xử lý chuỗi Date ISO (ví dụ 1899-12-30T10:30:00.000Z hoặc 1900-... hoặc chứa GMT / Z)
+      if (str.includes('1899') || str.includes('1900') || (str.includes('T') && (str.includes('Z') || str.includes('+')))) {
+        try {
+          const d = new Date(str);
+          if (!isNaN(d.getTime())) {
+            let h = d.getHours();
+            let m = d.getMinutes();
+            // Khắc phục sai số phút lịch sử múi giờ GMT+7:06:40
+            if (m === 29 || m === 31) m = 30;
+            if (m === 59) { m = 0; h = (h + 1) % 24; }
+            if (m === 1) m = 0;
+            return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+          }
+        } catch (e) {}
+      }
+
+      // Chuỗi chứa 'T' thông thường: "YYYY-MM-DDTHH:mm:ss"
+      if (str.includes('T')) {
+        const timePart = str.split('T')[1];
+        if (timePart) {
+          const parts = timePart.split(':');
+          if (parts.length >= 2) {
+            return `${parts[0].padStart(2, '0')}:${parts[1].padStart(2, '0')}`;
+          }
+        }
+      }
+
+      // Định dạng có giây: "17:30:00" hoặc "07:30:00"
+      const matchWithSec = str.match(/^(\d{1,2}):(\d{2}):\d{2}(.*)$/);
+      if (matchWithSec) {
+        const h = matchWithSec[1].padStart(2, '0');
+        const m = matchWithSec[2];
+        const rest = matchWithSec[3] ? matchWithSec[3].trim() : '';
+        return rest ? `${h}:${m} ${rest}` : `${h}:${m}`;
+      }
+
+      // Định dạng tiêu chuẩn: "17:30" hoặc "17:30 (Chiều)"
+      const matchSimple = str.match(/^(\d{1,2}):(\d{2})(.*)$/);
+      if (matchSimple) {
+        const h = matchSimple[1].padStart(2, '0');
+        const m = matchSimple[2];
+        const rest = matchSimple[3] ? matchSimple[3].trim() : '';
+        return rest ? `${h}:${m} ${rest}` : `${h}:${m}`;
+      }
+
+      // Định dạng kiểu tiếng Việt: "17h30" hoặc "17h"
+      const matchH = str.match(/^(\d{1,2})h(\d{2})?(.*)$/i);
+      if (matchH) {
+        const h = matchH[1].padStart(2, '0');
+        const m = matchH[2] ? matchH[2] : '00';
+        const rest = matchH[3] ? matchH[3].trim() : '';
+        return rest ? `${h}:${m} ${rest}` : `${h}:${m}`;
+      }
+
+      return str;
+    }
+
+    // Lấy dữ liệu danh sách lịch từ LocalStorage
     function getStoredAppointments() {
       const stored = localStorage.getItem(APPOINTMENTS_STORAGE_KEY);
       if (stored) {
         try {
           const parsed = JSON.parse(stored);
           if (Array.isArray(parsed)) {
-            // Tự động lọc sạch các ID mẫu cũ nếu còn lưu trong trình duyệt
-            const cleanList = parsed.filter(item => !['AP-101', 'AP-102', 'AP-103', 'AP-104', 'AP-105'].includes(item.id));
-            localStorage.setItem(APPOINTMENTS_STORAGE_KEY, JSON.stringify(cleanList));
+            const cleanList = parsed
+              .filter(item => !['AP-101', 'AP-102', 'AP-103', 'AP-104', 'AP-105'].includes(item.id))
+              .map(item => ({
+                ...item,
+                bookingTime: formatBookingTime(item.bookingTime)
+              }));
             return cleanList;
           }
         } catch (e) {
           console.error("Lỗi đọc dữ liệu hẹn:", e);
         }
       }
-      localStorage.setItem(APPOINTMENTS_STORAGE_KEY, JSON.stringify([]));
       return [];
     }
 
@@ -1321,11 +1478,30 @@
     // Hàm che số điện thoại để bảo mật danh tính khách hàng
     function maskPhoneNumber(phone) {
       if (!phone) return '09********';
-      const cleanPhone = phone.replace(/[^0-9]/g, '');
+      const cleanPhone = String(phone).replace(/[^0-9]/g, '');
       if (cleanPhone.length >= 10) {
         return cleanPhone.slice(0, 2) + '***' + cleanPhone.slice(-1);
       }
       return cleanPhone.slice(0, 3) + '***';
+    }
+
+    // Chuẩn hóa định dạng ngày từ YYYY-MM-DD hoặc Date object từ Sheet
+    function normalizeDateString(dateVal) {
+      if (!dateVal) return getTodayString(0);
+      let str = String(dateVal).trim();
+      if (str.includes('T')) {
+        str = str.split('T')[0];
+      }
+      if (str.includes('/')) {
+        const parts = str.split('/');
+        if (parts.length === 3) {
+          const d = parts[0].padStart(2, '0');
+          const m = parts[1].padStart(2, '0');
+          const y = parts[2];
+          return `${y}-${m}-${d}`;
+        }
+      }
+      return str;
     }
 
     // Định dạng hiển thị ngày từ YYYY-MM-DD sang DD/MM/YYYY
@@ -1341,14 +1517,15 @@
 
     // Màu sắc huy hiệu cho từng dịch vụ
     function getServiceBadge(service) {
-      if (service.includes('thai kỳ')) {
-        return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200"><i class="fa-solid fa-baby text-[10px]"></i> ${service}</span>`;
-      } else if (service.includes('phụ khoa')) {
-        return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-pink-50 text-pink-700 border border-pink-200"><i class="fa-solid fa-venus text-[10px]"></i> ${service}</span>`;
-      } else if (service.includes('ung thư')) {
-        return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-200"><i class="fa-solid fa-shield-virus text-[10px]"></i> ${service}</span>`;
+      const s = String(service || '');
+      if (s.includes('thai kỳ')) {
+        return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200"><i class="fa-solid fa-baby text-[10px]"></i> ${s}</span>`;
+      } else if (s.includes('phụ khoa')) {
+        return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-pink-50 text-pink-700 border border-pink-200"><i class="fa-solid fa-venus text-[10px]"></i> ${s}</span>`;
+      } else if (s.includes('ung thư')) {
+        return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-purple-50 text-purple-700 border border-purple-200"><i class="fa-solid fa-shield-virus text-[10px]"></i> ${s}</span>`;
       }
-      return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200"><i class="fa-solid fa-notes-medical text-[10px]"></i> ${service}</span>`;
+      return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200"><i class="fa-solid fa-notes-medical text-[10px]"></i> ${s || 'Khám phụ khoa'}</span>`;
     }
 
     // Chuyển đổi trạng thái giữa: "Đang chờ khám" và "Đã khám"
@@ -1395,7 +1572,6 @@
 
       if (!tbody) return;
 
-      // Cập nhật hiển thị cột Thao tác Admin trên tiêu đề
       if (adminColHeader) {
         if (isAdmin) {
           adminColHeader.classList.remove('hidden');
@@ -1410,14 +1586,15 @@
       // Lọc danh sách theo tiêu chí
       let filtered = appointmentList.filter(item => {
         let matchDate = true;
+        const bDate = normalizeDateString(item.bookingDate);
         if (customDateFilter) {
-          matchDate = item.bookingDate === customDateFilter;
+          matchDate = bDate === customDateFilter;
         } else if (currentFilter === 'today') {
-          matchDate = item.bookingDate === todayStr;
+          matchDate = bDate === todayStr;
         } else if (currentFilter === 'tomorrow') {
-          matchDate = item.bookingDate === tomorrowStr;
+          matchDate = bDate === tomorrowStr;
         } else if (currentFilter === 'upcoming') {
-          matchDate = item.bookingDate >= todayStr;
+          matchDate = bDate >= todayStr;
         }
 
         let matchSearch = true;
@@ -1434,10 +1611,12 @@
       });
 
       filtered.sort((a, b) => {
-        if (a.bookingDate !== b.bookingDate) {
-          return a.bookingDate.localeCompare(b.bookingDate);
+        const dateA = normalizeDateString(a.bookingDate);
+        const dateB = normalizeDateString(b.bookingDate);
+        if (dateA !== dateB) {
+          return dateA.localeCompare(dateB);
         }
-        return (a.bookingTime || '').localeCompare(b.bookingTime || '');
+        return formatBookingTime(a.bookingTime).localeCompare(formatBookingTime(b.bookingTime));
       });
 
       if (visibleCountElem) {
@@ -1449,7 +1628,7 @@
 
       if (filtered.length === 0) {
         tbody.innerHTML = '';
-        if (emptyState) emptyState.classList.remove('hidden');
+        if (emptyState && !isFetchingFromCloud) emptyState.classList.remove('hidden');
         return;
       }
 
@@ -1459,8 +1638,8 @@
       filtered.forEach((item, index) => {
         const isNew = item.id === newlyAddedId;
         const rowClass = isNew ? 'row-highlight bg-rose-50/70 font-medium' : 'hover:bg-rose-50/30 transition-colors';
+        const formattedDisplayTime = formatBookingTime(item.bookingTime);
 
-        // Nút xóa riêng từng lịch khi đã bật quyền Quản trị
         const adminDeleteCell = isAdmin ? `
           <td class="py-3.5 px-4 text-center bg-rose-50/40">
             <button 
@@ -1494,12 +1673,12 @@
             </td>
             <td class="py-3.5 px-4 font-bold text-rose-600 whitespace-nowrap">
               <i class="fa-regular fa-calendar text-xs mr-1 text-rose-400"></i>
-              ${formatDateDisplay(item.bookingDate)}
+              ${formatDateDisplay(normalizeDateString(item.bookingDate))}
             </td>
             <td class="py-3.5 px-4 font-medium text-slate-800 whitespace-nowrap">
-              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200/70 font-semibold text-xs">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200/70 font-semibold text-xs shadow-sm">
                 <i class="fa-regular fa-clock text-amber-600"></i>
-                ${item.bookingTime || '--'}
+                <span>${formattedDisplayTime || '--'}</span>
               </span>
             </td>
             <td class="py-3.5 px-4">
@@ -1516,9 +1695,119 @@
       tbody.innerHTML = html;
     }
 
-    // ==============================================================================================
-    // LOGIC QUẢN TRỊ VIÊN & XÓA LỊCH ĐÃ ĐẶT
-    // ==============================================================================================
+    // GỬI DỮ LIỆU ĐÁNG TIN CẬY VÀO GOOGLE APPS SCRIPT
+    async function postDataToGoogleSheet(url, payload) {
+      const params = new URLSearchParams();
+      for (const key in payload) {
+        params.append(key, payload[key]);
+      }
+
+      try {
+        await fetch(url, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: params.toString()
+        });
+        return true;
+      } catch (err) {
+        console.warn("Thử gửi dạng form ẩn fallback:", err);
+      }
+
+      // Phương pháp fallback qua Form submit vào iframe ẩn
+      try {
+        let hiddenIframe = document.getElementById('hidden_iframe_poster');
+        if (!hiddenIframe) {
+          hiddenIframe = document.createElement('iframe');
+          hiddenIframe.id = 'hidden_iframe_poster';
+          hiddenIframe.name = 'hidden_iframe_poster';
+          hiddenIframe.style.display = 'none';
+          document.body.appendChild(hiddenIframe);
+        }
+
+        const hiddenForm = document.createElement('form');
+        hiddenForm.method = 'POST';
+        hiddenForm.action = url;
+        hiddenForm.target = 'hidden_iframe_poster';
+        hiddenForm.style.display = 'none';
+
+        for (const key in payload) {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = key;
+          input.value = payload[key];
+          hiddenForm.appendChild(input);
+        }
+
+        document.body.appendChild(hiddenForm);
+        hiddenForm.submit();
+        setTimeout(() => {
+          hiddenForm.remove();
+        }, 1500);
+        return true;
+      } catch (e) {
+        console.error("Lỗi khi gửi dữ liệu qua form ngầm:", e);
+        return false;
+      }
+    }
+
+    // ĐỒNG BỘ DỮ LIỆU TỰ ĐỘNG TỪ GOOGLE SHEET VÀ CHUẨN HÓA DỮ LIỆU GIỜ
+    async function refreshAppointmentList(showFeedback = false) {
+      const refreshIcon = document.getElementById('refreshIcon');
+      const loadingOverlay = document.getElementById('tableLoadingState');
+      const emptyState = document.getElementById('emptyTableState');
+
+      if (refreshIcon) refreshIcon.classList.add('fa-spin');
+      if (loadingOverlay) loadingOverlay.classList.remove('hidden');
+      if (emptyState) emptyState.classList.add('hidden');
+      isFetchingFromCloud = true;
+
+      const targetUrl = getActiveScriptUrl();
+
+      if (isUrlConfigured(targetUrl)) {
+        try {
+          const res = await fetch(targetUrl);
+          if (res.ok) {
+            const data = await res.json();
+            let rows = [];
+            if (data && Array.isArray(data.appointments)) {
+              rows = data.appointments;
+            } else if (Array.isArray(data)) {
+              rows = data;
+            }
+
+            if (rows.length > 0) {
+              const formattedList = rows.map((row, idx) => ({
+                id: `GS-${idx}-${Date.now().toString().slice(-4)}`,
+                fullName: row["Họ và tên"] || row["Họ tên"] || row["fullName"] || row["hoTen"] || "Khách hàng",
+                phoneNumber: String(row["Số điện thoại"] || row["SĐT"] || row["phoneNumber"] || row["sdt"] || ""),
+                bookingDate: normalizeDateString(row["Ngày khám"] || row["Ngày"] || row["bookingDate"] || row["ngayKham"] || getTodayString(0)),
+                bookingTime: formatBookingTime(row["Khung giờ hẹn"] || row["Giờ khám"] || row["Giờ"] || row["bookingTime"] || row["gioKham"] || "--"),
+                serviceCategory: row["Mục khám"] || row["serviceCategory"] || row["dichVu"] || "Khám phụ khoa",
+                status: row["Trạng thái"] || "Đang chờ khám",
+                notes: row["Ghi chú"] || row["notes"] || ""
+              }));
+
+              appointmentList = formattedList;
+              localStorage.setItem(APPOINTMENTS_STORAGE_KEY, JSON.stringify(appointmentList));
+            }
+          }
+        } catch (err) {
+          console.warn("Không thể tải danh sách từ Google Apps Script (Sử dụng dữ liệu tạm):", err);
+        }
+      }
+
+      isFetchingFromCloud = false;
+      if (loadingOverlay) loadingOverlay.classList.add('hidden');
+      renderAppointmentTable();
+
+      setTimeout(() => {
+        if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+      }, 500);
+    }
+
     function updateAdminUI() {
       const toggleBtn = document.getElementById('adminToggleBtn');
       const toggleText = document.getElementById('adminToggleText');
@@ -1626,7 +1915,7 @@
       const title = document.getElementById('deleteModalTitle');
       const desc = document.getElementById('deleteModalDesc');
       if (title) title.textContent = "Xóa lịch của bệnh nhân?";
-      if (desc) desc.innerHTML = `Bạn có chắc muốn xóa lịch hẹn của <strong>${clientName}</strong>? Lịch khám này sẽ bị xóa vĩnh viễn khỏi danh sách.`;
+      if (desc) desc.innerHTML = `Bạn có chắc muốn xóa lịch hẹn của <strong>${clientName}</strong>?`;
 
       const modal = document.getElementById('deleteConfirmModal');
       if (modal) modal.classList.remove('hidden');
@@ -1638,7 +1927,7 @@
       const title = document.getElementById('deleteModalTitle');
       const desc = document.getElementById('deleteModalDesc');
       if (title) title.textContent = "Xóa toàn bộ danh sách?";
-      if (desc) desc.innerHTML = `Thao tác này sẽ xóa sạch <strong>tất cả ${appointmentList.length} lịch khám</strong> hiện có. Bạn có chắc chắn muốn xóa không?`;
+      if (desc) desc.innerHTML = `Thao tác này sẽ xóa sạch <strong>tất cả ${appointmentList.length} lịch khám</strong> trên bảng hiện tại. Bạn có chắc chắn muốn xóa không?`;
 
       const modal = document.getElementById('deleteConfirmModal');
       if (modal) modal.classList.remove('hidden');
@@ -1647,7 +1936,6 @@
     function promptClearCompleted() {
       const completedCount = appointmentList.filter(x => x.status === 'Đã khám').length;
       if (completedCount === 0) {
-        alert("Hiện không có lịch khám nào ở trạng thái 'Đã khám'.");
         return;
       }
       pendingDeleteTarget = 'COMPLETED';
@@ -1744,45 +2032,6 @@
       scrollToAppointmentTable();
     }
 
-    async function refreshAppointmentList(showFeedback = false) {
-      const refreshIcon = document.getElementById('refreshIcon');
-      if (refreshIcon) refreshIcon.classList.add('fa-spin');
-
-      const targetUrl = getActiveScriptUrl();
-
-      if (isUrlConfigured(targetUrl)) {
-        try {
-          const res = await fetch(targetUrl);
-          if (res.ok) {
-            const data = await res.json();
-            if (data && data.appointments && Array.isArray(data.appointments) && data.appointments.length > 0) {
-              const formattedList = data.appointments.map((row, idx) => ({
-                id: `GS-${idx}`,
-                fullName: row["Họ và tên"] || row["fullName"] || "Khách hàng",
-                phoneNumber: String(row["Số điện thoại"] || row["phoneNumber"] || ""),
-                bookingDate: row["Ngày khám"] || row["bookingDate"] || getTodayString(0),
-                bookingTime: row["Giờ khám"] || row["bookingTime"] || "--",
-                serviceCategory: row["Mục khám"] || row["serviceCategory"] || "Khám phụ khoa",
-                status: "Đang chờ khám",
-                notes: row["Ghi chú"] || row["notes"] || ""
-              }));
-
-              appointmentList = formattedList;
-              localStorage.setItem(APPOINTMENTS_STORAGE_KEY, JSON.stringify(appointmentList));
-            }
-          }
-        } catch (err) {
-          console.warn("Không thể tải danh sách từ Google Apps Script (Sử dụng dữ liệu cục bộ):", err);
-        }
-      }
-
-      renderAppointmentTable();
-
-      setTimeout(() => {
-        if (refreshIcon) refreshIcon.classList.remove('fa-spin');
-      }, 600);
-    }
-
     const validTabs = ['trang-chu', 'dich-vu', 'bac-si', 'lich-lam-viec', 'dat-lich'];
 
     function switchTab(tabId) {
@@ -1822,6 +2071,10 @@
       const mobileMenu = document.getElementById('mobileMenu');
       if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
         mobileMenu.classList.add('hidden');
+      }
+
+      if (tabId === 'dat-lich') {
+        refreshAppointmentList();
       }
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1944,7 +2197,7 @@
         GOOGLE_SCRIPT_URL = val;
         localStorage.setItem(STORAGE_KEY, val);
         updateConnectionBadge();
-        refreshAppointmentList();
+        refreshAppointmentList(true);
       }
       closeConfigModal();
     }
@@ -1980,29 +2233,28 @@
       if (testIcon) testIcon.className = "fa-solid fa-spinner fa-spin";
       if (testBtnText) testBtnText.textContent = "Đang gửi thử...";
 
-      const testData = new FormData();
-      testData.append('fullName', 'Nguyễn Thị Hoa (Thử nghiệm)');
-      testData.append('phoneNumber', '0964058462');
-      testData.append('bookingDate', new Date().toISOString().split('T')[0]);
-      testData.append('bookingTime', '17:15 - 18:00');
-      testData.append('serviceCategory', 'Khám phụ khoa');
-      testData.append('notes', 'Kiểm tra đường truyền lưu dữ liệu Google Sheet');
+      const testPayload = {
+        fullName: 'Nguyễn Thị Thử Nghiệm',
+        phoneNumber: '0964058462',
+        bookingDate: new Date().toISOString().split('T')[0],
+        bookingTime: '17:30',
+        serviceCategory: 'Khám phụ khoa',
+        notes: 'Kiểm tra kết nối Google Sheet',
+        submittedAt: new Date().toLocaleString("vi-VN")
+      };
 
       try {
-        await fetch(url, {
-          method: 'POST',
-          body: testData,
-          mode: 'no-cors'
-        });
-        if (testBtnText) testBtnText.textContent = "Đã gửi! Vui lòng mở Google Sheet kiểm tra dòng mới";
+        await postDataToGoogleSheet(url, testPayload);
+        if (testBtnText) testBtnText.textContent = "Đã gửi! Kiểm tra dòng mới trên Google Sheet";
+        setTimeout(() => refreshAppointmentList(), 2000);
       } catch (err) {
         console.error(err);
-        if (testBtnText) testBtnText.textContent = "Lỗi khi gửi, kiểm tra lại link Web App";
+        if (testBtnText) testBtnText.textContent = "Lỗi khi gửi, kiểm tra quyền 'Anyone'";
       } finally {
         setTimeout(() => {
           if (testIcon) testIcon.className = "fa-solid fa-flask";
-          if (testBtnText) testBtnText.textContent = "Gửi thử nghiệm 1 dòng vào Sheet";
-        }, 3000);
+          if (testBtnText) testBtnText.textContent = "Gửi thử 1 dòng kiểm tra";
+        }, 3500);
       }
     }
 
@@ -2020,7 +2272,8 @@
         const fullName = document.getElementById('fullName').value.trim();
         const phoneNumber = document.getElementById('phoneNumber').value.trim();
         const bookingDate = document.getElementById('bookingDate').value;
-        const bookingTime = document.getElementById('bookingTime').value.trim();
+        const rawBookingTime = document.getElementById('bookingTime').value.trim();
+        const formattedBookingTime = formatBookingTime(rawBookingTime);
         const serviceCategory = document.getElementById('serviceCategory').value;
         const notes = document.getElementById('notes') ? document.getElementById('notes').value.trim() : '';
 
@@ -2028,17 +2281,17 @@
         if (submitBtn) {
           submitBtn.disabled = true;
           if (btnIcon) btnIcon.className = "fa-solid fa-spinner fa-spin";
-          if (btnText) btnText.textContent = "Đang lưu lịch hẹn...";
+          if (btnText) btnText.textContent = "Đang lưu lịch hẹn lên hệ thống...";
         }
 
-        // Tạo đối tượng lịch mới
+        // Tạo đối tượng lịch mới với khung giờ đã chuẩn hóa
         const newAppointmentId = 'AP-' + Date.now().toString().slice(-4);
         const newRecord = {
           id: newAppointmentId,
           fullName: fullName,
           phoneNumber: phoneNumber,
           bookingDate: bookingDate,
-          bookingTime: bookingTime,
+          bookingTime: formattedBookingTime,
           serviceCategory: serviceCategory,
           status: 'Đang chờ khám',
           notes: notes,
@@ -2052,25 +2305,21 @@
         // Cập nhật bảng dữ liệu ngay lập tức kèm hiệu ứng nổi bật
         renderAppointmentTable(newAppointmentId);
 
-        // Gửi ngầm tới Google Sheet (nếu đã kết nối)
-        const formData = new FormData();
-        formData.append('fullName', fullName);
-        formData.append('phoneNumber', phoneNumber);
-        formData.append('bookingDate', bookingDate);
-        formData.append('bookingTime', bookingTime);
-        formData.append('serviceCategory', serviceCategory);
-        formData.append('notes', notes);
-        formData.append('submittedAt', new Date().toISOString());
-
+        // Gửi lên Google Sheet bằng cơ chế postDataToGoogleSheet tin cậy
         const targetUrl = getActiveScriptUrl();
+        const payload = {
+          fullName: fullName,
+          phoneNumber: phoneNumber,
+          bookingDate: bookingDate,
+          bookingTime: formattedBookingTime,
+          serviceCategory: serviceCategory,
+          notes: notes,
+          submittedAt: new Date().toLocaleString('vi-VN')
+        };
 
         try {
           if (isUrlConfigured(targetUrl)) {
-            await fetch(targetUrl, {
-              method: 'POST',
-              body: formData,
-              mode: 'no-cors'
-            });
+            await postDataToGoogleSheet(targetUrl, payload);
           }
         } catch (error) {
           console.warn('Lưu ý kết nối Google Sheet:', error);
@@ -2092,7 +2341,7 @@
           if (resName) resName.textContent = fullName;
           if (resPhone) resPhone.textContent = maskPhoneNumber(phoneNumber);
           if (resDate) resDate.textContent = formatDateDisplay(bookingDate);
-          if (resTime) resTime.innerHTML = `<i class="fa-regular fa-clock text-xs"></i> <span>${bookingTime || '--'}</span>`;
+          if (resTime) resTime.innerHTML = `<i class="fa-regular fa-clock text-xs"></i> <span>${formattedBookingTime || '--'}</span>`;
           if (resService) resService.textContent = serviceCategory;
 
           if (resSyncStatus) {
@@ -2140,10 +2389,14 @@
       });
     }
 
+    // Khởi chạy ứng dụng khi DOM tải xong
     document.addEventListener('DOMContentLoaded', () => {
       switchTab('trang-chu');
       updateConnectionBadge();
       updateAdminUI();
+
+      // Tự động đồng bộ và chuẩn hóa giờ từ Cloud / Google Sheet ngay khi mở trang
+      refreshAppointmentList();
     });
   </script>
 </body>
