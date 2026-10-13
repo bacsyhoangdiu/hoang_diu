@@ -1011,42 +1011,11 @@
         <button type="button" onclick="closeConfigModal()" class="text-slate-400 hover:text-slate-600 text-xl p-1">
           <i class="fa-solid fa-xmark"></i>
         </button>
-      </div>
-      
-      <div class="mt-4 space-y-4 text-xs sm:text-sm text-slate-600">
-        <!-- 3 Bước quan trọng để ghi được vào Google Sheet -->
-        <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-xs text-amber-900 space-y-1.5">
-          <div class="font-bold text-sm text-amber-800 flex items-center gap-1.5">
-            <i class="fa-solid fa-triangle-exclamation text-amber-600"></i> 3 bước bắt buộc trong Google Apps Script để nhận dữ liệu:
-          </div>
-          <div><strong>1. Dán mã bên dưới</strong> vào mục <i>Mở rộng (Extensions) &rarr; Apps Script</i> trong Google Sheet.</div>
-          <div><strong>2. Bấm Triển khai (Deploy) &rarr; Tùy chọn triển khai mới (New deployment)</strong> &rarr; Loại: <i>Ứng dụng web (Web App)</i>.</div>
-          <div><strong>3. CỰC KỲ QUAN TRỌNG:</strong>
-            <ul class="list-disc pl-5 mt-1 space-y-0.5">
-              <li>Thực thi dưới dạng (Execute as): <strong>Tôi (Tài khoản của bạn)</strong></li>
-              <li>Ai có quyền truy cập (Who has access): Chọn <strong>Bất kỳ ai (Anyone)</strong> (<i>Nếu chọn 'Chỉ mình tôi' dữ liệu sẽ bị Google chặn</i>).</li>
-            </ul>
-          </div>
-        </div>
-
-        <div>
-          <label for="scriptUrlInput" class="block font-bold text-slate-700 mb-1.5 flex items-center justify-between">
-            <span>Đường dẫn Web App Google Apps Script:</span>
-            <span id="urlStatusBadge" class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">Chưa kiểm tra</span>
-          </label>
-          <input 
-            type="url" 
-            id="scriptUrlInput" 
-            placeholder="https://script.google.com/macros/s/AKfycb.../exec"
-            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 font-mono text-xs text-slate-800"
-          />
-        </div>
-
-        <!-- Hướng dẫn Code Google Apps Script chuẩn, sử dụng getDisplayValues tránh lỗi định dạng giờ -->
+        <!-- Hướng dẫn Code Google Apps Script chuẩn -->
         <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
           <div class="flex items-center justify-between mb-2">
             <span class="font-bold text-xs text-slate-800 flex items-center gap-1.5">
-              <i class="fa-solid fa-code text-rose-500"></i> Mã Code.gs chuẩn (Lưu & đọc đúng 100% định dạng giờ):
+              <i class="fa-solid fa-code text-rose-500"></i> Mã Code.gs chuẩn (Khắc phục triệt để lỗi lệch Ngày & Giờ):
             </span>
             <button type="button" onclick="copyScriptCode()" class="text-xs font-semibold text-rose-600 hover:underline">
               <span id="copyBtnText">Sao chép mã</span>
@@ -1055,12 +1024,12 @@
           <textarea 
             id="scriptSourceCode" 
             readonly 
-            rows="9" 
+            rows="10" 
             class="w-full p-2.5 font-mono text-[11px] bg-slate-900 text-emerald-400 rounded-xl leading-relaxed outline-none"
 >function doGet(e) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getActiveSheet();
-  var data = sheet.getDataRange().getDisplayValues(); // Dùng getDisplayValues giữ nguyên dạng chữ giờ hiển thị
+  var data = sheet.getDataRange().getDisplayValues(); // Sử dụng getDisplayValues để giữ nguyên ngày giờ hiển thị
   if (data.length <= 1) {
     return ContentService.createTextOutput(JSON.stringify({ appointments: [] }))
       .setMimeType(ContentService.MimeType.JSON);
@@ -1069,7 +1038,7 @@
   var appointments = [];
   for (var i = 1; i < data.length; i++) {
     var row = data[i];
-    var obj = {};
+    var obj = { rowIndex: i + 1 };
     for (var j = 0; j < headers.length; j++) {
       obj[headers[j]] = row[j];
     }
@@ -1084,7 +1053,7 @@ function doPost(e) {
   var sheet = ss.getActiveSheet();
   
   if (sheet.getLastRow() === 0) {
-    sheet.appendRow(["Họ và tên", "Số điện thoại", "Ngày khám", "Khung giờ hẹn", "Mục khám", "Ghi chú", "Thời gian gửi"]);
+    sheet.appendRow(["Họ và tên", "Số điện thoại", "Ngày khám", "Khung giờ hẹn", "Mục khám", "Ghi chú", "Thời gian gửi", "Trạng thái"]);
   }
   
   var p = e.parameter || {};
@@ -1095,6 +1064,34 @@ function doPost(e) {
     } catch(err) {}
   }
   
+  // Xử lý cập nhật trạng thái
+  if (p.action === "updateStatus") {
+    var data = sheet.getDataRange().getDisplayValues();
+    var headers = data[0];
+    var statusColIdx = headers.indexOf("Trạng thái") + 1;
+    if (statusColIdx === 0) {
+      statusColIdx = 8;
+      sheet.getRange(1, 8).setValue("Trạng thái");
+    }
+    
+    var targetRow = parseInt(p.rowIndex, 10);
+    if (targetRow && targetRow <= sheet.getLastRow()) {
+      sheet.getRange(targetRow, statusColIdx).setValue(p.status || "Đang chờ khám");
+      return ContentService.createTextOutput(JSON.stringify({ status: "success" })).setMimeType(ContentService.MimeType.JSON);
+    }
+    
+    for (var i = 1; i < data.length; i++) {
+      var rowPhone = String(data[i][1]).replace(/[^0-9]/g, '');
+      var searchPhone = String(p.phoneNumber || '').replace(/[^0-9]/g, '');
+      if (rowPhone && searchPhone && rowPhone.indexOf(searchPhone) !== -1) {
+        sheet.getRange(i + 1, statusColIdx).setValue(p.status || "Đang chờ khám");
+        break;
+      }
+    }
+    return ContentService.createTextOutput(JSON.stringify({ status: "success" })).setMimeType(ContentService.MimeType.JSON);
+  }
+  
+  // Lưu lịch hẹn mới: Bắt buộc thêm dấu ' trước Ngày khám, Giờ và SĐT để Google Sheet không đổi thành UTC Date
   sheet.appendRow([
     p.fullName || '',
     "'" + (p.phoneNumber || ''),
@@ -1102,7 +1099,8 @@ function doPost(e) {
     "'" + (p.bookingTime || ''),
     p.serviceCategory || '',
     p.notes || '',
-    p.submittedAt || new Date().toLocaleString("vi-VN", {timeZone: "Asia/Ho_Chi_Minh"})
+    p.submittedAt || new Date().toLocaleString("vi-VN", {timeZone: "Asia/Ho_Chi_Minh"}),
+    p.status || 'Đang chờ khám'
   ]);
   
   return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
@@ -1346,7 +1344,7 @@ function doPost(e) {
     // ==============================================================================================
     // CẤU HÌNH LINK GOOGLE SHEET & LƯU TRỮ LỊCH HẸN
     // ==============================================================================================
-    const DEFAULT_GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyX8bcwmCQ2Xwwyl_zBldjHXmXnhjMvY8ORGlltaEQVrvW-zB4XN2JFIu-cVlEQOko/exec";
+    const DEFAULT_GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbxGByUpPMr1uhiJZJ76XRT3J0sQNAk8Oeno-J9V6QDkgAu8y4hrTGQjSVO7eheQwwM/exec";
     const STORAGE_KEY = "hoangdiu_google_sheet_url";
     const APPOINTMENTS_STORAGE_KEY = "hoangdiu_appointments_data";
     const ADMIN_PASSWORD_KEY = "hoangdiu_admin_pin";
@@ -1485,30 +1483,77 @@ function doPost(e) {
       return cleanPhone.slice(0, 3) + '***';
     }
 
-    // Chuẩn hóa định dạng ngày từ YYYY-MM-DD hoặc Date object từ Sheet
+    // ==============================================================================================
+    // CHUẨN HÓA ĐỊNH DẠNG NGÀY KHÁM (KHẮC PHỤC TRIỆT ĐỂ LỖI LỆCH NGÀY GOOGLE SHEET / UTC / FORMAT)
+    // ==============================================================================================
     function normalizeDateString(dateVal) {
       if (!dateVal) return getTodayString(0);
       let str = String(dateVal).trim();
+      if (!str || str === '--' || str === 'undefined' || str === 'null') return getTodayString(0);
+
+      // Trường hợp 1: Chuỗi Date object tiếng Anh từ Sheet (ví dụ "Thu Oct 15 2026..." hoặc "2026-10-14T17:00:00.000Z")
+      if (str.includes('GMT') || (str.includes('T') && (str.includes('Z') || str.includes('+')))) {
+        try {
+          const d = new Date(str);
+          if (!isNaN(d.getTime())) {
+            // Lấy năm, tháng, ngày theo múi giờ địa phương Việt Nam (GMT+7)
+            const y = d.getFullYear();
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${y}-${m}-${day}`;
+          }
+        } catch (e) {}
+      }
+
+      // Trường hợp 2: Chuỗi ISO dạng "YYYY-MM-DDTHH:mm:ss" (không có Z)
       if (str.includes('T')) {
         str = str.split('T')[0];
       }
+
+      // Trường hợp 3: Chuỗi chuẩn ISO "YYYY-MM-DD"
+      if (/^\d{4}-\d{1,2}-\d{1,2}$/.test(str)) {
+        const parts = str.split('-');
+        return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
+      }
+
+      // Trường hợp 4: Chuỗi ngày có dấu gạch chéo "DD/MM/YYYY" hoặc "D/M/YYYY"
       if (str.includes('/')) {
         const parts = str.split('/');
         if (parts.length === 3) {
+          // Kiểm tra nếu phần đầu là năm (YYYY/MM/DD)
+          if (parts[0].length === 4) {
+            return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
+          }
+          // Ngược lại định dạng phổ biến ở Việt Nam: DD/MM/YYYY
           const d = parts[0].padStart(2, '0');
           const m = parts[1].padStart(2, '0');
           const y = parts[2];
           return `${y}-${m}-${d}`;
         }
       }
+
+      // Trường hợp 5: Chuỗi có dấu chấm "DD.MM.YYYY"
+      if (str.includes('.')) {
+        const parts = str.split('.');
+        if (parts.length === 3) {
+          if (parts[0].length === 4) {
+            return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
+          }
+          const d = parts[0].padStart(2, '0');
+          const m = parts[1].padStart(2, '0');
+          const y = parts[2];
+          return `${y}-${m}-${d}`;
+        }
+      }
+
       return str;
     }
 
-    // Định dạng hiển thị ngày từ YYYY-MM-DD sang DD/MM/YYYY
+    // Định dạng hiển thị ngày từ YYYY-MM-DD sang DD/MM/YYYY chuẩn đẹp
     function formatDateDisplay(dateStr) {
-      if (!dateStr) return '--';
-      if (dateStr.includes('/')) return dateStr;
-      const parts = dateStr.split('-');
+      if (!dateStr || dateStr === '--') return '--';
+      const normalized = normalizeDateString(dateStr);
+      const parts = normalized.split('-');
       if (parts.length === 3) {
         return `${parts[2]}/${parts[1]}/${parts[0]}`;
       }
@@ -1528,13 +1573,29 @@ function doPost(e) {
       return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200"><i class="fa-solid fa-notes-medical text-[10px]"></i> ${s || 'Khám phụ khoa'}</span>`;
     }
 
-    // Chuyển đổi trạng thái giữa: "Đang chờ khám" và "Đã khám"
-    function updateAppointmentStatus(id, newStatus) {
+    // Chuyển đổi trạng thái giữa: "Đang chờ khám" và "Đã khám" đồng bộ lên Cloud
+    async function updateAppointmentStatus(id, newStatus) {
       const item = appointmentList.find(x => x.id === id);
       if (item) {
         item.status = newStatus;
         localStorage.setItem(APPOINTMENTS_STORAGE_KEY, JSON.stringify(appointmentList));
         renderAppointmentTable();
+
+        // Gửi cập nhật trạng thái lên Google Sheet để các thiết bị khác cùng thấy
+        const targetUrl = getActiveScriptUrl();
+        if (isUrlConfigured(targetUrl)) {
+          const updatePayload = {
+            action: 'updateStatus',
+            rowIndex: item.rowIndex || '',
+            phoneNumber: item.phoneNumber || '',
+            status: newStatus
+          };
+          try {
+            await postDataToGoogleSheet(targetUrl, updatePayload);
+          } catch (e) {
+            console.warn("Lỗi gửi cập nhật trạng thái lên Sheet:", e);
+          }
+        }
       }
     }
 
@@ -1552,7 +1613,7 @@ function doPost(e) {
           <select 
             onchange="updateAppointmentStatus('${id}', this.value)"
             class="pl-7 pr-7 py-1 rounded-full text-xs font-bold border transition-all cursor-pointer outline-none appearance-none shadow-sm ${selectClass}"
-            title="Nhấp để thay đổi trạng thái"
+            title="Nhấp để thay đổi trạng thái và đồng bộ sang mọi máy"
           >
             <option value="Đang chờ khám" ${!isExamined ? 'selected' : ''}>⏳ Đang chờ khám</option>
             <option value="Đã khám" ${isExamined ? 'selected' : ''}>✅ Đã khám</option>
@@ -1781,12 +1842,13 @@ function doPost(e) {
             if (rows.length > 0) {
               const formattedList = rows.map((row, idx) => ({
                 id: `GS-${idx}-${Date.now().toString().slice(-4)}`,
+                rowIndex: row.rowIndex || (idx + 2),
                 fullName: row["Họ và tên"] || row["Họ tên"] || row["fullName"] || row["hoTen"] || "Khách hàng",
                 phoneNumber: String(row["Số điện thoại"] || row["SĐT"] || row["phoneNumber"] || row["sdt"] || ""),
                 bookingDate: normalizeDateString(row["Ngày khám"] || row["Ngày"] || row["bookingDate"] || row["ngayKham"] || getTodayString(0)),
                 bookingTime: formatBookingTime(row["Khung giờ hẹn"] || row["Giờ khám"] || row["Giờ"] || row["bookingTime"] || row["gioKham"] || "--"),
                 serviceCategory: row["Mục khám"] || row["serviceCategory"] || row["dichVu"] || "Khám phụ khoa",
-                status: row["Trạng thái"] || "Đang chờ khám",
+                status: row["Trạng thái"] || row["status"] || "Đang chờ khám",
                 notes: row["Ghi chú"] || row["notes"] || ""
               }));
 
@@ -2305,7 +2367,7 @@ function doPost(e) {
         // Cập nhật bảng dữ liệu ngay lập tức kèm hiệu ứng nổi bật
         renderAppointmentTable(newAppointmentId);
 
-        // Gửi lên Google Sheet bằng cơ chế postDataToGoogleSheet tin cậy
+        // Gửi lên Google Sheet bằng cơ chế postDataToGoogleSheet tin cậy (ngày gửi đi dưới dạng chuỗi chuẩn YYYY-MM-DD)
         const targetUrl = getActiveScriptUrl();
         const payload = {
           fullName: fullName,
@@ -2313,6 +2375,7 @@ function doPost(e) {
           bookingDate: bookingDate,
           bookingTime: formattedBookingTime,
           serviceCategory: serviceCategory,
+          status: 'Đang chờ khám',
           notes: notes,
           submittedAt: new Date().toLocaleString('vi-VN')
         };
