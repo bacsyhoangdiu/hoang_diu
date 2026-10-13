@@ -62,6 +62,13 @@
     .row-highlight {
       animation: highlightRow 3s ease-out;
     }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    .live-dot {
+      animation: pulseDot 2s infinite ease-in-out;
+    }
   </style>
 </head>
 <body class="font-sans text-brand-dark bg-slate-50 antialiased selection:bg-rose-200 selection:text-rose-900">
@@ -757,7 +764,7 @@
                     Danh Sách Khách Hàng Đã Đặt Lịch
                   </h3>
                   <p class="text-xs text-slate-500 mt-0.5">
-                    Quý khách có thể xem trước danh sách bên dưới để chọn giờ khám thông thoáng nhất.
+                    Quý khách có thể xem trước danh sách bên dưới để chọn giờ khám thông thoáng nhất. Dữ liệu xóa trên máy quản trị hoặc Google Sheet sẽ lập tức cập nhật tới tất cả mọi thiết bị.
                   </p>
                 </div>
               </div>
@@ -774,7 +781,7 @@
                 onclick="refreshAppointmentList(true)" 
                 id="refreshListBtn"
                 class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
-                title="Tải lại danh sách từ máy chủ"
+                title="Tải lại danh sách từ máy chủ Google Sheet"
               >
                 <i id="refreshIcon" class="fa-solid fa-rotate-right"></i>
                 <span>Đồng bộ từ Sheet</span>
@@ -798,7 +805,7 @@
                   type="button" 
                   onclick="promptClearCompleted()" 
                   class="inline-flex items-center gap-1 text-xs font-bold px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white transition-all shadow-sm"
-                  title="Chỉ xóa các ca đã hoàn tất khám"
+                  title="Chỉ xóa các ca đã hoàn tất khám trên mọi máy"
                 >
                   <i class="fa-solid fa-check-double text-xs"></i>
                   <span>Xóa ca đã khám</span>
@@ -807,7 +814,7 @@
                   type="button" 
                   onclick="promptClearAll()" 
                   class="inline-flex items-center gap-1 text-xs font-bold px-3 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white transition-all shadow-sm"
-                  title="Xóa toàn bộ danh sách hiện tại"
+                  title="Xóa toàn bộ danh sách hiện tại trên mọi máy"
                 >
                   <i class="fa-solid fa-trash-can text-xs"></i>
                   <span>Xóa tất cả</span>
@@ -876,9 +883,9 @@
               Hiển thị: <strong id="visibleCount" class="text-rose-600 font-bold">0</strong> lượt đặt lịch
               <span id="activeFilterDesc" class="italic text-slate-400 ml-1">(Tất cả các ngày)</span>
             </div>
-            <div id="cloudSyncStatusNote" class="text-[11px] text-slate-400 flex items-center gap-1">
-              <i class="fa-solid fa-cloud-arrow-down text-emerald-500"></i>
-              <span>Dữ liệu tự động đồng bộ trên mọi thiết bị</span>
+            <div id="cloudSyncStatusNote" class="text-[11px] text-slate-500 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 live-dot inline-block"></span>
+              <span>Đang kết nối trực tiếp đa thiết bị (Tự cập nhật khi Admin xóa)</span>
             </div>
           </div>
 
@@ -886,8 +893,8 @@
             <!-- Loading Overlay khi đang tải dữ liệu -->
             <div id="tableLoadingState" class="hidden absolute inset-0 bg-white/80 backdrop-blur-[2px] z-20 flex flex-col items-center justify-center py-12">
               <div class="w-10 h-10 border-4 border-rose-200 border-t-rose-600 rounded-full animate-spin mb-3"></div>
-              <p class="text-xs font-semibold text-rose-600">Đang tải lịch hẹn từ máy chủ Google Sheet...</p>
-              <p class="text-[11px] text-slate-400 mt-1">Đảm bảo hiển thị đầy đủ trên mọi thiết bị</p>
+              <p class="text-xs font-semibold text-rose-600">Đang đồng bộ lịch hẹn từ máy chủ Google Sheet...</p>
+              <p class="text-[11px] text-slate-400 mt-1">Cập nhật danh sách mới nhất trên mọi thiết bị</p>
             </div>
 
             <table class="w-full text-left text-sm border-collapse min-w-[700px]">
@@ -916,7 +923,7 @@
             </div>
             <h4 class="font-bold text-slate-800 text-base">Chưa có lịch khám nào trong danh sách</h4>
             <p class="text-slate-500 text-xs mt-1 max-w-sm mx-auto">
-              Danh sách hiện đang trống. Quý khách vui lòng điền thông tin vào form phía trên để đặt lịch khám!
+              Danh sách hiện đang trống hoặc toàn bộ lịch đã được quản trị viên dọn dẹp/xóa trên Google Sheet.
             </p>
             <div class="mt-4 flex items-center justify-center gap-2">
               <button type="button" onclick="refreshAppointmentList(true)" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-sm">
@@ -972,7 +979,7 @@
         <div class="flex justify-between pt-1">
           <span class="text-slate-500 font-medium">Trạng thái đồng bộ:</span>
           <span id="resSyncStatus" class="font-semibold text-emerald-700 flex items-center gap-1">
-            <i class="fa-solid fa-file-excel text-emerald-600"></i> Đã đồng bộ lên Google Sheet
+            <i class="fa-solid fa-file-excel text-emerald-600"></i> Đã đồng bộ lên Google Sheet & mọi thiết bị
           </span>
         </div>
       </div>
@@ -997,39 +1004,57 @@
   </div>
 
   <div id="configModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-rose-100 transform transition-all text-left">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl border border-rose-100 transform transition-all text-left space-y-4">
       <div class="flex items-center justify-between pb-4 border-b border-slate-100">
         <div class="flex items-center gap-2.5">
           <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl">
             <i class="fa-solid fa-file-excel"></i>
           </div>
           <div>
-            <h3 class="text-lg font-bold text-slate-900">Khắc Phục Kết Nối Google Sheet</h3>
-            <p class="text-xs text-slate-500">Đảm bảo dữ liệu lưu 100% vào trang tính và đồng bộ đa thiết bị</p>
+            <h3 class="text-lg font-bold text-slate-900">Cấu Hình Google Sheet & Đồng Bộ Xóa Đa Thiết Bị</h3>
+            <p class="text-xs text-slate-500">Mã kịch bản Google Apps Script hỗ trợ xóa đồng bộ thời gian thực trên mọi máy</p>
           </div>
         </div>
         <button type="button" onclick="closeConfigModal()" class="text-slate-400 hover:text-slate-600 text-xl p-1">
           <i class="fa-solid fa-xmark"></i>
         </button>
-        <!-- Hướng dẫn Code Google Apps Script chuẩn -->
-        <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
-          <div class="flex items-center justify-between mb-2">
-            <span class="font-bold text-xs text-slate-800 flex items-center gap-1.5">
-              <i class="fa-solid fa-code text-rose-500"></i> Mã Code.gs chuẩn (Khắc phục triệt để lỗi lệch Ngày & Giờ):
-            </span>
-            <button type="button" onclick="copyScriptCode()" class="text-xs font-semibold text-rose-600 hover:underline">
-              <span id="copyBtnText">Sao chép mã</span>
-            </button>
-          </div>
-          <textarea 
-            id="scriptSourceCode" 
-            readonly 
-            rows="10" 
-            class="w-full p-2.5 font-mono text-[11px] bg-slate-900 text-emerald-400 rounded-xl leading-relaxed outline-none"
+      </div>
+
+      <!-- Ô nhập link Web App Google Sheet -->
+      <div>
+        <label for="scriptUrlInput" class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center justify-between">
+          <span>Đường dẫn Web App (Google Apps Script URL)</span>
+          <span id="urlStatusBadge" class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">Đang kiểm tra...</span>
+        </label>
+        <div class="relative">
+          <input 
+            type="url" 
+            id="scriptUrlInput" 
+            placeholder="https://script.google.com/macros/s/.../exec" 
+            class="w-full px-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-mono focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 text-slate-800"
+          />
+        </div>
+      </div>
+
+      <!-- Hướng dẫn Code Google Apps Script chuẩn -->
+      <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
+        <div class="flex items-center justify-between mb-2">
+          <span class="font-bold text-xs text-slate-800 flex items-center gap-1.5">
+            <i class="fa-solid fa-code text-rose-500"></i> Mã Code.gs chuẩn (Hỗ trợ Xóa Đồng Bộ tức thì giữa các thiết bị):
+          </span>
+          <button type="button" onclick="copyScriptCode()" class="text-xs font-semibold text-rose-600 hover:underline">
+            <span id="copyBtnText">Sao chép mã</span>
+          </button>
+        </div>
+        <textarea 
+          id="scriptSourceCode" 
+          readonly 
+          rows="11" 
+          class="w-full p-2.5 font-mono text-[11px] bg-slate-900 text-emerald-400 rounded-xl leading-relaxed outline-none"
 >function doGet(e) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getActiveSheet();
-  var data = sheet.getDataRange().getDisplayValues(); // Sử dụng getDisplayValues để giữ nguyên ngày giờ hiển thị
+  var data = sheet.getDataRange().getDisplayValues();
   if (data.length <= 1) {
     return ContentService.createTextOutput(JSON.stringify({ appointments: [] }))
       .setMimeType(ContentService.MimeType.JSON);
@@ -1038,11 +1063,18 @@
   var appointments = [];
   for (var i = 1; i < data.length; i++) {
     var row = data[i];
+    var hasContent = row.some(function(cell) { return String(cell).trim() !== ""; });
+    if (!hasContent) continue;
+    
     var obj = { rowIndex: i + 1 };
     for (var j = 0; j < headers.length; j++) {
       obj[headers[j]] = row[j];
     }
-    appointments.push(obj);
+    var name = String(obj["Họ và tên"] || obj["Họ tên"] || "").trim();
+    var phone = String(obj["Số điện thoại"] || obj["SĐT"] || "").trim();
+    if (name !== "" || phone !== "") {
+      appointments.push(obj);
+    }
   }
   return ContentService.createTextOutput(JSON.stringify({ appointments: appointments }))
     .setMimeType(ContentService.MimeType.JSON);
@@ -1051,20 +1083,59 @@
 function doPost(e) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getActiveSheet();
-  
   if (sheet.getLastRow() === 0) {
     sheet.appendRow(["Họ và tên", "Số điện thoại", "Ngày khám", "Khung giờ hẹn", "Mục khám", "Ghi chú", "Thời gian gửi", "Trạng thái"]);
   }
-  
   var p = e.parameter || {};
   if (e.postData && e.postData.contents) {
-    try {
-      var json = JSON.parse(e.postData.contents);
-      p = Object.assign(p, json);
-    } catch(err) {}
+    try { p = Object.assign(p, JSON.parse(e.postData.contents)); } catch(err) {}
   }
   
-  // Xử lý cập nhật trạng thái
+  // 1. Thao tác Xóa 1 lịch hẹn theo số điện thoại hoặc dòng
+  if (p.action === "deleteAppointment") {
+    var data = sheet.getDataRange().getDisplayValues();
+    var searchPhone = String(p.phoneNumber || '').replace(/[^0-9]/g, '');
+    var targetRow = parseInt(p.rowIndex, 10);
+    
+    if (targetRow && targetRow <= sheet.getLastRow()) {
+      sheet.deleteRow(targetRow);
+      return ContentService.createTextOutput(JSON.stringify({ status: "success", deleted: true }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+    for (var i = data.length - 1; i >= 1; i--) {
+      var rowPhone = String(data[i][1]).replace(/[^0-9]/g, '');
+      if (searchPhone && rowPhone && rowPhone.indexOf(searchPhone) !== -1) {
+        sheet.deleteRow(i + 1);
+        return ContentService.createTextOutput(JSON.stringify({ status: "success", deleted: true }))
+          .setMimeType(ContentService.MimeType.JSON);
+      }
+    }
+    return ContentService.createTextOutput(JSON.stringify({ status: "not_found" })).setMimeType(ContentService.MimeType.JSON);
+  }
+
+  // 2. Thao tác Xóa tất cả các lịch đã hoàn thành ("Đã khám")
+  if (p.action === "clearCompleted") {
+    var data = sheet.getDataRange().getDisplayValues();
+    var statusColIdx = data[0].indexOf("Trạng thái");
+    if (statusColIdx !== -1) {
+      for (var i = data.length - 1; i >= 1; i--) {
+        if (data[i][statusColIdx] === "Đã khám") {
+          sheet.deleteRow(i + 1);
+        }
+      }
+    }
+    return ContentService.createTextOutput(JSON.stringify({ status: "success" })).setMimeType(ContentService.MimeType.JSON);
+  }
+
+  // 3. Thao tác Xóa sạch toàn bộ lịch (Dành cho Quản trị viên dọn dẹp bảng)
+  if (p.action === "clearAll") {
+    if (sheet.getLastRow() > 1) {
+      sheet.deleteRows(2, sheet.getLastRow() - 1);
+    }
+    return ContentService.createTextOutput(JSON.stringify({ status: "success" })).setMimeType(ContentService.MimeType.JSON);
+  }
+  
+  // 4. Thao tác Cập nhật Trạng thái
   if (p.action === "updateStatus") {
     var data = sheet.getDataRange().getDisplayValues();
     var headers = data[0];
@@ -1073,13 +1144,11 @@ function doPost(e) {
       statusColIdx = 8;
       sheet.getRange(1, 8).setValue("Trạng thái");
     }
-    
     var targetRow = parseInt(p.rowIndex, 10);
     if (targetRow && targetRow <= sheet.getLastRow()) {
       sheet.getRange(targetRow, statusColIdx).setValue(p.status || "Đang chờ khám");
       return ContentService.createTextOutput(JSON.stringify({ status: "success" })).setMimeType(ContentService.MimeType.JSON);
     }
-    
     for (var i = 1; i < data.length; i++) {
       var rowPhone = String(data[i][1]).replace(/[^0-9]/g, '');
       var searchPhone = String(p.phoneNumber || '').replace(/[^0-9]/g, '');
@@ -1091,7 +1160,7 @@ function doPost(e) {
     return ContentService.createTextOutput(JSON.stringify({ status: "success" })).setMimeType(ContentService.MimeType.JSON);
   }
   
-  // Lưu lịch hẹn mới: Bắt buộc thêm dấu ' trước Ngày khám, Giờ và SĐT để Google Sheet không đổi thành UTC Date
+  // 5. Thêm lịch hẹn mới
   sheet.appendRow([
     p.fullName || '',
     "'" + (p.phoneNumber || ''),
@@ -1102,14 +1171,11 @@ function doPost(e) {
     p.submittedAt || new Date().toLocaleString("vi-VN", {timeZone: "Asia/Ho_Chi_Minh"}),
     p.status || 'Đang chờ khám'
   ]);
-  
-  return ContentService.createTextOutput(JSON.stringify({ status: "success" }))
-    .setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput(JSON.stringify({ status: "success" })).setMimeType(ContentService.MimeType.JSON);
 }</textarea>
-        </div>
       </div>
 
-      <div class="mt-6 flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
         <button type="button" onclick="testSheetConnection()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-xs inline-flex items-center gap-1.5">
           <i id="testIcon" class="fa-solid fa-flask"></i>
           <span id="testBtnText">Gửi thử 1 dòng kiểm tra</span>
@@ -1196,7 +1262,7 @@ function doPost(e) {
       </div>
       <h3 id="deleteModalTitle" class="text-xl font-bold font-serif text-slate-900">Xác Nhận Xóa Lịch Đặt</h3>
       <p id="deleteModalDesc" class="text-slate-600 text-sm mt-2 leading-relaxed">
-        Bạn có chắc muốn thực hiện thao tác xóa này không? Hành động này sẽ cập nhật trên bảng.
+        Bạn có chắc muốn thực hiện thao tác xóa này không? Hành động này sẽ cập nhật trên Google Sheet và xóa đồng bộ trên mọi thiết bị.
       </p>
 
       <div class="mt-6 flex gap-3">
@@ -1209,6 +1275,7 @@ function doPost(e) {
         </button>
         <button 
           type="button" 
+          id="confirmDeleteSubmitBtn"
           onclick="executeDelete()" 
           class="flex-1 py-3 px-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm shadow-md shadow-red-200 transition-all flex items-center justify-center gap-1.5"
         >
@@ -1374,14 +1441,14 @@ function doPost(e) {
     }
 
     // ==============================================================================================
-    // HÀM XỬ LÝ CHUẨN HÓA ĐỊNH DẠNG KHUNG GIỜ HẸN (TRÁNH LỖI GOOGLE SHEET / ISO STRING)
+    // HÀM XỬ LÝ CHUẨN HÓA ĐỊNH DẠNG KHUNG GIỜ HẸN
     // ==============================================================================================
     function formatBookingTime(timeVal) {
       if (!timeVal) return '--';
       let str = String(timeVal).trim();
       if (!str || str === '--' || str === 'undefined' || str === 'null') return '--';
 
-      // Xử lý trường hợp Google Sheet trả về phân số của ngày (ví dụ 0.729166667 = 17:30)
+      // Phân số ngày từ Sheet (ví dụ 0.729166667 = 17:30)
       if (!isNaN(Number(str)) && Number(str) > 0 && Number(str) < 1) {
         const totalMinutes = Math.round(Number(str) * 24 * 60);
         const h = String(Math.floor(totalMinutes / 60)).padStart(2, '0');
@@ -1389,14 +1456,13 @@ function doPost(e) {
         return `${h}:${m}`;
       }
 
-      // Xử lý chuỗi Date ISO (ví dụ 1899-12-30T10:30:00.000Z hoặc 1900-... hoặc chứa GMT / Z)
+      // Chuỗi Date ISO
       if (str.includes('1899') || str.includes('1900') || (str.includes('T') && (str.includes('Z') || str.includes('+')))) {
         try {
           const d = new Date(str);
           if (!isNaN(d.getTime())) {
             let h = d.getHours();
             let m = d.getMinutes();
-            // Khắc phục sai số phút lịch sử múi giờ GMT+7:06:40
             if (m === 29 || m === 31) m = 30;
             if (m === 59) { m = 0; h = (h + 1) % 24; }
             if (m === 1) m = 0;
@@ -1405,7 +1471,6 @@ function doPost(e) {
         } catch (e) {}
       }
 
-      // Chuỗi chứa 'T' thông thường: "YYYY-MM-DDTHH:mm:ss"
       if (str.includes('T')) {
         const timePart = str.split('T')[1];
         if (timePart) {
@@ -1416,7 +1481,6 @@ function doPost(e) {
         }
       }
 
-      // Định dạng có giây: "17:30:00" hoặc "07:30:00"
       const matchWithSec = str.match(/^(\d{1,2}):(\d{2}):\d{2}(.*)$/);
       if (matchWithSec) {
         const h = matchWithSec[1].padStart(2, '0');
@@ -1425,7 +1489,6 @@ function doPost(e) {
         return rest ? `${h}:${m} ${rest}` : `${h}:${m}`;
       }
 
-      // Định dạng tiêu chuẩn: "17:30" hoặc "17:30 (Chiều)"
       const matchSimple = str.match(/^(\d{1,2}):(\d{2})(.*)$/);
       if (matchSimple) {
         const h = matchSimple[1].padStart(2, '0');
@@ -1434,7 +1497,6 @@ function doPost(e) {
         return rest ? `${h}:${m} ${rest}` : `${h}:${m}`;
       }
 
-      // Định dạng kiểu tiếng Việt: "17h30" hoặc "17h"
       const matchH = str.match(/^(\d{1,2})h(\d{2})?(.*)$/i);
       if (matchH) {
         const h = matchH[1].padStart(2, '0');
@@ -1484,19 +1546,17 @@ function doPost(e) {
     }
 
     // ==============================================================================================
-    // CHUẨN HÓA ĐỊNH DẠNG NGÀY KHÁM (KHẮC PHỤC TRIỆT ĐỂ LỖI LỆCH NGÀY GOOGLE SHEET / UTC / FORMAT)
+    // CHUẨN HÓA ĐỊNH DẠNG NGÀY KHÁM
     // ==============================================================================================
     function normalizeDateString(dateVal) {
       if (!dateVal) return getTodayString(0);
       let str = String(dateVal).trim();
       if (!str || str === '--' || str === 'undefined' || str === 'null') return getTodayString(0);
 
-      // Trường hợp 1: Chuỗi Date object tiếng Anh từ Sheet (ví dụ "Thu Oct 15 2026..." hoặc "2026-10-14T17:00:00.000Z")
       if (str.includes('GMT') || (str.includes('T') && (str.includes('Z') || str.includes('+')))) {
         try {
           const d = new Date(str);
           if (!isNaN(d.getTime())) {
-            // Lấy năm, tháng, ngày theo múi giờ địa phương Việt Nam (GMT+7)
             const y = d.getFullYear();
             const m = String(d.getMonth() + 1).padStart(2, '0');
             const day = String(d.getDate()).padStart(2, '0');
@@ -1505,26 +1565,21 @@ function doPost(e) {
         } catch (e) {}
       }
 
-      // Trường hợp 2: Chuỗi ISO dạng "YYYY-MM-DDTHH:mm:ss" (không có Z)
       if (str.includes('T')) {
         str = str.split('T')[0];
       }
 
-      // Trường hợp 3: Chuỗi chuẩn ISO "YYYY-MM-DD"
       if (/^\d{4}-\d{1,2}-\d{1,2}$/.test(str)) {
         const parts = str.split('-');
         return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
       }
 
-      // Trường hợp 4: Chuỗi ngày có dấu gạch chéo "DD/MM/YYYY" hoặc "D/M/YYYY"
       if (str.includes('/')) {
         const parts = str.split('/');
         if (parts.length === 3) {
-          // Kiểm tra nếu phần đầu là năm (YYYY/MM/DD)
           if (parts[0].length === 4) {
             return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
           }
-          // Ngược lại định dạng phổ biến ở Việt Nam: DD/MM/YYYY
           const d = parts[0].padStart(2, '0');
           const m = parts[1].padStart(2, '0');
           const y = parts[2];
@@ -1532,7 +1587,6 @@ function doPost(e) {
         }
       }
 
-      // Trường hợp 5: Chuỗi có dấu chấm "DD.MM.YYYY"
       if (str.includes('.')) {
         const parts = str.split('.');
         if (parts.length === 3) {
@@ -1549,7 +1603,6 @@ function doPost(e) {
       return str;
     }
 
-    // Định dạng hiển thị ngày từ YYYY-MM-DD sang DD/MM/YYYY chuẩn đẹp
     function formatDateDisplay(dateStr) {
       if (!dateStr || dateStr === '--') return '--';
       const normalized = normalizeDateString(dateStr);
@@ -1560,7 +1613,6 @@ function doPost(e) {
       return dateStr;
     }
 
-    // Màu sắc huy hiệu cho từng dịch vụ
     function getServiceBadge(service) {
       const s = String(service || '');
       if (s.includes('thai kỳ')) {
@@ -1573,7 +1625,6 @@ function doPost(e) {
       return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200"><i class="fa-solid fa-notes-medical text-[10px]"></i> ${s || 'Khám phụ khoa'}</span>`;
     }
 
-    // Chuyển đổi trạng thái giữa: "Đang chờ khám" và "Đã khám" đồng bộ lên Cloud
     async function updateAppointmentStatus(id, newStatus) {
       const item = appointmentList.find(x => x.id === id);
       if (item) {
@@ -1581,7 +1632,6 @@ function doPost(e) {
         localStorage.setItem(APPOINTMENTS_STORAGE_KEY, JSON.stringify(appointmentList));
         renderAppointmentTable();
 
-        // Gửi cập nhật trạng thái lên Google Sheet để các thiết bị khác cùng thấy
         const targetUrl = getActiveScriptUrl();
         if (isUrlConfigured(targetUrl)) {
           const updatePayload = {
@@ -1599,7 +1649,6 @@ function doPost(e) {
       }
     }
 
-    // Hiển thị dropdown cho trạng thái
     function renderStatusControl(id, currentStatus, isNew = false) {
       const isExamined = currentStatus === 'Đã khám';
       const selectClass = isExamined 
@@ -1623,7 +1672,6 @@ function doPost(e) {
       `;
     }
 
-    // Hàm render bảng danh sách ra giao diện
     function renderAppointmentTable(newlyAddedId = null) {
       const tbody = document.getElementById('appointmentTableBody');
       const emptyState = document.getElementById('emptyTableState');
@@ -1644,7 +1692,6 @@ function doPost(e) {
       const todayStr = getTodayString(0);
       const tomorrowStr = getTodayString(1);
 
-      // Lọc danh sách theo tiêu chí
       let filtered = appointmentList.filter(item => {
         let matchDate = true;
         const bDate = normalizeDateString(item.bookingDate);
@@ -1756,7 +1803,6 @@ function doPost(e) {
       tbody.innerHTML = html;
     }
 
-    // GỬI DỮ LIỆU ĐÁNG TIN CẬY VÀO GOOGLE APPS SCRIPT
     async function postDataToGoogleSheet(url, payload) {
       const params = new URLSearchParams();
       for (const key in payload) {
@@ -1777,7 +1823,6 @@ function doPost(e) {
         console.warn("Thử gửi dạng form ẩn fallback:", err);
       }
 
-      // Phương pháp fallback qua Form submit vào iframe ẩn
       try {
         let hiddenIframe = document.getElementById('hidden_iframe_poster');
         if (!hiddenIframe) {
@@ -1814,14 +1859,16 @@ function doPost(e) {
       }
     }
 
-    // ĐỒNG BỘ DỮ LIỆU TỰ ĐỘNG TỪ GOOGLE SHEET VÀ CHUẨN HÓA DỮ LIỆU GIỜ
+    // ==============================================================================================
+    // ĐỒNG BỘ DỮ LIỆU TỰ ĐỘNG TỪ GOOGLE SHEET (XỬ LÝ DỮ LIỆU ĐÃ XÓA TRÊN SHEET CHUẨN XÁC 100%)
+    // ==============================================================================================
     async function refreshAppointmentList(showFeedback = false) {
       const refreshIcon = document.getElementById('refreshIcon');
       const loadingOverlay = document.getElementById('tableLoadingState');
       const emptyState = document.getElementById('emptyTableState');
 
-      if (refreshIcon) refreshIcon.classList.add('fa-spin');
-      if (loadingOverlay) loadingOverlay.classList.remove('hidden');
+      if (showFeedback && refreshIcon) refreshIcon.classList.add('fa-spin');
+      if (showFeedback && loadingOverlay) loadingOverlay.classList.remove('hidden');
       if (emptyState) emptyState.classList.add('hidden');
       isFetchingFromCloud = true;
 
@@ -1829,7 +1876,17 @@ function doPost(e) {
 
       if (isUrlConfigured(targetUrl)) {
         try {
-          const res = await fetch(targetUrl);
+          // Thêm timestamp _t và cache: 'no-store' để ngăn trình duyệt lưu cache kết quả cũ khi đã xóa trên Google Sheet
+          const cacheBusterUrl = targetUrl + (targetUrl.includes('?') ? '&' : '?') + '_t=' + Date.now();
+          const res = await fetch(cacheBusterUrl, {
+            method: 'GET',
+            cache: 'no-store',
+            headers: {
+              'Pragma': 'no-cache',
+              'Cache-Control': 'no-cache'
+            }
+          });
+
           if (res.ok) {
             const data = await res.json();
             let rows = [];
@@ -1839,25 +1896,33 @@ function doPost(e) {
               rows = data;
             }
 
-            if (rows.length > 0) {
-              const formattedList = rows.map((row, idx) => ({
-                id: `GS-${idx}-${Date.now().toString().slice(-4)}`,
-                rowIndex: row.rowIndex || (idx + 2),
-                fullName: row["Họ và tên"] || row["Họ tên"] || row["fullName"] || row["hoTen"] || "Khách hàng",
-                phoneNumber: String(row["Số điện thoại"] || row["SĐT"] || row["phoneNumber"] || row["sdt"] || ""),
-                bookingDate: normalizeDateString(row["Ngày khám"] || row["Ngày"] || row["bookingDate"] || row["ngayKham"] || getTodayString(0)),
-                bookingTime: formatBookingTime(row["Khung giờ hẹn"] || row["Giờ khám"] || row["Giờ"] || row["bookingTime"] || row["gioKham"] || "--"),
-                serviceCategory: row["Mục khám"] || row["serviceCategory"] || row["dichVu"] || "Khám phụ khoa",
-                status: row["Trạng thái"] || row["status"] || "Đang chờ khám",
-                notes: row["Ghi chú"] || row["notes"] || ""
-              }));
+            // Lọc bỏ triệt để các hàng trống do người dùng chỉ ấn phím Delete trên Google Sheet
+            const validRows = rows.filter(row => {
+              const name = String(row["Họ và tên"] || row["Họ tên"] || row["fullName"] || row["hoTen"] || "").trim();
+              const phone = String(row["Số điện thoại"] || row["SĐT"] || row["phoneNumber"] || row["sdt"] || "").trim();
+              const date = String(row["Ngày khám"] || row["Ngày"] || row["bookingDate"] || row["ngayKham"] || "").trim();
+              return name !== "" || phone !== "" || date !== "";
+            });
 
-              appointmentList = formattedList;
-              localStorage.setItem(APPOINTMENTS_STORAGE_KEY, JSON.stringify(appointmentList));
-            }
+            // Chuyển đổi định dạng chuẩn
+            const formattedList = validRows.map((row, idx) => ({
+              id: `GS-${idx}-${Date.now().toString().slice(-4)}`,
+              rowIndex: row.rowIndex || (idx + 2),
+              fullName: row["Họ và tên"] || row["Họ tên"] || row["fullName"] || row["hoTen"] || "Khách hàng",
+              phoneNumber: String(row["Số điện thoại"] || row["SĐT"] || row["phoneNumber"] || row["sdt"] || ""),
+              bookingDate: normalizeDateString(row["Ngày khám"] || row["Ngày"] || row["bookingDate"] || row["ngayKham"] || getTodayString(0)),
+              bookingTime: formatBookingTime(row["Khung giờ hẹn"] || row["Giờ khám"] || row["Giờ"] || row["bookingTime"] || row["gioKham"] || "--"),
+              serviceCategory: row["Mục khám"] || row["serviceCategory"] || row["dichVu"] || "Khám phụ khoa",
+              status: row["Trạng thái"] || row["status"] || "Đang chờ khám",
+              notes: row["Ghi chú"] || row["notes"] || ""
+            }));
+
+            // Cập nhật danh sách (kể cả khi Google Sheet trống hoàn toàn do xóa hết dữ liệu)
+            appointmentList = formattedList;
+            localStorage.setItem(APPOINTMENTS_STORAGE_KEY, JSON.stringify(appointmentList));
           }
         } catch (err) {
-          console.warn("Không thể tải danh sách từ Google Apps Script (Sử dụng dữ liệu tạm):", err);
+          console.warn("Lưu ý khi tải dữ liệu từ Google Sheet:", err);
         }
       }
 
@@ -1865,9 +1930,9 @@ function doPost(e) {
       if (loadingOverlay) loadingOverlay.classList.add('hidden');
       renderAppointmentTable();
 
-      setTimeout(() => {
-        if (refreshIcon) refreshIcon.classList.remove('fa-spin');
-      }, 500);
+      if (refreshIcon) {
+        setTimeout(() => refreshIcon.classList.remove('fa-spin'), 500);
+      }
     }
 
     function updateAdminUI() {
@@ -1977,7 +2042,7 @@ function doPost(e) {
       const title = document.getElementById('deleteModalTitle');
       const desc = document.getElementById('deleteModalDesc');
       if (title) title.textContent = "Xóa lịch của bệnh nhân?";
-      if (desc) desc.innerHTML = `Bạn có chắc muốn xóa lịch hẹn của <strong>${clientName}</strong>?`;
+      if (desc) desc.innerHTML = `Bạn có chắc muốn xóa lịch hẹn của <strong>${clientName}</strong>? Lịch hẹn này sẽ bị xóa khỏi Google Sheet và biến mất trên tất cả thiết bị khác.`;
 
       const modal = document.getElementById('deleteConfirmModal');
       if (modal) modal.classList.remove('hidden');
@@ -1989,7 +2054,7 @@ function doPost(e) {
       const title = document.getElementById('deleteModalTitle');
       const desc = document.getElementById('deleteModalDesc');
       if (title) title.textContent = "Xóa toàn bộ danh sách?";
-      if (desc) desc.innerHTML = `Thao tác này sẽ xóa sạch <strong>tất cả ${appointmentList.length} lịch khám</strong> trên bảng hiện tại. Bạn có chắc chắn muốn xóa không?`;
+      if (desc) desc.innerHTML = `Thao tác này sẽ xóa sạch <strong>tất cả ${appointmentList.length} lịch khám</strong> trên Google Sheet và mọi thiết bị người dùng. Bạn có chắc chắn muốn xóa không?`;
 
       const modal = document.getElementById('deleteConfirmModal');
       if (modal) modal.classList.remove('hidden');
@@ -2004,7 +2069,7 @@ function doPost(e) {
       const title = document.getElementById('deleteModalTitle');
       const desc = document.getElementById('deleteModalDesc');
       if (title) title.textContent = "Dọn dẹp ca đã khám?";
-      if (desc) desc.innerHTML = `Thao tác này sẽ xóa <strong>${completedCount} lịch đã hoàn thành khám</strong>, giữ lại các ca đang chờ khám.`;
+      if (desc) desc.innerHTML = `Thao tác này sẽ xóa <strong>${completedCount} lịch đã hoàn thành khám</strong> khỏi Google Sheet và mọi thiết bị, giữ lại các ca đang chờ khám.`;
 
       const modal = document.getElementById('deleteConfirmModal');
       if (modal) modal.classList.remove('hidden');
@@ -2016,18 +2081,59 @@ function doPost(e) {
       if (modal) modal.classList.add('hidden');
     }
 
-    function executeDelete() {
+    // ==============================================================================================
+    // THỰC HIỆN XÓA LỊCH HẸN VÀ ĐỒNG BỘ TỨC THÌ LÊN GOOGLE SHEET
+    // ==============================================================================================
+    async function executeDelete() {
+      const targetUrl = getActiveScriptUrl();
+      const submitBtn = document.getElementById('confirmDeleteSubmitBtn');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-xs"></i> <span>Đang xóa...</span>';
+      }
+
+      let payload = null;
+
       if (pendingDeleteTarget === 'ALL') {
         appointmentList = [];
+        payload = { action: 'clearAll' };
       } else if (pendingDeleteTarget === 'COMPLETED') {
         appointmentList = appointmentList.filter(item => item.status !== 'Đã khám');
+        payload = { action: 'clearCompleted' };
       } else if (pendingDeleteTarget) {
+        const itemToDelete = appointmentList.find(item => item.id === pendingDeleteTarget);
+        if (itemToDelete) {
+          payload = {
+            action: 'deleteAppointment',
+            rowIndex: itemToDelete.rowIndex || '',
+            phoneNumber: itemToDelete.phoneNumber || ''
+          };
+        }
         appointmentList = appointmentList.filter(item => item.id !== pendingDeleteTarget);
       }
 
+      // Cập nhật ngay bộ nhớ máy quản trị
       localStorage.setItem(APPOINTMENTS_STORAGE_KEY, JSON.stringify(appointmentList));
       closeDeleteConfirmModal();
       renderAppointmentTable();
+
+      // Gửi lệnh xóa lên Google Sheet để đồng bộ tới tất cả thiết bị khác
+      if (payload && isUrlConfigured(targetUrl)) {
+        try {
+          await postDataToGoogleSheet(targetUrl, payload);
+          // Đợi 800ms để Google Apps Script hoàn tất xoá rồi đồng bộ kiểm tra lại
+          setTimeout(() => {
+            refreshAppointmentList(false);
+          }, 800);
+        } catch (err) {
+          console.warn("Lỗi khi gửi lệnh xóa lên Sheet:", err);
+        }
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i class="fa-solid fa-trash-can text-xs"></i> <span>Đồng ý xóa</span>';
+      }
     }
 
     function filterAppointments(type) {
@@ -2308,7 +2414,7 @@ function doPost(e) {
       try {
         await postDataToGoogleSheet(url, testPayload);
         if (testBtnText) testBtnText.textContent = "Đã gửi! Kiểm tra dòng mới trên Google Sheet";
-        setTimeout(() => refreshAppointmentList(), 2000);
+        setTimeout(() => refreshAppointmentList(true), 2000);
       } catch (err) {
         console.error(err);
         if (testBtnText) testBtnText.textContent = "Lỗi khi gửi, kiểm tra quyền 'Anyone'";
@@ -2367,7 +2473,7 @@ function doPost(e) {
         // Cập nhật bảng dữ liệu ngay lập tức kèm hiệu ứng nổi bật
         renderAppointmentTable(newAppointmentId);
 
-        // Gửi lên Google Sheet bằng cơ chế postDataToGoogleSheet tin cậy (ngày gửi đi dưới dạng chuỗi chuẩn YYYY-MM-DD)
+        // Gửi lên Google Sheet bằng cơ chế postDataToGoogleSheet
         const targetUrl = getActiveScriptUrl();
         const payload = {
           fullName: fullName,
@@ -2452,14 +2558,42 @@ function doPost(e) {
       });
     }
 
+    // ==============================================================================================
+    // CƠ CHẾ ĐỒNG BỘ LIÊN TỤC VÀ TỰ ĐỘNG GIỮA CÁC THIẾT BỊ (MULTI-DEVICE REAL-TIME SYNC)
+    // ==============================================================================================
+    
+    // Tự động đồng bộ ngay khi người dùng mở lại điện thoại / chuyển tab quay lại web
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && !isFetchingFromCloud) {
+        refreshAppointmentList(false);
+      }
+    });
+
+    window.addEventListener('focus', () => {
+      if (!isFetchingFromCloud) {
+        refreshAppointmentList(false);
+      }
+    });
+
+    window.addEventListener('online', () => {
+      refreshAppointmentList(false);
+    });
+
+    // Định kỳ tự động đồng bộ ngầm mỗi 6 giây (nhẹ nhàng, không giật màn hình) để phát hiện thao tác xóa từ quản trị viên
+    setInterval(() => {
+      if (!document.hidden && !isFetchingFromCloud) {
+        refreshAppointmentList(false);
+      }
+    }, 6000);
+
     // Khởi chạy ứng dụng khi DOM tải xong
     document.addEventListener('DOMContentLoaded', () => {
       switchTab('trang-chu');
       updateConnectionBadge();
       updateAdminUI();
 
-      // Tự động đồng bộ và chuẩn hóa giờ từ Cloud / Google Sheet ngay khi mở trang
-      refreshAppointmentList();
+      // Đồng bộ từ Cloud / Google Sheet ngay khi mở trang
+      refreshAppointmentList(true);
     });
   </script>
 </body>
